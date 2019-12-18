@@ -1,4 +1,5 @@
 spring:
+  profiles: default
   datasource:
     url: jdbc:mysql://localhost:3306/hotdeal
     username: root
