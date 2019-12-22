@@ -1,0 +1,42 @@
+spring:
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/hotdeal
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace
+
+---
+
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mysql://localhost:3306/hotdeal
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+
+---
+
+spring:
+  profiles: production
+  datasource:
+    url: "your url"
+    username: "your username"
+    password: "your password"
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
