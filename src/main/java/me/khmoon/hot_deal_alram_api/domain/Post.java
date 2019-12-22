@@ -3,10 +3,10 @@ package me.khmoon.hot_deal_alram_api.domain;
 import javax.persistence.*;
 
 @Entity
-@Table(indexes = {@Index(name = "postId", columnList = "postId"), @Index(name = "postType", columnList = "postType")})
+@Table(indexes = {@Index(name = "postId", columnList = "postId"), @Index(name = "boardName", columnList = "boardName")})
 public class Post {
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private Long postId;
   @Enumerated(EnumType.STRING)
