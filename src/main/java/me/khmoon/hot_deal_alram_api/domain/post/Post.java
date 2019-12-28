@@ -1,19 +1,20 @@
 package me.khmoon.hot_deal_alram_api.domain.post;
 
 import me.khmoon.hot_deal_alram_api.domain.BaseTimeEntity;
-import me.khmoon.hot_deal_alram_api.domain.board.BoardName;
+import me.khmoon.hot_deal_alram_api.domain.board.Board;
 
 import javax.persistence.*;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
-@Table(indexes = {@Index(name = "postId", columnList = "postId"), @Index(name = "boardName", columnList = "boardName")})
+@Table(indexes = {@Index(name = "postOriginId", columnList = "postOriginId")})
 public class Post extends BaseTimeEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "post_id")
   private Long id;
-  private Long postId;
-  @Enumerated(EnumType.STRING)
-  private BoardName boardName;
+  private Long postOriginId;
   private String postType;// Enum으로 하고 싶었는데, Type은 현재 fix 하기 어려울것 같다.
   private String postName;
   @Enumerated(EnumType.STRING)
@@ -22,4 +23,8 @@ public class Post extends BaseTimeEntity {
   private Long PostCommentSize;
   private Long PostClickCount;
   private String PostUrl;
+
+  @ManyToOne(fetch = LAZY)
+  @JoinColumn(name = "board_id")
+  private Board board;
 }

@@ -1,16 +1,26 @@
 package me.khmoon.hot_deal_alram_api.domain.board;
 
-import me.khmoon.hot_deal_alram_api.domain.BaseTimeEntity;
+import me.khmoon.hot_deal_alram_api.domain.page.Page;
+import me.khmoon.hot_deal_alram_api.domain.post.Post;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(indexes = {@Index(name = "boardName", columnList = "boardName")})
-public class Board extends BaseTimeEntity {
+public class Board {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "board_id")
   private Long id;
-  private String BoradUrl;
+
   @Enumerated(EnumType.STRING)
   private BoardName boardName;
+
+  @OneToMany(mappedBy = "board")
+  private List<Post> posts = new ArrayList<>();
+
+  @OneToMany(mappedBy = "board")
+  private List<Page> pages = new ArrayList<>();
 }
