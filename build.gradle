@@ -37,6 +37,7 @@ dependencies {
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
+    compile 'org.hibernate:hibernate-validator:6.1.0.Final' // CVE-2019-10219 (Medium) detected in hibernate-validator-6.0.18.Final.jar 따른 추가
 }
 
 test {
