@@ -3,7 +3,6 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
     id 'java'
     id "jacoco"
-    id "com.github.kt3k.coveralls" version "2.9.0"
 }
 
 group = 'me.khmoon'
