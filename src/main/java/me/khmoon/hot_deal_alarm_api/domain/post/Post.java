@@ -1,7 +1,7 @@
-package me.khmoon.hot_deal_alram_api.domain.post;
+package me.khmoon.hot_deal_alarm_api.domain.post;
 
-import me.khmoon.hot_deal_alram_api.domain.BaseTimeEntity;
-import me.khmoon.hot_deal_alram_api.domain.board.Board;
+import me.khmoon.hot_deal_alarm_api.domain.BaseTimeEntity;
+import me.khmoon.hot_deal_alarm_api.domain.board.Board;
 
 import javax.persistence.*;
 

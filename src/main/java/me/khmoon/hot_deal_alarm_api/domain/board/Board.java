@@ -1,9 +1,9 @@
-package me.khmoon.hot_deal_alram_api.domain.board;
+package me.khmoon.hot_deal_alarm_api.domain.board;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.khmoon.hot_deal_alram_api.domain.page.Page;
-import me.khmoon.hot_deal_alram_api.domain.post.Post;
+import me.khmoon.hot_deal_alarm_api.domain.page.Page;
+import me.khmoon.hot_deal_alarm_api.domain.post.Post;
 
 import javax.persistence.*;
 import java.util.ArrayList;
