@@ -1,7 +1,7 @@
-package me.khmoon.hot_deal_alram_api.repository;
+package me.khmoon.hot_deal_alarm_api.repository;
 
-import me.khmoon.hot_deal_alram_api.domain.board.Board;
-import me.khmoon.hot_deal_alram_api.domain.board.BoardName;
+import me.khmoon.hot_deal_alarm_api.domain.board.Board;
+import me.khmoon.hot_deal_alarm_api.domain.board.BoardName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

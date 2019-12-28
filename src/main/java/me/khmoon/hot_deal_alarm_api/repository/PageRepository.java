@@ -1,6 +1,6 @@
-package me.khmoon.hot_deal_alram_api.repository;
+package me.khmoon.hot_deal_alarm_api.repository;
 
-import me.khmoon.hot_deal_alram_api.domain.page.Page;
+import me.khmoon.hot_deal_alarm_api.domain.page.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PageRepository extends JpaRepository<Page, Long> {
