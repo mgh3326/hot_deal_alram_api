@@ -43,3 +43,5 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+check.dependsOn jacocoTestReport
+
