@@ -11,9 +11,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -36,9 +36,9 @@ public class BoardRepositoryTest {
 
     //then
     Board board1 = boardList.get(0);
-    assertThat(board1.getBoardName()).isEqualTo(boardName);
-    assertThat(board1.getBoardBaseListUrl()).isEqualTo(boardBaseListUrl);
-    assertThat(board1.getBoardBaseViewUrl()).isEqualTo(boardBaseViewUrl);
+    assertEquals(board1.getBoardName(), boardName, "equal test board name");
+    assertEquals(board1.getBoardBaseListUrl(), boardBaseListUrl, "equal test board base list url");
+    assertEquals(board1.getBoardBaseViewUrl(), boardBaseViewUrl, "equal test board base view url");
   }
 
 }
