@@ -1,18 +1,16 @@
 package me.khmoon.hot_deal_alarm_api.domain.board;
 
+import lombok.*;
 import me.khmoon.hot_deal_alarm_api.domain.page.Page;
 import me.khmoon.hot_deal_alarm_api.domain.post.Post;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Entity
-@Table(indexes = {@Index(name = "boardName", columnList = "boardName")})
+@Table(indexes = {@Index(name = "boardName", columnList = "boardName", unique = true)})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Board {
   @Id
@@ -28,7 +26,6 @@ public class Board {
 
   @OneToMany(mappedBy = "board")
   private List<Post> posts = new ArrayList<>();
-
   @OneToMany(mappedBy = "board")
   private List<Page> pages = new ArrayList<>();
 
