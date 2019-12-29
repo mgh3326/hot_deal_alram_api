@@ -10,12 +10,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ActiveProfiles("test") // Like this
 @ExtendWith(SpringExtension.class)
@@ -44,7 +43,7 @@ class BoardServiceTest {
 
     BoardName boardName = BoardName.DOMESTIC;
     Board board = Board.builder().boardName(boardName).boardParam(boardParam).build();
-    boardService.add(siteName, board);
+    boardService.add(site.getId(), board);
     Board board1 = boardRepository.findOne(board.getId());
     assertEquals(board1.getBoardName(), boardName, "equal test board name");
     assertEquals(board1.getBoardParam(), boardParam, "equal test board name");

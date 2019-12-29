@@ -15,7 +15,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ActiveProfiles("test") // Like this
 @ExtendWith(SpringExtension.class)
@@ -47,7 +47,7 @@ class PageServiceTest {
     //board 저장
     BoardName boardName = BoardName.DOMESTIC;
     Board board = Board.builder().boardName(boardName).boardParam(boardParam).build();
-    boardService.add(siteName, board);
+    boardService.add(site.getId(), board);
 
     int pageNum = 1;
     Page page = Page.builder().pageNum(pageNum).build();
