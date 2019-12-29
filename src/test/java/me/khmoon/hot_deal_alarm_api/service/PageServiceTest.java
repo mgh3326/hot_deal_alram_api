@@ -3,6 +3,8 @@ package me.khmoon.hot_deal_alarm_api.service;
 import me.khmoon.hot_deal_alarm_api.domain.board.Board;
 import me.khmoon.hot_deal_alarm_api.domain.board.BoardName;
 import me.khmoon.hot_deal_alarm_api.domain.page.Page;
+import me.khmoon.hot_deal_alarm_api.domain.site.Site;
+import me.khmoon.hot_deal_alarm_api.domain.site.SiteName;
 import me.khmoon.hot_deal_alarm_api.repository.BoardRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,20 +26,28 @@ class PageServiceTest {
   BoardService boardService;
   @Autowired
   BoardRepository boardRepository;
-  @Value("${ppomppu.domestic.baseUrl.list}")
-  private String boardBaseListUrl;
-
-  @Value("${ppomppu.domestic.baseUrl.view}")
-  private String boardBaseViewUrl;
   @Autowired
   PageService pageService;
+  @Autowired
+  SiteService siteService;
+  @Value("${ppomppu.param.domestic}")
+  private String boardParam;
+  @Value("${ppomppu.url.list}")
+  private String siteListUrl;
+  @Value("${ppomppu.url.view}")
+  private String siteViewUrl;
 
   @Test
   void savePage() {
+    // 사이트 저
+    SiteName siteName = SiteName.PPOMPPU;
+    Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
+    siteService.add(site);
+
     //board 저장
-    BoardName boardName = BoardName.PPOMPPU_DOMESTIC;
-    Board board = Board.builder().boardName(boardName).boardBaseListUrl(boardBaseListUrl).boardBaseViewUrl(boardBaseViewUrl).build();
-    boardService.add(board);
+    BoardName boardName = BoardName.DOMESTIC;
+    Board board = Board.builder().boardName(boardName).boardParam(boardParam).build();
+    boardService.add(siteName, board);
 
     int pageNum = 1;
     Page page = Page.builder().pageNum(pageNum).build();

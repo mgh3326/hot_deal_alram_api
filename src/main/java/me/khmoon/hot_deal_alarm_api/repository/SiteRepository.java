@@ -22,7 +22,7 @@ public class SiteRepository {
     return em.find(Site.class, id);
   }
 
-  public Board findOneBySiteName(SiteName siteName) {
-    return em.createQuery("select s from Site s where s.siteName=:siteName", Board.class).setParameter("siteName", siteName).getSingleResult();
+  public Site findOneBySiteName(SiteName siteName) {
+    return em.createQuery("select s from Site s where s.siteName=:siteName", Site.class).setParameter("siteName", siteName).getSingleResult();
   }
 }

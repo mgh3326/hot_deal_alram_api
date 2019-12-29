@@ -2,8 +2,9 @@ package me.khmoon.hot_deal_alarm_api.service;
 
 import me.khmoon.hot_deal_alarm_api.domain.board.Board;
 import me.khmoon.hot_deal_alarm_api.domain.board.BoardName;
+import me.khmoon.hot_deal_alarm_api.domain.site.Site;
+import me.khmoon.hot_deal_alarm_api.domain.site.SiteName;
 import me.khmoon.hot_deal_alarm_api.repository.BoardRepository;
-import org.hibernate.exception.ConstraintViolationException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,29 +26,29 @@ class BoardServiceTest {
   BoardService boardService;
   @Autowired
   BoardRepository boardRepository;
-  @Value("${ppomppu.domestic.baseUrl.list}")
-  private String boardBaseListUrl;
+  @Autowired
+  SiteService siteService;
+  @Value("${ppomppu.param.domestic}")
+  private String boardParam;
 
-  @Value("${ppomppu.domestic.baseUrl.view}")
-  private String boardBaseViewUrl;
+  @Value("${ppomppu.url.list}")
+  private String siteListUrl;
+  @Value("${ppomppu.url.view}")
+  private String siteViewUrl;
 
   @Test
   void add() {
-    BoardName boardName = BoardName.PPOMPPU_DOMESTIC;
-    Board board = Board.builder().boardName(boardName).boardBaseListUrl(boardBaseListUrl).boardBaseViewUrl(boardBaseViewUrl).build();
-    boardService.add(board);
+    SiteName siteName = SiteName.PPOMPPU;
+    Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
+    siteService.add(site);
+
+    BoardName boardName = BoardName.DOMESTIC;
+    Board board = Board.builder().boardName(boardName).boardParam(boardParam).build();
+    boardService.add(siteName, board);
     Board board1 = boardRepository.findOne(board.getId());
     assertEquals(board1.getBoardName(), boardName, "equal test board name");
-    assertEquals(board1.getBoardBaseListUrl(), boardBaseListUrl, "equal test board base list url");
-    assertEquals(board1.getBoardBaseViewUrl(), boardBaseViewUrl, "equal test board base view url");
+    assertEquals(board1.getBoardParam(), boardParam, "equal test board name");
   }
 
-  @Test
-  void 유니큐_조건() {
-    BoardName boardName = BoardName.PPOMPPU_DOMESTIC;
-    Board board = Board.builder().boardName(boardName).boardBaseListUrl(boardBaseListUrl).boardBaseViewUrl(boardBaseViewUrl).build();
-    boardService.add(board);
-    Board board2 = Board.builder().boardName(boardName).boardBaseListUrl(boardBaseListUrl).boardBaseViewUrl(boardBaseViewUrl).build();
-    assertThrows(DataIntegrityViolationException.class, () -> boardService.add(board2));
-  }
+
 }
