@@ -35,3 +35,5 @@ src/main/resources/application-dev.yml
 src/main/resources/application-production.yml
 
 src/test/java/me/khmoon/.DS_Store
+
+src/test/java/me/khmoon/hot_deal_alarm_api/.DS_Store

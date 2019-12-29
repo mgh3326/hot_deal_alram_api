@@ -21,8 +21,9 @@ logging:
     org.hibernate.SQL: debug
 #    org.hibernate.type: trace
 ppomppu:
-  baseUrl:
-    list: http://m.ppomppu.co.kr/new/bbs_list.php?id=ppomppu
-    view: http://m.ppomppu.co.kr/new/bbs_view.php?id=ppomppu
+  domestic:
+    baseUrl:
+      list: http://m.ppomppu.co.kr/new/bbs_list.php?id=ppomppu
+      view: http://m.ppomppu.co.kr/new/bbs_view.php?id=ppomppu
 
 
