@@ -33,3 +33,5 @@ out/
 src/main/resources/application-dev.yml
 
 src/main/resources/application-production.yml
+
+src/test/java/me/khmoon/.DS_Store

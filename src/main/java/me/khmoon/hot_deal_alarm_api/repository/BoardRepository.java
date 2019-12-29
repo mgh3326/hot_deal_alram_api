@@ -12,9 +12,8 @@ import java.util.List;
 public class BoardRepository {
   private final EntityManager em;
 
-  public Long save(Board board) {
+  public void save(Board board) {
     em.persist(board);
-    return board.getId();
   }
 
   public List<Board> findAll() {
