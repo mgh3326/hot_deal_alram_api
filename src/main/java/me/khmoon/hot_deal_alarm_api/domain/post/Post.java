@@ -1,5 +1,6 @@
 package me.khmoon.hot_deal_alarm_api.domain.post;
 
+import lombok.Getter;
 import me.khmoon.hot_deal_alarm_api.domain.BaseTimeEntity;
 import me.khmoon.hot_deal_alarm_api.domain.board.Board;
 
@@ -7,6 +8,7 @@ import javax.persistence.*;
 
 import static javax.persistence.FetchType.LAZY;
 
+@Getter
 @Entity
 @Table(indexes = {@Index(name = "postOriginId", columnList = "postOriginId")})
 public class Post extends BaseTimeEntity {
