@@ -19,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -89,5 +91,57 @@ class PostServiceTest {
     assertEquals(post.getPostOriginDateTime(), postOriginDateTime, "equal test post");
     assertEquals(post.getPostUrl(), postUrl, "equal test post");
     assertEquals(post.getPostClickCount(), 0, "equal test post");
+  }
+
+  @Test
+  void savePosts() {
+    // 사이트 저장
+    Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
+    siteService.add(site);
+
+    //board 저장
+    Board board = Board.builder().boardName(boardName).boardParam(boardParam).build();
+    boardService.add(site.getId(), board);
+
+    String postTitle = "[티몬] 자뎅 커피/음료 230mlx30팩 / 230mlx24팩 ( 9,900원 / 무...";
+    long postOriginId = 339492L;
+    String postType = "기타";
+    int postRecommendationCount = 0;
+    int postCommentCount = 0;
+    PostStatus postStatus = PostStatus.READY;
+    int postOriginClickCount = 1822;
+    LocalTime parse = LocalTime.parse("21:05:54");
+    LocalDateTime postOriginDateTime = LocalDate.now().atTime(parse);// 2018-07-26T02:30
+    String postUrl = "bbs_view.php?id=ppomppu&amp;no=339492&amp;page=1";
+    Post post = Post.builder()
+            .postTitle(postTitle)
+            .postOriginId(postOriginId)
+            .postType(postType)
+            .postRecommendationCount(postRecommendationCount)
+            .postCommentCount(postCommentCount)
+            .postStatus(postStatus)
+            .postOriginClickCount(postOriginClickCount)
+            .postOriginDateTime(postOriginDateTime)
+            .postUrl(postUrl)
+            .build();
+    List<Post> posts = new ArrayList<>();
+    posts.add(post);
+    post = Post.builder()
+            .postTitle(postTitle)
+            .postOriginId(339491L)
+            .postType(postType)
+            .postRecommendationCount(postRecommendationCount)
+            .postCommentCount(postCommentCount)
+            .postStatus(postStatus)
+            .postOriginClickCount(postOriginClickCount)
+            .postOriginDateTime(postOriginDateTime)
+            .postUrl(postUrl)
+            .build();
+    posts.add(post);
+
+    postService.savePostAll(board.getId(), posts);
+    List<Post> posts1 = postService.findAll();
+    assertEquals(posts1.size(), 2, "equal test post");
+
   }
 }
