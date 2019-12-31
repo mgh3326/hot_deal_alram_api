@@ -39,12 +39,12 @@ class PageServiceTest {
   private String siteViewUrl;
   private SiteName siteName = SiteName.PPOMPPU;
   private BoardName boardName = BoardName.DOMESTIC;
-  private int pageNum = 1;
+
 
   @Test
-  @DisplayName("페이지 저장 (Name)")
+  @DisplayName("페이지 저장")
   void savePage() {
-    // 사이트 저
+    // 사이트 저장
     Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
     siteService.add(site);
 
@@ -52,26 +52,11 @@ class PageServiceTest {
     Board board = Board.builder().boardName(boardName).boardParam(boardParam).build();
     boardService.add(site.getId(), board);
 
-    Page page = Page.builder().pageNum(pageNum).pageRefreshSecond(60).build();
-    pageService.savePage(boardName, page);
-    assertEquals(page.getPageNum(), pageNum, "equal test page page_num");
-
-  }
-
-  @Test
-  @DisplayName("페이지 저장 (id)")
-  void savePage2() {
-    // 사이트 저
-    Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
-    siteService.add(site);
-
-    //board 저장
-    Board board = Board.builder().boardName(boardName).boardParam(boardParam).build();
-    boardService.add(site.getId(), board);
-
-    Page page = Page.builder().pageNum(pageNum).pageRefreshSecond(60).build();
+    int pageNum = 1;
+    int pageRefreshSecond = 60;
+    Page page = Page.builder().pageNum(pageNum).pageRefreshSecond(pageRefreshSecond).build();
     pageService.savePage(board.getId(), page);
     assertEquals(page.getPageNum(), pageNum, "equal test page page_num");
-
+    assertEquals(page.getPageRefreshSecond(), pageRefreshSecond, "equal test page page_num");
   }
 }
