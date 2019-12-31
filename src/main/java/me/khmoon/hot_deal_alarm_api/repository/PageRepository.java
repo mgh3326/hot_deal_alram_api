@@ -1,12 +1,10 @@
 package me.khmoon.hot_deal_alarm_api.repository;
 
 import lombok.RequiredArgsConstructor;
-import me.khmoon.hot_deal_alarm_api.domain.board.Board;
 import me.khmoon.hot_deal_alarm_api.domain.page.Page;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -19,5 +17,9 @@ public class PageRepository {
     } else {
       em.merge(page);
     }
+  }
+
+  public Page findOne(Long id) {
+    return em.find(Page.class, id);
   }
 }
