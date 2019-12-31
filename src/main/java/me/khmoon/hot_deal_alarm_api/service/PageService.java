@@ -24,4 +24,13 @@ public class PageService {
     pageRepository.save(page);
     return page.getId();
   }
+
+  //페이지 추가
+  @Transactional
+  public Long savePage(Long boardId, Page page) {
+    Board board = boardRepository.findOne(boardId);
+    page.setBoard(board);
+    pageRepository.save(page);
+    return page.getId();
+  }
 }
