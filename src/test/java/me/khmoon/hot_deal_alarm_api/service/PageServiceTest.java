@@ -50,7 +50,7 @@ class PageServiceTest {
     boardService.add(site.getId(), board);
 
     int pageNum = 1;
-    Page page = Page.builder().pageNum(pageNum).build();
+    Page page = Page.builder().pageNum(pageNum).pageRefreshSecond(60).build();
     pageService.savePage(boardName, page);
     assertEquals(page.getPageNum(), pageNum, "equal test page page_num");
 
