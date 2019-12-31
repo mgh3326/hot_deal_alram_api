@@ -18,4 +18,8 @@ public class PostRepository {
       em.merge(post);
     }
   }
+
+  public Post findOne(Long id) {
+    return em.find(Post.class, id);
+  }
 }

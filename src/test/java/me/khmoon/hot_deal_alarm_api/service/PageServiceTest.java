@@ -6,6 +6,7 @@ import me.khmoon.hot_deal_alarm_api.domain.page.Page;
 import me.khmoon.hot_deal_alarm_api.domain.site.Site;
 import me.khmoon.hot_deal_alarm_api.domain.site.SiteName;
 import me.khmoon.hot_deal_alarm_api.repository.BoardRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,23 +37,26 @@ class PageServiceTest {
   private String siteListUrl;
   @Value("${ppomppu.url.view}")
   private String siteViewUrl;
+  private SiteName siteName = SiteName.PPOMPPU;
+  private BoardName boardName = BoardName.DOMESTIC;
+
 
   @Test
+  @DisplayName("페이지 저장")
   void savePage() {
-    // 사이트 저
-    SiteName siteName = SiteName.PPOMPPU;
+    // 사이트 저장
     Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
     siteService.add(site);
 
     //board 저장
-    BoardName boardName = BoardName.DOMESTIC;
     Board board = Board.builder().boardName(boardName).boardParam(boardParam).build();
     boardService.add(site.getId(), board);
 
     int pageNum = 1;
-    Page page = Page.builder().pageNum(pageNum).build();
-    pageService.savePage(boardName, page);
+    int pageRefreshSecond = 60;
+    Page page = Page.builder().pageNum(pageNum).pageRefreshSecond(pageRefreshSecond).build();
+    pageService.savePage(board.getId(), page);
     assertEquals(page.getPageNum(), pageNum, "equal test page page_num");
-
+    assertEquals(page.getPageRefreshSecond(), pageRefreshSecond, "equal test page page_num");
   }
 }

@@ -2,25 +2,25 @@ package me.khmoon.hot_deal_alarm_api.service;
 
 import lombok.RequiredArgsConstructor;
 import me.khmoon.hot_deal_alarm_api.domain.board.Board;
-import me.khmoon.hot_deal_alarm_api.domain.page.Page;
+import me.khmoon.hot_deal_alarm_api.domain.post.Post;
 import me.khmoon.hot_deal_alarm_api.repository.BoardRepository;
-import me.khmoon.hot_deal_alarm_api.repository.PageRepository;
+import me.khmoon.hot_deal_alarm_api.repository.PostRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class PageService {
-  private final PageRepository pageRepository;
-  private final BoardRepository boardRepository;
+public class PostService {
+  final PostRepository postRepository;
+  final BoardRepository boardRepository;
 
   //페이지 추가
   @Transactional
-  public Long savePage(Long boardId, Page page) {
+  public Long savePost(Long boardId, Post post) {
     Board board = boardRepository.findOne(boardId);
-    page.setBoard(board);
-    pageRepository.save(page);
-    return page.getId();
+    post.setBoard(board);
+    postRepository.save(post);
+    return post.getId();
   }
 }

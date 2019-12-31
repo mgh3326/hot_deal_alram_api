@@ -22,14 +22,15 @@ public class Page extends BaseTimeEntity {
   private Long id;
 
   private int pageNum;
-
+  private int pageRefreshSecond;//페이지 크롤링 시간
   @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "board_id")
   private Board board;
 
   @Builder
-  public Page(int pageNum) {
+  public Page(int pageNum, int pageRefreshSecond) {
     this.pageNum = pageNum;
+    this.pageRefreshSecond = pageRefreshSecond;
   }
 
   //==연관관계 메서드==//

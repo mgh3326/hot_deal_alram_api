@@ -3,6 +3,7 @@ package me.khmoon.hot_deal_alarm_api.service;
 import me.khmoon.hot_deal_alarm_api.domain.site.Site;
 import me.khmoon.hot_deal_alarm_api.domain.site.SiteName;
 import me.khmoon.hot_deal_alarm_api.repository.SiteRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +30,11 @@ class SiteServiceTest {
   private String siteListUrl;
   @Value("${ppomppu.url.view}")
   private String siteViewUrl;
+  private SiteName siteName = SiteName.PPOMPPU;
 
   @Test
+  @DisplayName("추가하기")
   void add() {
-    SiteName siteName = SiteName.PPOMPPU;
     Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
     siteService.add(site);
     Site site1 = siteRepository.findOne(site.getId());
@@ -42,8 +44,8 @@ class SiteServiceTest {
   }
 
   @Test
-  void 유니큐_조건() {
-    SiteName siteName = SiteName.PPOMPPU;
+  @DisplayName("유니큐 조건")
+  void unique_violation() {
     Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
     siteService.add(site);
     Site site2 = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
@@ -51,6 +53,7 @@ class SiteServiceTest {
   }
 
   @Test
+  @DisplayName("url format test")
   void ppomppu_url_string_format() {
     String ppomppuListUrl = String.format(siteListUrl, "ppomppu", 1);
     String ppomppuViewUrl = String.format(siteViewUrl, "ppomppu", 339349);
