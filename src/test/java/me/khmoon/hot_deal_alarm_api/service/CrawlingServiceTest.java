@@ -3,6 +3,7 @@ package me.khmoon.hot_deal_alarm_api.service;
 import me.khmoon.hot_deal_alarm_api.domain.board.Board;
 import me.khmoon.hot_deal_alarm_api.domain.board.BoardName;
 import me.khmoon.hot_deal_alarm_api.domain.page.Page;
+import me.khmoon.hot_deal_alarm_api.domain.post.Post;
 import me.khmoon.hot_deal_alarm_api.domain.site.Site;
 import me.khmoon.hot_deal_alarm_api.domain.site.SiteName;
 import me.khmoon.hot_deal_alarm_api.propertiy.ApplicationProperties;
@@ -15,6 +16,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
@@ -29,6 +33,8 @@ class CrawlingServiceTest {
   private SiteService siteService;
   @Autowired
   private CrawlingService crawlingService;
+  @Autowired
+  private PostService postService;
   @Autowired
   private ApplicationProperties applicationProperties;
   private String boardParam;
@@ -59,7 +65,11 @@ class CrawlingServiceTest {
     Page page = Page.builder().pageNum(pageNum).pageRefreshSecond(pageRefreshSecond).build();
     pageService.savePage(board.getId(), page);
 
-    crawlingService.Parse(page.getId());
+    List<Post> posts = crawlingService.Parse(page.getId());
+    postService.savePostAll(board.getId(), posts);
+    List<Post> posts1 = postService.findAll();
+    assertEquals(posts.size(), posts1.size(), "equal test post");
+
 
   }
 }

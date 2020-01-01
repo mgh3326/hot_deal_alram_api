@@ -68,8 +68,8 @@ class SiteServiceTest {
   void ppomppuUrlStringFormat() {
     String ppomppuListUrl = String.format(siteListUrl, "ppomppu", 1);
     String ppomppuViewUrl = String.format(siteViewUrl, "ppomppu", 339349);
-    assertEquals(ppomppuListUrl, "http://m.ppomppu.co.kr/new/bbs_list.php?id=ppomppu&page=1");
-    assertEquals(ppomppuViewUrl, "http://m.ppomppu.co.kr/new/bbs_view.php?id=ppomppu&no=339349");
+    assertEquals(ppomppuListUrl, "https://m.ppomppu.co.kr/new/bbs_list.php?id=ppomppu&page=1");
+    assertEquals(ppomppuViewUrl, "https://m.ppomppu.co.kr/new/bbs_view.php?id=ppomppu&no=339349");
   }
 
   @Test

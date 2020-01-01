@@ -24,8 +24,8 @@ my-values:
   user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36"
   ppomppu:
     url:
-      list: http://m.ppomppu.co.kr/new/bbs_list.php?id=%s&page=%d
-      view: http://m.ppomppu.co.kr/new/bbs_view.php?id=%s&no=%d
+      list: https://m.ppomppu.co.kr/new/bbs_list.php?id=%s&page=%d
+      view: https://m.ppomppu.co.kr/new/bbs_view.php?id=%s&no=%d
     param:
       domestic: ppomppu
       overseas: ppomppu4

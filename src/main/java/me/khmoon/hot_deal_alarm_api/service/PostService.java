@@ -22,7 +22,7 @@ public class PostService {
   @Transactional
   public Long savePost(Long boardId, Post post) {
     Board board = boardRepository.findOne(boardId);
-    post.setBoard(board);
+    post.setBoard(board);//TODO Save랑 Update 분리가 필요하겠다.
     postRepository.save(post);
     return post.getId();
   }

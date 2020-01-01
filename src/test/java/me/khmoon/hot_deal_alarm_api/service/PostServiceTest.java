@@ -63,35 +63,38 @@ class PostServiceTest {
     String postTitle = "[티몬] 자뎅 커피/음료 230mlx30팩 / 230mlx24팩 ( 9,900원 / 무...";
     long postOriginId = 339492L;
     String postType = "기타";
+    String postWriter = "까댄당";
     int postRecommendationCount = 0;
     int postCommentCount = 0;
+    int postDisLikeCount = 0;
     PostStatus postStatus = PostStatus.READY;
     int postOriginClickCount = 1822;
     LocalTime parse = LocalTime.parse("21:05:54");
     LocalDateTime postOriginDateTime = LocalDate.now().atTime(parse);// 2018-07-26T02:30
-    String postUrl = "bbs_view.php?id=ppomppu&amp;no=339492&amp;page=1";
     Post post = Post.builder()
             .postTitle(postTitle)
             .postOriginId(postOriginId)
             .postType(postType)
+            .postWriter(postWriter)
             .postRecommendationCount(postRecommendationCount)
+            .postDisLikeCount(postDisLikeCount)
             .postCommentCount(postCommentCount)
             .postStatus(postStatus)
             .postOriginClickCount(postOriginClickCount)
             .postOriginDateTime(postOriginDateTime)
-            .postUrl(postUrl)
             .build();
     postService.savePost(board.getId(), post);
 
     assertEquals(post.getPostTitle(), postTitle, "equal test post");
     assertEquals(post.getPostOriginId(), postOriginId, "equal test post");
     assertEquals(post.getPostType(), postType, "equal test post");
+    assertEquals(post.getPostWriter(), postWriter, "equal test post");
     assertEquals(post.getPostRecommendationCount(), postRecommendationCount, "equal test post");
+    assertEquals(post.getPostDisLikeCount(), postDisLikeCount, "equal test post");
     assertEquals(post.getPostCommentCount(), postCommentCount, "equal test post");
     assertEquals(post.getPostStatus(), postStatus, "equal test post");
     assertEquals(post.getPostOriginClickCount(), postOriginClickCount, "equal test post");
     assertEquals(post.getPostOriginDateTime(), postOriginDateTime, "equal test post");
-    assertEquals(post.getPostUrl(), postUrl, "equal test post");
   }
 
   @Test
@@ -107,23 +110,25 @@ class PostServiceTest {
     String postTitle = "[티몬] 자뎅 커피/음료 230mlx30팩 / 230mlx24팩 ( 9,900원 / 무...";
     long postOriginId = 339492L;
     String postType = "기타";
+    String postWriter = "까댄당";
     int postRecommendationCount = 0;
     int postCommentCount = 0;
     PostStatus postStatus = PostStatus.READY;
     int postOriginClickCount = 1822;
     LocalTime parse = LocalTime.parse("21:05:54");
     LocalDateTime postOriginDateTime = LocalDate.now().atTime(parse);// 2018-07-26T02:30
-    String postUrl = "bbs_view.php?id=ppomppu&amp;no=339492&amp;page=1";
+    int postDisLikeCount = 0;
     Post post = Post.builder()
             .postTitle(postTitle)
             .postOriginId(postOriginId)
             .postType(postType)
+            .postWriter(postWriter)
             .postRecommendationCount(postRecommendationCount)
+            .postDisLikeCount(postDisLikeCount)
             .postCommentCount(postCommentCount)
             .postStatus(postStatus)
             .postOriginClickCount(postOriginClickCount)
             .postOriginDateTime(postOriginDateTime)
-            .postUrl(postUrl)
             .build();
     List<Post> posts = new ArrayList<>();
     posts.add(post);
@@ -131,18 +136,18 @@ class PostServiceTest {
             .postTitle(postTitle)
             .postOriginId(339491L)
             .postType(postType)
+            .postWriter(postWriter)
             .postRecommendationCount(postRecommendationCount)
+            .postDisLikeCount(postDisLikeCount)
             .postCommentCount(postCommentCount)
             .postStatus(postStatus)
             .postOriginClickCount(postOriginClickCount)
             .postOriginDateTime(postOriginDateTime)
-            .postUrl(postUrl)
             .build();
     posts.add(post);
 
     postService.savePostAll(board.getId(), posts);
     List<Post> posts1 = postService.findAll();
     assertEquals(posts1.size(), 2, "equal test post");
-
   }
 }

@@ -1,6 +1,9 @@
 package me.khmoon.hot_deal_alarm_api.domain.board;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import me.khmoon.hot_deal_alarm_api.domain.page.Page;
 import me.khmoon.hot_deal_alarm_api.domain.post.Post;
 import me.khmoon.hot_deal_alarm_api.domain.site.Site;
@@ -25,7 +28,7 @@ public class Board {
   private BoardName boardName;
   private String boardParam;
 
-  @OneToMany(mappedBy = "board")
+  @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
   private List<Post> posts = new ArrayList<>();
 
   @OneToMany(mappedBy = "board")
