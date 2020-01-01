@@ -1,8 +1,6 @@
 package me.khmoon.hot_deal_alarm_api.repository;
 
 import lombok.RequiredArgsConstructor;
-import me.khmoon.hot_deal_alarm_api.domain.board.Board;
-import me.khmoon.hot_deal_alarm_api.domain.board.BoardName;
 import me.khmoon.hot_deal_alarm_api.domain.site.Site;
 import me.khmoon.hot_deal_alarm_api.domain.site.SiteName;
 import org.springframework.stereotype.Repository;

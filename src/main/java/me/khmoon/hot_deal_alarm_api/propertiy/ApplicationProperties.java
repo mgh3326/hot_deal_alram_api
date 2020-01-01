@@ -16,21 +16,21 @@ public class ApplicationProperties {
   @Getter
   @Setter
   public static class Ppomppu {
-    Url url;
-    Param param;
+    private Url url;
+    private Param param;
 
     @Getter
     @Setter
     public static class Url {
-      String list;
-      String view;
+      private String list;
+      private String view;
     }
 
     @Getter
     @Setter
     public static class Param {
-      String domestic;
-      String overseas;
+      private String domestic;
+      private String overseas;
     }
 
 

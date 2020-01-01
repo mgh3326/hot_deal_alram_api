@@ -40,7 +40,16 @@ public class Post extends BaseTimeEntity {
   private Board board;
 
   @Builder
-  public Post(Long postOriginId, String postType, String postTitle, PostStatus postStatus, int postRecommendationCount, int postCommentCount, String postUrl, int postClickCount, int postOriginClickCount, LocalDateTime postOriginDateTime) {
+  public Post(Long postOriginId,
+              String postType,
+              String postTitle,
+              PostStatus postStatus,
+              int postRecommendationCount,
+              int postCommentCount,
+              String postUrl,
+              int postClickCount,
+              int postOriginClickCount,
+              LocalDateTime postOriginDateTime) {
     this.postOriginId = postOriginId;
     this.postType = postType;
     this.postTitle = postTitle;

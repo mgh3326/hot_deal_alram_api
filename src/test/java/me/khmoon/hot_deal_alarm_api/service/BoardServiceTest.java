@@ -25,13 +25,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Transactional
 class BoardServiceTest {
   @Autowired
-  BoardService boardService;
+  private BoardService boardService;
   @Autowired
-  BoardRepository boardRepository;
+  private BoardRepository boardRepository;
   @Autowired
-  SiteService siteService;
+  private SiteService siteService;
   @Autowired
-  ApplicationProperties applicationProperties;
+  private ApplicationProperties applicationProperties;
   private String boardParam;
   private String siteListUrl;
   private String siteViewUrl;

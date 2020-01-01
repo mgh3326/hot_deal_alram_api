@@ -25,11 +25,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @Transactional
 class SiteServiceTest {
   @Autowired
-  SiteService siteService;
+  private SiteService siteService;
   @Autowired
-  SiteRepository siteRepository;
+  private SiteRepository siteRepository;
   @Autowired
-  ApplicationProperties applicationProperties;
+  private ApplicationProperties applicationProperties;
   private String siteListUrl;
   private String siteViewUrl;
 
@@ -73,8 +73,8 @@ class SiteServiceTest {
   }
 
   @Test
-  void oh() {
-    System.out.println(" = " + applicationProperties.getUserAgent());
-    System.out.println(" = " + applicationProperties.getPpomppu().getParam().getDomestic());
+  void check_property() {
+    assertEquals(siteListUrl, applicationProperties.getPpomppu().getUrl().getList());
+    assertEquals(siteViewUrl, applicationProperties.getPpomppu().getUrl().getView());
   }
 }

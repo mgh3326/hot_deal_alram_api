@@ -5,9 +5,7 @@ import me.khmoon.hot_deal_alarm_api.domain.board.Board;
 import me.khmoon.hot_deal_alarm_api.domain.page.Page;
 import me.khmoon.hot_deal_alarm_api.domain.post.Post;
 import me.khmoon.hot_deal_alarm_api.propertiy.ApplicationProperties;
-import me.khmoon.hot_deal_alarm_api.repository.BoardRepository;
 import me.khmoon.hot_deal_alarm_api.repository.PageRepository;
-import me.khmoon.hot_deal_alarm_api.repository.PostRepository;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.stereotype.Service;
@@ -20,10 +18,8 @@ import java.io.IOException;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class CrawlingService {
-  final PostRepository postRepository;
-  final BoardRepository boardRepository;
-  final PageRepository pageRepository;
-  final ApplicationProperties applicationProperties;
+  private final PageRepository pageRepository;
+  private final ApplicationProperties applicationProperties;
   private String ppomppuListUrlFormat;
   private String userAgent;
 

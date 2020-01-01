@@ -6,7 +6,6 @@ import me.khmoon.hot_deal_alarm_api.domain.page.Page;
 import me.khmoon.hot_deal_alarm_api.domain.site.Site;
 import me.khmoon.hot_deal_alarm_api.domain.site.SiteName;
 import me.khmoon.hot_deal_alarm_api.propertiy.ApplicationProperties;
-import me.khmoon.hot_deal_alarm_api.repository.BoardRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,15 +25,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Transactional
 class PageServiceTest {
   @Autowired
-  BoardService boardService;
+  private BoardService boardService;
   @Autowired
-  BoardRepository boardRepository;
+  private PageService pageService;
   @Autowired
-  PageService pageService;
+  private SiteService siteService;
   @Autowired
-  SiteService siteService;
-  @Autowired
-  ApplicationProperties applicationProperties;
+  private ApplicationProperties applicationProperties;
   private String boardParam;
   private String siteListUrl;
   private String siteViewUrl;

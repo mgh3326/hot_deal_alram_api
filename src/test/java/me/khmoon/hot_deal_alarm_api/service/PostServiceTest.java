@@ -7,7 +7,6 @@ import me.khmoon.hot_deal_alarm_api.domain.post.PostStatus;
 import me.khmoon.hot_deal_alarm_api.domain.site.Site;
 import me.khmoon.hot_deal_alarm_api.domain.site.SiteName;
 import me.khmoon.hot_deal_alarm_api.propertiy.ApplicationProperties;
-import me.khmoon.hot_deal_alarm_api.repository.BoardRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,17 +30,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Transactional
 class PostServiceTest {
   @Autowired
-  BoardService boardService;
+  private BoardService boardService;
   @Autowired
-  BoardRepository boardRepository;
+  private SiteService siteService;
   @Autowired
-  PageService pageService;
+  private PostService postService;
   @Autowired
-  SiteService siteService;
-  @Autowired
-  PostService postService;
-  @Autowired
-  ApplicationProperties applicationProperties;
+  private ApplicationProperties applicationProperties;
   private String boardParam;
   private String siteListUrl;
   private String siteViewUrl;

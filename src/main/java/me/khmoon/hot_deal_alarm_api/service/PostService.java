@@ -15,8 +15,8 @@ import java.util.List;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class PostService {
-  final PostRepository postRepository;
-  final BoardRepository boardRepository;
+  private final PostRepository postRepository;
+  private final BoardRepository boardRepository;
 
   //페이지 추가
   @Transactional

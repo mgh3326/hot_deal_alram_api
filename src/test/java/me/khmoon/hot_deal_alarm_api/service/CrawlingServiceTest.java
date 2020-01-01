@@ -6,7 +6,6 @@ import me.khmoon.hot_deal_alarm_api.domain.page.Page;
 import me.khmoon.hot_deal_alarm_api.domain.site.Site;
 import me.khmoon.hot_deal_alarm_api.domain.site.SiteName;
 import me.khmoon.hot_deal_alarm_api.propertiy.ApplicationProperties;
-import me.khmoon.hot_deal_alarm_api.repository.BoardRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,17 +22,15 @@ import javax.annotation.PostConstruct;
 @Transactional
 class CrawlingServiceTest {
   @Autowired
-  BoardService boardService;
+  private BoardService boardService;
   @Autowired
-  BoardRepository boardRepository;
+  private PageService pageService;
   @Autowired
-  PageService pageService;
+  private SiteService siteService;
   @Autowired
-  SiteService siteService;
+  private CrawlingService crawlingService;
   @Autowired
-  CrawlingService crawlingService;
-  @Autowired
-  ApplicationProperties applicationProperties;
+  private ApplicationProperties applicationProperties;
   private String boardParam;
   private String siteListUrl;
   private String siteViewUrl;
