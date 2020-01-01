@@ -5,16 +5,18 @@ import me.khmoon.hot_deal_alarm_api.domain.board.BoardName;
 import me.khmoon.hot_deal_alarm_api.domain.page.Page;
 import me.khmoon.hot_deal_alarm_api.domain.site.Site;
 import me.khmoon.hot_deal_alarm_api.domain.site.SiteName;
+import me.khmoon.hot_deal_alarm_api.propertiy.ApplicationProperties;
 import me.khmoon.hot_deal_alarm_api.repository.BoardRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.PostConstruct;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -31,14 +33,20 @@ class PageServiceTest {
   PageService pageService;
   @Autowired
   SiteService siteService;
-  @Value("${ppomppu.param.domestic}")
+  @Autowired
+  ApplicationProperties applicationProperties;
   private String boardParam;
-  @Value("${ppomppu.url.list}")
   private String siteListUrl;
-  @Value("${ppomppu.url.view}")
   private String siteViewUrl;
   private SiteName siteName = SiteName.PPOMPPU;
   private BoardName boardName = BoardName.DOMESTIC;
+
+  @PostConstruct
+  public void init() {
+    siteListUrl = applicationProperties.getPpomppu().getUrl().getList();
+    siteViewUrl = applicationProperties.getPpomppu().getUrl().getView();
+    boardParam = applicationProperties.getPpomppu().getParam().getDomestic();
+  }
 
 
   @Test
