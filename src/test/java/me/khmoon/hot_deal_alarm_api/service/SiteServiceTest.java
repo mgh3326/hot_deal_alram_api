@@ -56,7 +56,7 @@ class SiteServiceTest {
 
   @Test
   @DisplayName("유니큐 조건")
-  void unique_violation() {
+  void uniqueViolation() {
     Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
     siteService.add(site);
     Site site2 = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
@@ -65,7 +65,7 @@ class SiteServiceTest {
 
   @Test
   @DisplayName("url format test")
-  void ppomppu_url_string_format() {
+  void ppomppuUrlStringFormat() {
     String ppomppuListUrl = String.format(siteListUrl, "ppomppu", 1);
     String ppomppuViewUrl = String.format(siteViewUrl, "ppomppu", 339349);
     assertEquals(ppomppuListUrl, "http://m.ppomppu.co.kr/new/bbs_list.php?id=ppomppu&page=1");
@@ -73,7 +73,7 @@ class SiteServiceTest {
   }
 
   @Test
-  void check_property() {
+  void checkProperty() {
     assertEquals(siteListUrl, applicationProperties.getPpomppu().getUrl().getList());
     assertEquals(siteViewUrl, applicationProperties.getPpomppu().getUrl().getView());
   }
