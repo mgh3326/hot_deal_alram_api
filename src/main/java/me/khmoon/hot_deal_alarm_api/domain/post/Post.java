@@ -6,10 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.khmoon.hot_deal_alarm_api.domain.BaseTimeEntity;
 import me.khmoon.hot_deal_alarm_api.domain.board.Board;
-import org.hibernate.annotations.ColumnDefault;
+import me.khmoon.hot_deal_alarm_api.domain.user.UserPost;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -32,8 +34,7 @@ public class Post extends BaseTimeEntity {
   private int PostOriginClickCount;//실제 클릭수
   private String PostUrl;
   private LocalDateTime PostOriginDateTime;
-  @ColumnDefault("0")
-  private int PostClickCount;//내 api 클릭수
+
 
   @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "board_id")
@@ -47,7 +48,6 @@ public class Post extends BaseTimeEntity {
               int postRecommendationCount,
               int postCommentCount,
               String postUrl,
-              int postClickCount,
               int postOriginClickCount,
               LocalDateTime postOriginDateTime) {
     this.postOriginId = postOriginId;
@@ -59,7 +59,6 @@ public class Post extends BaseTimeEntity {
     this.PostOriginClickCount = postOriginClickCount;
     this.PostUrl = postUrl;
     this.PostOriginDateTime = postOriginDateTime;
-    this.PostClickCount = postClickCount;
   }
 
   //==연관관계 메서드==//
@@ -67,4 +66,7 @@ public class Post extends BaseTimeEntity {
     this.board = board;
     board.getPosts().add(this);
   }
+
+  @OneToMany(mappedBy = "post")
+  private List<UserPost> userPosts = new ArrayList<>();
 }

@@ -92,7 +92,6 @@ class PostServiceTest {
     assertEquals(post.getPostOriginClickCount(), postOriginClickCount, "equal test post");
     assertEquals(post.getPostOriginDateTime(), postOriginDateTime, "equal test post");
     assertEquals(post.getPostUrl(), postUrl, "equal test post");
-    assertEquals(post.getPostClickCount(), 0, "equal test post");
   }
 
   @Test
