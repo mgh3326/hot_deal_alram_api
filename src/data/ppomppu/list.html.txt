@@ -1,0 +1,1397 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta content="text/html; charset=euc-kr" http-equiv="Content-Type">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"
+          name="viewport">
+    <meta content="뽐뿌게시판은 국내 쇼핑몰에서 판매중인 가성비 좋은 상품과 쇼핑정보를 공유하는 공간입니다." name="description">
+    <meta content="뽐뿌" property="og:site_name">
+    <script async src="//www.googletagservices.com/tag/js/gpt.js"></script>
+    <script>var googletag = googletag || {};
+    googletag.cmd = googletag.cmd || [];</script>
+    <meta content="" property="og:description">
+    <title>뽐뿌:뽐뿌게시판</title>
+    <link href="//cdn.ppomppu.co.kr/images/nn128.jpeg?v=2019123016" rel="shortcut icon">
+    <link href="//cdn.ppomppu.co.kr/images/nn128.jpeg?v=2019123016" rel="apple-touch-icon">
+    <link href="/new/css/mobile.css?v=2019123016" rel="stylesheet" type="text/css">
+    <link href="/new/asset/css/list_thumb_20140826.css?v=2019123016" rel="stylesheet" type="text/css">
+    <link href="/new/asset/css/list_popup.css?v=2019071611" rel="stylesheet" type="text/css">
+    <script>
+        var G_HOME_URL = "http://m.ppomppu.co.kr";
+        var G_WWW_URL = "http://www.ppomppu.co.kr";
+        var G_WWW_REL_URL = "//www.ppomppu.co.kr";
+        var G_MOB_URL = "http://m.ppomppu.co.kr";
+        var G_MOB_REL_URL = "//m.ppomppu.co.kr";
+        var G_NIC_URL = "//nic.ppomppu.co.kr";
+        var G_MEMO_URL = "http://memo.ppomppu.co.kr";
+        var G_S_URL = "http://s.ppomppu.co.kr";
+        var G_HOME_SSL_URL = "https://m.ppomppu.co.kr";
+        var G_WWW_SSL_URL = "https://www.ppomppu.co.kr";
+        var G_MOB_SSL_URL = "https://m.ppomppu.co.kr";
+        var G_MEMO_SSL_URL = "https://memo.ppomppu.co.kr";
+        var G_S_SSL_URL = "https://s.ppomppu.co.kr";
+        var G_STATIC_URL = "//static.ppomppu.co.kr";
+        var G_IMG_URL = "//img.ppomppu.co.kr";
+        var G_IS_MOB = "1";
+    </script>
+    <script src="/new/asset/js/jquery-1.11.2.min.js"></script>
+    <script src="/new/asset/js/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+    <script src="/js/common.js?v=2019112702" type="text/javascript"></script>
+    <script type="text/javascript">
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-1778193-1', {'cookieDomain': 'ppomppu.co.kr'});
+        ga('require', 'linkid', 'linkid.js');
+        ga('send', 'pageview');
+    </script>
+</head>
+<body>
+<div id="wrap">
+    <script type="text/javascript">
+        var monitor_new = false;
+        var mycmt_new = false;
+        var ppomcoupon_new = false;
+
+        function set_myinfo_new() {
+            if (!monitor_new && !mycmt_new) set_monitor_new();
+            if (!monitor_new && !mycmt_new) set_mycmt_new();
+        }
+
+        function set_monitor_new() {
+            if (!monitor_new) {
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url: "/new/myinfo/ajax_monitor.php",
+                    success: function (data) {
+                        if (data.code == 0 && data.result.length > 0 && data.has_new == 1) {
+                            monitor_new = true;
+                            $(".new_ico.monitor_new").show();
+                            $(".new_ico2.monitor_new").show();
+
+                        }
+                    }
+                });
+            }
+        }
+
+        function set_mycmt_new() {
+            if (!mycmt_new) {
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url: "/new/myinfo/ajax_mycomm_monitor.php",
+                    success: function (data) {
+                        //console.log(data.result);
+                        if (data.code == 0 && data.result.length > 0) {
+                            mycmt_new = true;
+                            $(".new_ico.monitor_new").show();
+                            $(".new_ico2.new_mycmt").show();
+
+                        }
+                    }
+                });
+            }
+        }
+
+        function set_ppomcoupon_new() {
+            if (!ppomcoupon_new) {
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url: "/new/myinfo/ajax_my_ppomcoupon_monitor.php",
+                    success: function (data) {
+                        //console.log(data.result);
+                        if (data.code == 0 && data.result > 0) {
+                            ppomcoupon_new = true;
+                            $(".new_ico.ppomcoupon_new").show();
+
+                        }
+                    }
+                });
+            }
+
+        }
+
+        var clickButton = function (p1) {
+            if (p1 == '2') {
+                var src = ($("#searchImg").attr("src") === "/new/asset/images/bnt_search_on_2.png")
+                    ? "/new/asset/images/bnt_search_off_2.png"
+                    : "/new/asset/images/bnt_search_on_2.png";
+                $("#searchImg").attr("src", src);
+                if (src == "/new/asset/images/bnt_search_on_2.png") {
+                    $("#searchIco").show();
+                    //$('#ppom_keyword').focus();
+                } else {
+                    $("#searchIco").hide();
+                }
+            } else {
+                var src = ($("#menuImg").attr("src") === "/new/asset/images/btn_menu_on_2.png")
+                    ? "/new/asset/images/btn_menu_off_2.png"
+                    : "/new/asset/images/btn_menu_on_2.png";
+                $("#menuImg").attr("src", src);
+                if (src == "/new/asset/images/btn_menu_on_2.png") {
+                    $("#menuIco").show();
+                } else {
+                    $("#menuIco").hide();
+                }
+            }
+        };
+
+        function show_keyword() {
+            if ($("#keyword_list").css("display") == 'none') {
+                $("#keyword_list").find('img').each(function () {
+                    $(this).attr('src', $(this).attr('data-src'));
+                });
+                $("#keyword_list").css('display', 'block');
+                $("#keyword_btn").html('▲');
+
+            } else {
+                $("#keyword_list").css('display', 'none');
+                $("#keyword_btn").html('▼');
+            }
+        }
+
+    </script>
+    <style>
+        /* .new_ico{font-size: 11px;color: red;font-weight: bolder;display:none;position: absolute;}
+        .new_ico.new_myinfo{top: 0px;right: -2px;}
+        .new_ico.new_mybbs {top: 0px;left: 88px;}
+        .new_ico.new_mycmt {top: 0px;left: 97px;} */
+    </style>
+    <!-- header -->
+    <div class="hd">
+        <h1 class="logo"><a href="http://m.ppomppu.co.kr/new/index.php"><img alt="뽐뿌"
+                                                                             src="/new/asset/images/common/logo_2.png"
+                                                                             style="width:122px; height:25px;"></a></h1>
+        <p class="btn_menu" id="menu_on"><a href="#전체메뉴" id="menuBtn" onclick="clickButton('1');"><img id="menuImg"
+                                                                                                       src="/new/asset/images/btn_menu_off_2.png"
+                                                                                                       style="width:32px; height:34px;"></a>
+        </p>
+        <p class="btn_search" id="search_on"><a href="#search" id="searchBtn" onclick="clickButton('2');"><img
+                id="searchImg" src="/new/asset/images/bnt_search_off_2.png" style="width:31px; height:35px;"></a></p>
+    </div>
+    <!-- //header -->
+    <!-- search -->
+    <div class="search-input" id="searchIco" style="display:none;">
+        <form action="http://m.ppomppu.co.kr/new/search_result.php" method="GET" name="search_all"
+              onsubmit="return searchValidation(this);">
+            <input name="category" type="hidden" value="0">
+            <div class="new_search">
+                <p><input id="ppom_keyword" name="keyword" style="padding-left:5px;" type="text" value="카톡"> <span
+                        class="keyword_btn" id="keyword_btn" onclick="show_keyword();">▼</span> <span
+                        class="keyword_list" id="keyword_list"> <img
+                        data-src="/new/asset/images/ppimg_hotword01.gif"> <a
+                        href="http://m.ppomppu.co.kr/new/search_result.php?search_type=sub_memo&amp;keyword=%C4%AB%C4%AB%BF%C0%C5%E5">카카오톡</a><br><img
+                        data-src="/new/asset/images/ppimg_hotword02.gif"> <a
+                        href="http://m.ppomppu.co.kr/new/search_result.php?search_type=sub_memo&amp;keyword=%C4%AB%C5%E5">카톡</a><br><img
+                        data-src="/new/asset/images/ppimg_hotword03.gif"> <a
+                        href="http://m.ppomppu.co.kr/new/search_result.php?search_type=sub_memo&amp;keyword=%C1%A6%BE%DF%C0%C7+%C1%BE%BC%D2%B8%AE">제야의 종소리</a><br><img
+                        data-src="/new/asset/images/ppimg_hotword04.gif"> <a
+                        href="http://m.ppomppu.co.kr/new/search_result.php?search_type=sub_memo&amp;keyword=%B1%E8%B8%ED%BC%F6">김명수</a><br><img
+                        data-src="/new/asset/images/ppimg_hotword05.gif"> <a
+                        href="http://m.ppomppu.co.kr/new/search_result.php?search_type=sub_memo&amp;keyword=%BD%C3%B0%A3">시간</a><br><img
+                        data-src="/new/asset/images/ppimg_hotword06.gif"> <a
+                        href="http://m.ppomppu.co.kr/new/search_result.php?search_type=sub_memo&amp;keyword=%C4%AB%C5%E5+%BF%C0%B7%F9">카톡 오류</a><br><img
+                        data-src="/new/asset/images/ppimg_hotword07.gif"> <a
+                        href="http://m.ppomppu.co.kr/new/search_result.php?search_type=sub_memo&amp;keyword=%B3%D7%C0%CC%B9%F6+%BD%C3%B0%E8">네이버 시계</a><br><img
+                        data-src="/new/asset/images/ppimg_hotword08.gif"> <a
+                        href="http://m.ppomppu.co.kr/new/search_result.php?search_type=sub_memo&amp;keyword=%C4%AB%C4%AB%BF%C0%C5%E5+%BF%C0%B7%F9">카카오톡 오류</a><br><img
+                        data-src="/new/asset/images/ppimg_hotword09.gif"> <a
+                        href="http://m.ppomppu.co.kr/new/search_result.php?search_type=sub_memo&amp;keyword=%C7%D1%BF%B9%B8%AE">한예리</a><br><img
+                        data-src="/new/asset/images/ppimg_hotword10.gif"> <a
+                        href="http://m.ppomppu.co.kr/new/search_result.php?search_type=sub_memo&amp;keyword=%B5%F0%BD%BA%C6%D0%C4%A1">디스패치</a><br> </span>
+                    <input alt="검색버튼" class="btn" type="submit"></p>
+            </div>
+        </form>
+    </div>
+    <!-- //search -->
+    <!-- menu -->
+    <div id="menuIco" style="text-align:center; width:100%;">
+        <div class="menu">
+            <ul>
+                <li class="m1"><a href="http://m.ppomppu.co.kr/new/menu_list.php?menu=1">뽐뿌</a></li>
+                <li class="m2"><a href="http://m.ppomppu.co.kr/new/menu_list.php?menu=2">이벤트</a></li>
+                <li class="m3"><a href="http://m.ppomppu.co.kr/new/menu_list.php?menu=3">정보</a></li>
+                <li class="m4"><a href="http://m.ppomppu.co.kr/new/menu_list.php?menu=4">커뮤니티</a></li>
+                <li class="m5"><a href="http://m.ppomppu.co.kr/new/menu_list.php?menu=5">갤러리</a></li>
+                <li class="m6"><a href="http://m.ppomppu.co.kr/new/menu_list.php?menu=6">장터</a></li>
+                <li class="m7"><a href="http://m.ppomppu.co.kr/new/menu_list.php?menu=7">포럼</a></li>
+                <li class="m8"><a href="http://m.ppomppu.co.kr/new/menu_list.php?menu=8">상담실</a></li>
+            </ul>
+        </div>
+        <!-- // 임시추가 -->
+        <div class="ft">
+            <p class="ft2"><a class="loginBtn"
+                              href="javascript:auth_login('%2Fnew%2Fbbs_list.php%3Fid%3Dppomppu');">로그인</a> <a
+                    class="loginBtn" href="javascript:auth_join('%2Fnew%2Fbbs_list.php%3Fid%3Dppomppu');">회원가입</a></p>
+        </div>
+        <!-- 임시추가 // -->
+        <div id="pp_ban_top"
+             style="text-align: center; height:100px; padding-top:8px; padding-bottom:8px; overflow:hidden; margin-bottom:2px;">
+            <iframe frameborder="0" height="100" leftmargin="0" marginheight="0" marginwidth="0" scrolling="no"
+                    src="//adex.ednplus.com/xc/h/tWtR5gfn" topmargin="0" width="320"></iframe>
+        </div>
+    </div>
+    <!-- //menu -->
+    <style>
+        .bbs .bbsList li a span.rp {
+            color: #404040;
+            background-color: #f0f0f0;
+            font-size: 9pt;
+            font-family: 'tahoma', 'Gulim';
+            font-weight: bold;
+            padding: 0px 3px 2px 3px;
+            line-height: 1.6;
+            margin-left: 3px;
+        }
+    </style>
+    <!-- content -->
+    <div class="ct">
+        <h3><a class="top_sel_btn" href="javascript:void(0);" rel="#board-cate">뽐뿌</a>
+            <div class="top_sel" id="board-cate">
+                <i class="on">▼</i>
+                <i>▲</i>
+                <ul style="display:none">
+                    <li class="active" onclick="location.href='/new/bbs_list.php?id=ppomppu'"> 뽐뿌게시판</li>
+                    <li onclick="location.href='/new/bbs_list.php?id=ppomppu2'"> 휴대폰뽐뿌</li>
+                    <li onclick="location.href='/new/bbs_list.php?id=ppomppu4'"> 해외뽐뿌</li>
+                    <li onclick="location.href='/new/bbs_list.php?id=pmarket'"> MD뽐뿌</li>
+                    <li onclick="location.href='/new/bbs_list.php?id=ppomppu5'"> 오프라인뽐뿌</li>
+                    <li onclick="location.href='/new/bbs_list.php?id=ppomppu7'"> 뷰티뽐뿌</li>
+                    <li onclick="location.href='/new/bbs_list.php?id=ppomppu6'"> 업체뽐뿌</li>
+                    <li onclick="location.href='/new/bbs_list.php?id=pmarket2'"> 휴대폰업체</li>
+                    <li onclick="location.href='/new/bbs_list.php?id=pmarket3'"> 통신업체</li>
+                    <li onclick="location.href='/new/bbs_list.php?id=card_market'"> 카드업체</li>
+                    <li onclick="location.href='/new/bbs_list.php?id=pmarket7'"> 렌탈업체</li>
+                </ul>
+            </div> &gt;
+            <!-- <a href="bbs_list.php?id=ppomppu">뽐뿌게시판</a> --> <a class="top_sel_btn" href="bbs_list.php?id=ppomppu"
+                                                                    rel="#board-name">뽐뿌게시판</a> <span class="img_sec"
+                                                                                                      id="board-name"> <i
+                    class="key_ico on">▼</i><i class="key_ico">▲</i>
+      <ul style="display:none;z-index:1000">
+       <li class="on" onclick="location.href='/new/bbs_list.php?id=ppomppu'"> 뽐뿌게시판 </li>
+       <li onclick="location.href='/new/bbs_list.php?id=buy'"> 구매게시판 </li>
+       <li onclick="location.href='/new/bbs_list.php?id=review'"> 사용기 </li>
+       <li onclick="location.href='/new/bbs_list.php?id=receive'"> 수령기 </li>
+       <li onclick="location.href='/new/bbs_list.php?id=coupon'"> 쿠폰게시판 </li>
+       <li onclick="location.href='/new/bbs_list.php?id=social'"> 쇼핑포럼 </li>
+      </ul> </span> &gt; <a class="top_sel_btn" id="top_sel_category_btn" rel="#category-name">분류</a>
+            <div class="top_sel" id="category-name">
+                <i class="on">▼</i>
+                <i>▲</i>
+                <ul style="display:none;">
+                    <li data-value="1">기타</li>
+                    <li data-value="4">컴퓨터</li>
+                    <li data-value="5">디지털</li>
+                    <li data-value="6">식품/건강</li>
+                    <li data-value="8">서적</li>
+                    <li data-value="9">가전/가구</li>
+                    <li data-value="10">육아</li>
+                    <li data-value="11">상품권</li>
+                    <li data-value="12">의류/잡화</li>
+                    <li data-value="13">화장품</li>
+                    <li data-value="15">등산/캠핑</li>
+                </ul>
+            </div>
+            <script>
+                $('#category-name ul li').on('click', function () {
+                    var id = 'ppomppu';
+
+                    if (id == 'phone' && $(this).attr('data-value') == 'phone_mgr') {
+                        location.replace("/new/phone_mgr.php");
+                    } else if (id == 'kakao_game' && $(this).attr('data-value') == 'kakao_invite') {
+                        location.replace("/new/bbs_list.php?id=kakao_invite");
+                    } else if (id == 'game' && $(this).attr('data-value') == 'invitation') {
+                        location.replace("/new/bbs_list.php?id=invitation");
+                    } else if (id == 'diablo' && $(this).attr('data-value') == 'party') {
+                        location.replace("/new/bbs_list.php?id=party");
+                    } else if (id == 'adult' && $(this).attr('data-value') == 6) {
+                        location.replace("/new/bbs_list.php?id=back_gallery");
+                    } else if (id == 'market_phone' && $(this).attr('data-value') == 'market_data') {
+                        location.replace("/new/bbs_list.php?id=market_data");
+                    } else if (id == 'onmarket' && $(this).attr('data-value') == 'market_data') {
+                        location.replace("/new/bbs_list.php?id=market_data");
+                    } else {
+                        location.replace('/new/bbs_list.php?id=ppomppu&category=' + $(this).attr('data-value'));
+                    }
+                });
+
+            </script>
+            <script>
+                var is_top_sel_click = false;
+
+                $('h3 .top_sel').on('click', function () {
+                    is_top_sel_click = true;
+
+                    var $target = $(this);
+                    var $icon1 = $target.find('i').eq(0);
+                    var $icon2 = $target.find('i').eq(1);
+                    var $ul = $target.find('ul');
+                    var left = ($(this).prev().width() + 12) * -1;
+
+                    $ul.css('left', left);
+
+                    if ($ul.is(':visible') == true) {
+                        $ul.hide();
+                        $icon1.addClass('on');
+                        $icon2.removeClass('on');
+                    } else {
+                        set_top_sel_btn_ul_hide();
+
+                        $ul.show();
+                        $icon1.removeClass('on');
+                        $icon2.addClass('on');
+                    }
+                });
+
+                $('h3 .img_sec').on('click', function () {
+                    is_top_sel_click = true;
+
+                    var $target = $(this);
+                    var $icon1 = $target.find('i').eq(0);
+                    var $icon2 = $target.find('i').eq(1);
+                    var $ul = $target.find('ul');
+                    var left = ($(this).prev().width() + 12) * -1;
+
+                    $ul.css('left', left);
+
+                    if ($ul.is(':visible') == true) {
+                        $ul.hide();
+                        $icon1.addClass('on');
+                        $icon2.removeClass('on');
+                    } else {
+                        set_top_sel_btn_ul_hide();
+
+                        $ul.show();
+                        $icon1.removeClass('on');
+                        $icon2.addClass('on');
+                    }
+                });
+
+                $('h3 .top_sel_btn').on('click', function () {
+                    is_top_sel_click = true;
+
+                    var $target = $($(this).attr('rel'));
+                    var $icon1 = $target.find('i').eq(0);
+                    var $icon2 = $target.find('i').eq(1);
+                    var $ul = $target.find('ul');
+                    var left = ($(this).width() + 12) * -1;
+
+                    if ($target.selector == '#board-name') return;
+
+                    $ul.css('left', left);
+
+                    if ($ul.is(':visible') == true) {
+                        $ul.hide();
+                        $icon1.addClass('on');
+                        $icon2.removeClass('on');
+                    } else {
+                        set_top_sel_btn_ul_hide();
+
+                        $ul.show();
+                        $icon1.removeClass('on');
+                        $icon2.addClass('on');
+                    }
+                });
+
+                function set_top_sel_btn_ul_hide() {
+                    var top_sel_btn_list = ['img_sec', 'top_sel'];
+
+                    $.each(top_sel_btn_list, function (index, item) {
+                        $('h3 .' + item + ' ul').hide();
+                        $('h3 .' + item).each(function () {
+                            $(this).find('i').eq(0).addClass('on');
+                            $(this).find('i').eq(1).removeClass('on');
+                        });
+                    });
+                }
+
+                $(document).on('click', function (e) {
+                    if (is_top_sel_click == false && $('h3 .top_sel ul:visible').length > 0) {
+                        e.preventDefault();
+                        set_top_sel_btn_ul_hide();
+                    } else if (is_top_sel_click == false && $('h3 .img_sec ul:visible').length > 0) {
+                        e.preventDefault();
+                        set_top_sel_btn_ul_hide();
+                    }
+                    is_top_sel_click = false;
+                });
+            </script>
+        </h3>
+        <div class="category_box">
+            <p></p>
+        </div>
+        <div class="hot_tag">
+            <div>
+                <span><b>인기</b>검색어</span>
+                <span><a href="/new/bbs_list.php?id=ppomppu&amp;keyword=%C4%C3%C3%C4"><span class="h_tag"
+                                                                                            style="line-height:21px;"><img
+                        alt="돋보기아이콘" src="/images/serch_ico.png">컬쳐</span></a><a
+                        href="/new/bbs_list.php?id=ppomppu&amp;keyword=%C4%C3%C3%C4%B7%A3%B5%E5"><span class="h_tag"
+                                                                                                       style="line-height:21px;"><img
+                        alt="돋보기아이콘" src="/images/serch_ico.png">컬쳐랜드</span></a><a
+                        href="/new/bbs_list.php?id=ppomppu&amp;keyword=%C7%D8%C7%C7%B8%D3%B4%CF"><span class="h_tag"
+                                                                                                       style="line-height:21px;"><img
+                        alt="돋보기아이콘" src="/images/serch_ico.png">해피머니</span></a><a
+                        href="/new/bbs_list.php?id=ppomppu&amp;keyword=%BF%A1%BE%EE%C6%CC"><span class="h_tag"
+                                                                                                 style="line-height:21px;"><img
+                        alt="돋보기아이콘" src="/images/serch_ico.png">에어팟</span></a><a
+                        href="/new/bbs_list.php?id=ppomppu&amp;keyword=CGV"><span class="h_tag"
+                                                                                  style="line-height:21px;"><img
+                        alt="돋보기아이콘" src="/images/serch_ico.png">CGV</span></a><a
+                        href="/new/bbs_list.php?id=ppomppu&amp;keyword=%B8%DE%B0%A1%B9%DA%BD%BA"><span class="h_tag"
+                                                                                                       style="line-height:21px;"><img
+                        alt="돋보기아이콘" src="/images/serch_ico.png">메가박스</span></a><a
+                        href="/new/bbs_list.php?id=ppomppu&amp;keyword=%B7%D4%B5%A5%BD%C3%B3%D7%B8%B6"><span
+                        class="h_tag" style="line-height:21px;"><img alt="돋보기아이콘"
+                                                                     src="/images/serch_ico.png">롯데시네마</span></a><a
+                        href="/new/bbs_list.php?id=ppomppu&amp;keyword=tv"><span class="h_tag"
+                                                                                 style="line-height:21px;"><img
+                        alt="돋보기아이콘" src="/images/serch_ico.png">tv</span></a><a
+                        href="/new/bbs_list.php?id=ppomppu&amp;keyword=%B1%B8%BD%BA"><span class="h_tag"
+                                                                                           style="line-height:21px;"><img
+                        alt="돋보기아이콘" src="/images/serch_ico.png">구스</span></a></span>
+            </div>
+        </div>
+        <div class="tab_03">
+            <ul>
+                <li class="first on" style="width:33.3333%;"><a
+                        href="http://m.ppomppu.co.kr/new/bbs_list.php?id=ppomppu"><span>최신</span></a></li>
+                <li class="" style="width:33.3333%;"><a
+                        href="http://m.ppomppu.co.kr/new/pop_bbs.php?id=ppomppu&amp;bot_type=pop_bbs"><span>인기</span></a>
+                </li>
+                <li class="" style="width:33.3333%;"><a
+                        href="http://m.ppomppu.co.kr/new/hot_bbs.php?id=ppomppu&amp;bot_type=hot_bbs"><span>HOT게시글</span></a>
+                </li>
+            </ul>
+        </div>
+        <div class="bbs">
+            <div class="bbsTop bbsTop_notice " id="bbs_notice">
+                <ul></ul>
+            </div>
+            <div class="bbsTop bbsTop_inform " id="bbs_inform">
+                <ul></ul>
+            </div>
+            <style type="text/css">
+                div.bbsTop ul li {
+                    vertical-align: middle;
+                    font-size: 14px;
+                    border-bottom: 1px solid #ccc;
+                    padding-right: 40px;
+                    padding-top: 9px;
+                    padding-bottom: 8px;
+                }
+
+                div.bbsTop ul li span {
+                    vertical-align: middle;
+                }
+
+                div.bbsTop ul li img {
+                    position: relative;
+                    float: right;
+                    vertical-align: middle;
+                    margin-top: 2px;
+                    margin-right: -30px;
+                }
+
+                div.bbsTop_notice ul li:first-child {
+                    padding-left: 45px;
+                    background: url('/new/asset/images/notice_icon.gif') no-repeat 11px center;
+                    background-size: 27px 16px;
+                }
+
+                div.bbsTop_notice ul li:nth-child(n+2) {
+                    padding-left: 45px;
+                    display: none;
+                }
+
+                div.bbsTop_saramin ul li:first-child {
+                    padding-left: 45px;
+                    background: url('/new/asset/images/hot_icon.gif') no-repeat 11px center;
+                }
+
+                div.bbsTop_inform ul li {
+                    padding-left: 45px;
+                }
+
+                /*div.bbsTop_inform ul li:last-child {border-bottom: 2px solid #ccc;}*/
+
+                .bbs_ad1 {
+                    background: url('/new/asset/images/inform_icon.gif') no-repeat 11px center;
+                    background-size: 27px 16px;
+                }
+
+                .bbs_ad2 {
+                    background: url('/new/asset/images/ad_icon2.png') no-repeat 11px center;
+                    background-size: 27px 16px;
+                }
+            </style>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $("img[id='bbs_toggle_notice']").click(function () {
+                        if ($(this).attr('src') == '/new/asset/images/arrow_down_icon.gif') {
+                            $("div[id='bbs_notice'] > ul > li:gt(0)").show();
+                            $(this).attr('src', '/new/asset/images/arrow_up_icon.gif');
+                        } else {
+                            $("div[id='bbs_notice'] > ul > li:gt(0)").hide();
+                            $(this).attr('src', '/new/asset/images/arrow_down_icon.gif');
+                        }
+                    }).css('cursor', 'pointer');
+                });
+            </script>
+            <ul class="bbsList_new">
+                <li class="none-border"><a class="list_b_01n" href="bbs_view.php?id=ppomppu&amp;no=339514&amp;page=1">
+                    <div class="thmb_N">
+                        <img border="0" onError="this.src='/new/asset/images/no_img.gif'"
+                             src="/ppomppu.html.bak/cdn.ppomppu.co.kr/zboard/data/_thumb/ppomppu/4/small_339514.jpg">
+                    </div>
+                    <div class="thmb_N2">
+                        <ul>
+                            <li class="title"><span class="cont"> Ssg money 1만원권/10프로 할인(마지막)</span>
+                                <!--
+                                                                 --><span class="rp">2</span>
+                                <!--
+                                                             --> </li>
+                            <li class="names">토익</li>
+                            <li class="exp">
+                                <!--
+                                                                 --><span class="ty">상품권</span><small class="ty">
+                                | </small>
+                                <!--
+                                                             -->
+                                <time class="">00:57:04</time>
+                                <span> [ 450 / 0 / 0 ]</span></li>
+                        </ul>
+                    </div>
+                </a></li>
+                <li class="none-border"><a class="list_b_01n" href="bbs_view.php?id=ppomppu&amp;no=339513&amp;page=1">
+                    <div class="thmb_N">
+                        <img border="0" onError="this.src='/new/asset/images/no_img.gif'"
+                             src="/ppomppu.html.bak/cdn.ppomppu.co.kr/zboard/data/_thumb/ppomppu/3/small_339513.jpg">
+                    </div>
+                    <div class="thmb_N2">
+                        <ul>
+                            <li class="title"><span class="cont"> [티몬] 국민관광상품권(97000/배송)</span>
+                                <!--
+                                                                 --><span class="rp">2</span>
+                                <!--
+                                                             --> </li>
+                            <li class="names">쿄쿄뇨쿄</li>
+                            <li class="exp">
+                                <!--
+                                                                 --><span class="ty">상품권</span><small class="ty">
+                                | </small>
+                                <!--
+                                                             -->
+                                <time class="">00:54:47</time>
+                                <span> [ 679 / 0 / 0 ]</span></li>
+                        </ul>
+                    </div>
+                </a></li>
+                <li class="none-border"><a class="list_b_01n" href="bbs_view.php?id=ppomppu&amp;no=339512&amp;page=1">
+                    <div class="thmb_N">
+                        <img border="0" onError="this.src='/new/asset/images/no_img.gif'"
+                             src="/ppomppu.html.bak/cdn.ppomppu.co.kr/zboard/data/_thumb/ppomppu/2/small_339512.jpg">
+                    </div>
+                    <div class="thmb_N2">
+                        <ul>
+                            <li class="title"><span class="cont"> [티몬] 루토사 감자튀김2kg(5500/배송)</span>
+                                <!--
+                                                             --> </li>
+                            <li class="names">바나나킥쵸코</li>
+                            <li class="exp">
+                                <!--
+                                                                 --><span class="ty">식품/건강</span><small class="ty">
+                                | </small>
+                                <!--
+                                                             -->
+                                <time class="">00:53:23</time>
+                                <span> [ 219 / 0 / 0 ]</span></li>
+                        </ul>
+                    </div>
+                </a></li>
+                <li class="none-border"><a class="list_b_01n" href="bbs_view.php?id=ppomppu&amp;no=339511&amp;page=1">
+                    <div class="thmb_N">
+                        <img border="0" onError="this.src='/new/asset/images/no_img.gif'"
+                             src="/ppomppu.html.bak/cdn.ppomppu.co.kr/zboard/data/_thumb/ppomppu/1/small_339511.jpg">
+                    </div>
+                    <div class="thmb_N2">
+                        <ul>
+                            <li class="title"><span
+                                    class="cont"> [롯데마트] A/E MARCO 기내(20")+화물(24") AHU-0300 캐리어 (59,...</span>
+                                <!--
+                                                                 --><span class="rp">3</span>
+                                <!--
+                                                             --> </li>
+                            <li class="names">베레타38</li>
+                            <li class="exp">
+                                <!--
+                                                                 --><span class="ty">의류/잡화</span><small class="ty">
+                                | </small>
+                                <!--
+                                                             -->
+                                <time class="">00:46:10</time>
+                                <span> [ 926 / 0 / 0 ]</span></li>
+                        </ul>
+                    </div>
+                </a></li>
+                <div style="text-align: center;">
+                    <div style="text-align: center; overflow:hidden; padding-top: 5px; border-bottom: 1px solid #ccc; ">
+                        <script>
+                            googletag.cmd.push(function () {
+                                googletag.defineSlot('/65120695/m_list2_f', [320, 100], 'div-gpt-ad-1553227133266-0').addService(googletag.pubads());
+                            });
+                        </script>
+                        <center>
+                            <div id="div-gpt-ad-1553227133266-0" style=" width:auto;height:100px;"></div>
+                        </center>
+                    </div>
+                </div>
+                <li class="none-border"><a class="list_b_01n" href="bbs_view.php?id=ppomppu&amp;no=339510&amp;page=1">
+                    <div class="thmb_N">
+                        <img border="0" onError="this.src='/new/asset/images/no_img.gif'"
+                             src="/ppomppu.html.bak/cdn.ppomppu.co.kr/zboard/data/_thumb/ppomppu/0/small_339510.jpg">
+                    </div>
+                    <div class="thmb_N2">
+                        <ul>
+                            <li class="title"><span class="cont"> [오늘의집] 버디쿡 에어프라이어 로티세리 12L(67,410원/무료-첫...</span>
+                                <!--
+                                                                 --><span class="rp">8</span>
+                                <!--
+                                                             --> </li>
+                            <li class="names">지우텍텍</li>
+                            <li class="exp">
+                                <!--
+                                                                 --><span class="ty">가전/가구</span><small class="ty">
+                                | </small>
+                                <!--
+                                                             -->
+                                <time class="">00:39:59</time>
+                                <span> [ 1445 / 0 / 0 ]</span></li>
+                        </ul>
+                    </div>
+                </a></li>
+                <li class="none-border"><a class="list_b_01n" href="bbs_view.php?id=ppomppu&amp;no=339509&amp;page=1">
+                    <div class="thmb_N">
+                        <img border="0" onError="this.src='/new/asset/images/no_img.gif'"
+                             src="/ppomppu.html.bak/cdn.ppomppu.co.kr/zboard/data/_thumb/ppomppu/9/small_339509.jpg">
+                    </div>
+                    <div class="thmb_N2">
+                        <ul>
+                            <li class="title"><span class="cont"> [티몬] 젤리케이스외(990/무료)</span>
+                                <!--
+                                                                 --><span class="rp">4</span>
+                                <!--
+                                                             --> </li>
+                            <li class="names">엉뚱~~@@</li>
+                            <li class="exp">
+                                <!--
+                                                                 --><span class="ty">디지털</span><small class="ty">
+                                | </small>
+                                <!--
+                                                             -->
+                                <time class="">00:33:01</time>
+                                <span> [ 1604 / 0 / 1 ]</span></li>
+                        </ul>
+                    </div>
+                </a></li>
+                <li class="none-border"><a class="list_b_01n" href="bbs_view.php?id=ppomppu&amp;no=339506&amp;page=1">
+                    <div class="thmb_N">
+                        <img border="0" onError="this.src='/new/asset/images/no_img.gif'"
+                             src="/ppomppu.html.bak/cdn.ppomppu.co.kr/zboard/data/_thumb/ppomppu/6/small_339506.jpg">
+                    </div>
+                    <div class="thmb_N2">
+                        <ul>
+                            <li class="title"><span class="cont"> [티몬] 아디다스 삼선져지/바지 (26,900/무료배송)</span>
+                                <!--
+                                                                 --><span class="rp">9</span>
+                                <!--
+                                                             --> </li>
+                            <li class="names">C1assy</li>
+                            <li class="exp">
+                                <!--
+                                                                 --><span class="ty">의류/잡화</span><small class="ty">
+                                | </small>
+                                <!--
+                                                             -->
+                                <time class="">00:10:08</time>
+                                <span> [ 6519 / 1 / 0 ]</span></li>
+                        </ul>
+                    </div>
+                </a></li>
+                <li class="none-border"><a class="list_b_01n" href="bbs_view.php?id=ppomppu&amp;no=339505&amp;page=1">
+                    <div class="thmb_N">
+                        <img border="0" onError="this.src='/new/asset/images/no_img.gif'"
+                             src="/ppomppu.html.bak/cdn.ppomppu.co.kr/zboard/data/_thumb/ppomppu/5/small_339505.jpg">
+                    </div>
+                    <div class="thmb_N2">
+                        <ul>
+                            <li class="title"><span class="cont"> <img class="newhot" src="/images/icon_hot_12.png"> [티몬] 컬쳐랜드 문화상품권 3만원권 (27,450원/무료)</span>
+                                <!--
+                                                                 --><span class="rp">51</span>
+                                <!--
+                                                             --> </li>
+                            <li class="names">유온리리브원스</li>
+                            <li class="exp">
+                                <!--
+                                                                 --><span class="ty">상품권</span><small class="ty">
+                                | </small>
+                                <!--
+                                                             -->
+                                <time class="">00:07:46</time>
+                                <span> [ 14641 / 42 / 0 ]</span></li>
+                        </ul>
+                    </div>
+                </a></li>
+                <li class="none-border"><a class="list_b_01n" href="bbs_view.php?id=ppomppu&amp;no=339504&amp;page=1">
+                    <div class="thmb_N">
+                        <img border="0" onError="this.src='/new/asset/images/no_img.gif'"
+                             src="/ppomppu.html.bak/cdn.ppomppu.co.kr/zboard/data/_thumb/ppomppu/4/small_339504.jpg">
+                    </div>
+                    <div class="thmb_N2">
+                        <ul>
+                            <li class="title"><span class="cont"> [티몬] 크라제버거 함박스테이크 120g x 3 (5900/무료) - 차이결...</span>
+                                <!--
+                                                             --> </li>
+                            <li class="names">뉴피넛</li>
+                            <li class="exp">
+                                <!--
+                                                                 --><span class="ty">식품/건강</span><small class="ty">
+                                | </small>
+                                <!--
+                                                             -->
+                                <time class="">00:06:48</time>
+                                <span> [ 2045 / 1 / 0 ]</span></li>
+                        </ul>
+                    </div>
+                </a></li>
+                <li class="none-border"><a class="list_b_01n" href="bbs_view.php?id=ppomppu&amp;no=339503&amp;page=1">
+                    <div class="thmb_N">
+                        <img border="0" onError="this.src='/new/asset/images/no_img.gif'"
+                             src="/ppomppu.html.bak/cdn.ppomppu.co.kr/zboard/data/_thumb/ppomppu/3/small_339503.jpg">
+                    </div>
+                    <div class="thmb_N2">
+                        <ul>
+                            <li class="title"><span class="cont"> <img class="newhot" src="/images/icon_hot_12.png"> [티몬] 해피머니 상품권 3만원권( 27,300/0)</span>
+                                <!--
+                                                                 --><span class="rp">167</span>
+                                <!--
+                                                             --> </li>
+                            <li class="names">질게로담당반</li>
+                            <li class="exp">
+                                <!--
+                                                                 --><span class="ty">상품권</span><small class="ty">
+                                | </small>
+                                <!--
+                                                             -->
+                                <time class="">00:04:09</time>
+                                <span> [ 14535 / 36 / 0 ]</span></li>
+                        </ul>
+                    </div>
+                </a></li>
+                <li class="none-border"><a class="list_b_01n" href="bbs_view.php?id=ppomppu&amp;no=339502&amp;page=1">
+                    <div class="thmb_N">
+                        <img border="0" onError="this.src='/new/asset/images/no_img.gif'"
+                             src="/ppomppu.html.bak/cdn.ppomppu.co.kr/zboard/data/_thumb/ppomppu/2/small_339502.jpg">
+                    </div>
+                    <div class="thmb_N2">
+                        <ul>
+                            <li class="title"><span class="cont"> <span style="color:#ACACAC">[SSG.com] 에어팟 프로 (329,000/무료)</span></span>
+                                <!--
+                                                                 --><span class="rp">5</span>
+                                <!--
+                                                             --> </li>
+                            <li class="names">미드나잇선</li>
+                            <li class="exp">
+                                <!--
+                                                                 --><span class="ty">디지털</span><small class="ty">
+                                | </small>
+                                <!--
+                                                             -->
+                                <time class="">19-12-31</time>
+                                <span> [ 4776 / 3 / 0 ]</span></li>
+                        </ul>
+                    </div>
+                </a></li>
+                <li class="none-border"><a class="list_b_01n" href="bbs_view.php?id=ppomppu&amp;no=339501&amp;page=1">
+                    <div class="thmb_N">
+                        <img border="0" onError="this.src='/new/asset/images/no_img.gif'"
+                             src="/ppomppu.html.bak/cdn.ppomppu.co.kr/zboard/data/_thumb/ppomppu/1/small_339501.jpg">
+                    </div>
+                    <div class="thmb_N2">
+                        <ul>
+                            <li class="title"><span class="cont"> [티몬] 웰론 롱패딩 사이즈 프리 (16.900/무료)</span>
+                                <!--
+                                                                 --><span class="rp">8</span>
+                                <!--
+                                                             --> </li>
+                            <li class="names">베레타38</li>
+                            <li class="exp">
+                                <!--
+                                                                 --><span class="ty">의류/잡화</span><small class="ty">
+                                | </small>
+                                <!--
+                                                             -->
+                                <time class="">19-12-31</time>
+                                <span> [ 4222 / 1 / 0 ]</span></li>
+                        </ul>
+                    </div>
+                </a></li>
+                <li class="none-border"><a class="list_b_01n" href="bbs_view.php?id=ppomppu&amp;no=339500&amp;page=1">
+                    <div class="thmb_N">
+                        <img border="0" onError="this.src='/new/asset/images/no_img.gif'"
+                             src="/ppomppu.html.bak/cdn.ppomppu.co.kr/zboard/data/_thumb/ppomppu/0/small_339500.jpg">
+                    </div>
+                    <div class="thmb_N2">
+                        <ul>
+                            <li class="title"><span class="cont"> [G9] 아워홈 골든 치킨가라아게 1KG (7,900 / 무료배송) - 쿠폰적...</span>
+                                <!--
+                                                                 --><span class="rp">15</span>
+                                <!--
+                                                             --> </li>
+                            <li class="names">명란젓고난</li>
+                            <li class="exp">
+                                <!--
+                                                                 --><span class="ty">식품/건강</span><small class="ty">
+                                | </small>
+                                <!--
+                                                             -->
+                                <time class="">19-12-31</time>
+                                <span> [ 4548 / 3 / 0 ]</span></li>
+                        </ul>
+                    </div>
+                </a></li>
+                <li class="none-border"><a class="list_b_01n" href="bbs_view.php?id=ppomppu&amp;no=339499&amp;page=1">
+                    <div class="thmb_N">
+                        <img border="0" onError="this.src='/new/asset/images/no_img.gif'"
+                             src="/ppomppu.html.bak/cdn.ppomppu.co.kr/zboard/data/_thumb/ppomppu/9/small_339499.jpg">
+                    </div>
+                    <div class="thmb_N2">
+                        <ul>
+                            <li class="title"><span class="cont"> [g9] 디어마 초음파분무형 리모콘 가습기(27,800/무료)</span>
+                                <!--
+                                                                 --><span class="rp">3</span>
+                                <!--
+                                                             --> </li>
+                            <li class="names">선지름후고민</li>
+                            <li class="exp">
+                                <!--
+                                                                 --><span class="ty">가전/가구</span><small class="ty">
+                                | </small>
+                                <!--
+                                                             -->
+                                <time class="">19-12-31</time>
+                                <span> [ 3507 / 0 / 0 ]</span></li>
+                        </ul>
+                    </div>
+                </a></li>
+                <li class="none-border"><a class="list_b_01n" href="bbs_view.php?id=ppomppu&amp;no=339498&amp;page=1">
+                    <div class="thmb_N">
+                        <img border="0" onError="this.src='/new/asset/images/no_img.gif'"
+                             src="/ppomppu.html.bak/cdn.ppomppu.co.kr/zboard/data/_thumb/ppomppu/8/small_339498.jpg">
+                    </div>
+                    <div class="thmb_N2">
+                        <ul>
+                            <li class="title"><span class="cont"> <img class="newhot" src="/images/icon_pop_12.jpg"> [지9]샤오미 가정용 초음파세척기 3세대 (30500원/무료)</span>
+                                <!--
+                                                                 --><span class="rp">39</span>
+                                <!--
+                                                             --> </li>
+                            <li class="names">boaid</li>
+                            <li class="exp">
+                                <!--
+                                                                 --><span class="ty">디지털</span><small class="ty">
+                                | </small>
+                                <!--
+                                                             -->
+                                <time class="">19-12-31</time>
+                                <span> [ 11009 / 5 / 0 ]</span></li>
+                        </ul>
+                    </div>
+                </a></li>
+            </ul>
+            <ul class="bbsList_new" style="margin-top:15px;">
+                <li class="top_name"><a href="/new/bbs_list.php?id=social"
+                                        style="background: #efefef; padding: 1px 6px; display: inline-block; border: 1px solid #ccc; border-bottom: 0;"><span>쇼핑포럼</span><img
+                        src="/images/plus_icon.gif"></a></li>
+                <li class="none-border" style="border-top:1px solid #ccc;"><a class="list_b_01n"
+                                                                              href="/new/bbs_view.php?id=social&amp;no=18891">
+                    <div class="thmb_N">
+                        <img border="0" onerror="this.src='/new/asset/images/no_img.gif'"
+                             src="//cdn.ppomppu.co.kr/zboard/ppomppu.html.bak">
+                    </div>
+                    <div class="thmb_N2">
+                        <ul>
+                            <li class="title"><span class="cont"><img class="newhot" src="/images/icon_pop_12.jpg">&nbsp;kt vip포인트 3만.. 지금 당장 어디에 쓸수 있을까요?</span>
+                                <!--
+                                                                                 --><span class="rp">18</span>
+                                <!--
+                                                                             --> </li>
+                            <li class="names">Haihm</li>
+                            <li class="exp">
+                                <!--
+                                                                                 --><span class="ty">기타</span><small
+                                    style="color:#000000;"> | </small>
+                                <!--
+                                                                             -->
+                                <time class="">12/31</time>
+                                <span> [ 7258 / 1 / 0 ]</span></li>
+                        </ul>
+                    </div>
+                </a></li>
+                <li class="none-border"><a class="list_b_01n" href="/new/bbs_view.php?id=social&amp;no=18889">
+                    <div class="thmb_N">
+                        <img border="0" onerror="this.src='/new/asset/images/no_img.gif'"
+                             src="/ppomppu.html.bak/cdn.ppomppu.co.kr/zboard/data3/2019/1231/20191231112006_myetzuhy.jpg">
+                    </div>
+                    <div class="thmb_N2">
+                        <ul>
+                            <li class="title"><span class="cont">토리버치 플랫슈즈(아내를 위한) 공홈 직구 잘 도착했습니다.</span>
+                                <!--
+                                                                                 --><span class="rp">9</span>
+                                <!--
+                                                                             --> </li>
+                            <li class="names">뽐뿌디티</li>
+                            <li class="exp">
+                                <!--
+                                                                                 --><span class="ty">의류/잡화</span><small
+                                    style="color:#000000;"> | </small>
+                                <!--
+                                                                             -->
+                                <time class="">12/31</time>
+                                <span> [ 4224 / 0 / 0 ]</span></li>
+                        </ul>
+                    </div>
+                </a></li>
+                <li class="none-border"><a class="list_b_01n" href="/new/bbs_view.php?id=social&amp;no=18888">
+                    <div class="thmb_N">
+                        <img border="0" onerror="this.src='/new/asset/images/no_img.gif'"
+                             src="/ppomppu.html.bak/cdn.ppomppu.co.kr/zboard/data3/2019/1231/20191231111911_rzwvwmdz.jpeg">
+                    </div>
+                    <div class="thmb_N2">
+                        <ul>
+                            <li class="title"><span class="cont">티몬 웃기네요</span>
+                                <!--
+                                                                                 --><span class="rp">9</span>
+                                <!--
+                                                                             --> </li>
+                            <li class="names">인형사</li>
+                            <li class="exp">
+                                <!--
+                                                                                 --><span class="ty">의류/잡화</span><small
+                                    style="color:#000000;"> | </small>
+                                <!--
+                                                                             -->
+                                <time class="">12/31</time>
+                                <span> [ 7793 / 0 / 0 ]</span></li>
+                        </ul>
+                    </div>
+                </a></li>
+            </ul>
+            <div class="bt2 rbt" id="right_button" style="display:none;">
+                <span class="move_button_icon" onclick="change_button('left');"><img
+                        src="http://m.ppomppu.co.kr/new/asset/images/position_move_left.gif"></span>
+            </div>
+            <div class="bt2 lbt" id="left_button" style="display:block;">
+                <span class="move_button_icon" onclick="change_button('right');"><img
+                        src="http://m.ppomppu.co.kr/new/asset/images/position_move_right.gif"></span>
+            </div>
+            <script type="text/javascript">
+                <!--
+                $(document).ready(function () {
+
+
+                    var base_page_url = "/new/bbs_list.php?id=ppomppu";
+
+
+                    $("input[id='cur_page']").focus(function () {
+                        $(this).val("");
+                    });
+
+                    $("a[class='prev']").click(function (e) {
+                        e.preventDefault();
+                        var cur_page = $("input[id='cur_page']").val();
+                        if (isNaN(cur_page)) {
+                            alert('숫자만 입력해주세요');
+                            return false;
+                        }
+                        var move_page = (cur_page * 1) - 1;
+                        if (move_page < 1) move_page = 1;
+                        document.location.href = base_page_url + "&page=" + move_page;
+                    });
+
+                    $("a[class='next']").click(function (e) {
+                        e.preventDefault();
+                        var cur_page = $("input[id='cur_page']").val();
+                        if (isNaN(cur_page)) {
+                            alert('숫자만 입력해주세요');
+                            return false;
+                        }
+                        var move_page = (cur_page * 1) + 1;
+                        if (move_page < 1) move_page = 1;
+
+                        console.log(base_page_url + "&page=" + move_page);
+                        document.location.href = base_page_url + "&page=" + move_page;
+                    });
+                });
+                -->
+            </script>
+            <div class="paging" id="paging_menu" style="">
+                <span id="actpg"><input id="cur_page" maxlength="6"
+                                        style="border:1px solid #ccc;width: 45px;text-align: right;padding: 0 5px 0 0;"
+                                        type="number" value="1"> / 17226</span>
+                <a class="next" href="#"><img alt="다음"
+                                              src="http://m.ppomppu.co.kr/new/asset/images/common/btn_list_next.gif"></a>
+            </div>
+        </div>
+        <form action="/new/bbs_list.php" autocomplete="off" method="get" name="search"
+              onsubmit="return searchValidation(this);">
+            <input name="id" type="hidden" value="ppomppu">
+            <input name="category" type="hidden" value="">
+            <div class="sch" style="clear:both;">
+                <p><select name="search_type">
+                    <option value="sub_memo">제목+내용</option>
+                    <option value="subject">제목만</option>
+                    <option value="name">작성자</option>
+                </select> <input name="keyword" type="text" value=""></p>
+                <input class="btn" type="submit" value="">
+            </div>
+        </form>
+    </div>
+    <!-- //content -->
+    <script language="JavaScript" type="text/javascript">
+        init_button();
+
+        function getCookie(name) {
+            var from_idx = document.cookie.indexOf(name + '=');
+            if (from_idx != -1) {
+                from_idx += name.length + 1;
+                to_idx = document.cookie.indexOf(';', from_idx);
+                if (to_idx == -1) {
+                    to_idx = document.cookie.length
+                }
+                return unescape(document.cookie.substring(from_idx, to_idx))
+            }
+        }
+
+        function setCookie(cookieName, cookieValue) {
+            var expires = 31;
+            var nType = 'number';
+            if (expires && (typeof expires == nType) || expires.toUTCString) {
+                var date = null;
+                if (typeof expires == nType) {
+                    date = new Date();
+                    date.setTime(date.getTime() + (expires * 31 * 24 * 60 * 60 * 1000));
+                } else {
+                    date = expires;
+                }
+                expires = '; expires=' + date.toUTCString();
+            }
+            cookieValue = cookieValue.replace("@", "%40");
+            cookieValue = cookieValue.replace(":", "%3A");
+            document.cookie = cookieName + "=" + cookieValue + "; path=/; expires=" + expires + ";";
+        }
+
+        function init_button() {
+            //쿠키가 없으면 버튼 왼쪽이 기본값
+            if (getCookie("m_button") != 'left' && getCookie("m_button") != 'right') {
+                //	document.cookie = "m_button" + "=" + escape("left");
+                setCookie('m_button', "left");
+            }
+            change_button();
+        }
+
+        function change_button(c_flag) {
+            if (c_flag == 'left') {
+                setCookie('m_button', "left");
+            } else if (c_flag == 'right') {
+                setCookie('m_button', "right");
+            }
+
+            if (getCookie("m_button") == 'left') {
+                document.getElementById('right_button').style.display = "none";
+                document.getElementById('left_button').style.display = "block";
+                document.getElementById('paging_menu').style.textAlign = "right";
+            } else if (getCookie("m_button") == 'right') {
+                document.getElementById('right_button').style.display = "block";
+                document.getElementById('left_button').style.display = "none";
+                document.getElementById('paging_menu').style.textAlign = "left";
+                document.getElementById('paging_menu').style.paddingLeft = "10px";
+            }
+        }
+
+
+        $(document).ready(function () {
+            var width = $(window).width();
+            if (width <= 320) {
+                $('#category_change').css('max-width', 120);
+            }
+        });
+
+    </script>
+    <div style="padding-top:10px; text-align:center; overflow:hidden;">
+        <script>
+            googletag.cmd.push(function () {
+                googletag.defineSlot('/65120695/m_list_bottom_f', [336, 280], 'div-gpt-ad-1553227110003-0').addService(googletag.pubads());
+            });
+        </script>
+        <center>
+            <div id="div-gpt-ad-1553227110003-0" style=" width:auto;height:280px;"></div>
+        </center>
+    </div>
+    <script>
+        $('.board-footer .tabs li').click(function () {
+            var tab = $(this).children().attr('rel');
+            $('.board-footer .tab-contents').not(tab).hide();
+            $(tab).show();
+            $('.board-footer .tabs li').removeClass('active');
+            $(this).addClass('active');
+        });
+    </script>
+    <div class="ft">
+        <p class="ft1"><a class="first" href="http://m.ppomppu.co.kr/new/bbs_list.php?id=notice">공지사항 </a> <a
+                href="http://m.ppomppu.co.kr/new/link.php">링크모음</a> <a
+                href="http://www.ppomppu.co.kr/zboard/zboard.php?id=ppomppu&amp;ismobile">PC버전</a> <a
+                href="javascript:auth_save_mode();">절약모드</a></p>
+        <p class="ft2"><a class="loginBtn" href="javascript:auth_login('%2Fnew%2Fbbs_list.php%3Fid%3Dppomppu');">로그인</a>
+            <a class="loginBtn" href="javascript:auth_join('%2Fnew%2Fbbs_list.php%3Fid%3Dppomppu');">회원가입</a></p>
+        <!--<span class="isms"><img src="/images/isms_mark.jpg" /><span>정보보호관리체계인증<small>(2016.10.31~2019.10.30)</small></span></span>-->
+        <address style="font-size:11px;color:#333;"> ⓒ <span style="font-weight:bold;">PPOMPPU Corp.</span></address>
+    </div>
+    <!-- //footer -->
+</div>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script type="text/javascript">
+    googletag.cmd.push(function () {
+        googletag.pubads().enableSingleRequest();
+        googletag.enableServices();
+    });
+    googletag.cmd.push(function () {
+        googletag.display('div-gpt-ad-1553227267474-0');
+        googletag.display('div-gpt-ad-1553227162278-0');
+        googletag.display('div-gpt-ad-1553227133266-0');
+        googletag.display('div-gpt-ad-1553227110003-0');
+        googletag.display('div-gpt-ad-1553227243912-0');
+        googletag.display('div-gpt-ad-1553227083589-0');
+        googletag.display('div-gpt-ad-1553227295655-0');
+        googletag.display('div-gpt-ad-1573432658118-0');
+        googletag.display('div-gpt-ad-1571364010595-0');
+        googletag.display('div-gpt-ad-1573000545511-0');
+        googletag.display('div-gpt-ad-1576212849267-0');
+    });
+    /*
+    스크롤이 광고div 위치오면 광고 노출
+    */
+    var ads_scroll_json = "[]";
+    for (i = 0; i < ads_scroll_json.length; i++) ads_scroll_json[i].visible = false;
+
+    /*
+    스크롤이벤트
+    */
+    $(document).scroll(function () {
+        google_ad_chk();
+    });
+
+    /*
+    최초한번 실행
+    */
+    $(document).ready(function () {
+        google_ad_chk();
+    });
+
+    /*
+    스크롤이 광고div 위치오면 광고 노출
+    */
+    function google_ad_chk() {
+        for (i = 0; i < ads_scroll_json.length; i++) {
+            if (ads_scroll_json[i].visible == false) {
+                var ad_scroll = $("#ad_" + ads_scroll_json[i].slot);
+                var is_ad_ = isAdDivVisible(ad_scroll);
+
+                if (is_ad_ == true) {
+                    $("div[id='ad_" + ads_scroll_json[i].slot + "']").html('<iframe id="if_' + ads_scroll_json[i].slot + '" src="http://m.ppomppu.co.kr/banner/google_ad.html?pos=' + ads_scroll_json[i].pos + '&gb=first" scrolling="no" border="0" marginWidth="0" marginHeight="0" frameBorder="0" width="' + ads_scroll_json[i].w + 'px" height="' + ads_scroll_json[i].h + 'px"></iframe>');
+                    ads_scroll_json[i].visible = true;
+                }
+            }
+        }
+    }
+
+
+    /*
+    스크롤이 광고div 위치에 있는지 체크
+    */
+    function isAdDivVisible(obj) {
+        if (obj.length == 0) return false;
+        var target = obj.offset().top;      //타겟 위치값
+        var window_height = $(window).height();    //윈도우크기
+        var window_scrollTop = $(window).scrollTop(); //브라우저의 스크롤 위치값
+        var gap = 250;                   //간격조정 px
+        var isVisible = false;
+
+        isVisible = (target - gap <= (window_height)) ? true : isVisible;
+        isVisible = (target - gap <= (window_height + window_scrollTop)) ? true : isVisible;
+
+        return isVisible;
+    }
+</script>
+<script src="//wcs.naver.net/wcslog.js" type="text/javascript"></script>
+<script type="text/javascript">
+    if (!wcs_add) var wcs_add = {};
+    wcs_add["wa"] = "17d34ba75b2d6";
+    wcs_do();
+</script>
+<script src="/js/jquery.lazyload.js" type="text/javascript"></script>
+<script src="/js/jquery.longpress.js" type="text/javascript"></script>
+<script type="text/javascript">
+    function informAdClick(url) {
+        try {
+            var iframe = document.createElement("iframe");
+            var temp_iframe = document.getElementById("_inform_temp_iframe_");
+            if (temp_iframe) temp_iframe.parentNode.removeChild(temp_iframe);
+
+            iframe.setAttribute('id', '_inform_temp_iframe_');
+            iframe.setAttribute('style', 'height:0;width:0;border:0;border:none;visibility:hidden;');
+            iframe.setAttribute('src', url);
+            document.body.appendChild(iframe);
+        } catch (e1) {
+        }
+    }
+</script>
+<script>
+    $(window).ready(function () {
+        $(window).ready(function () {
+            $("img.lazy").lazyload({threshold: 200});
+
+            $("img").longpress(function () {
+                var img_url = $(this).attr('src');
+
+                if (getAppType() == 'iOS') {
+                    window.HTMLOUT_IOS.appNotify('img_down_load', img_url);
+                }
+            });
+        });
+    });
+</script>
+<!-- GIF 다운로드  start -->
+<div class="gif_down-layer" style="display:none;z-index:1001">
+    <div class="gif_dimBg"></div>
+    <div class="gif_pop-layer" id="gif_down_layer">
+        <div id="gif_down_layer_box" style="
+    margin: auto;
+    max-width=100%;
+    width: 0px;
+    position: relative;
+    height: auto;
+">
+            <a href="javascript:void(0)" onclick="jfnGifLayerClose()" style="
+    padding: 2px;
+    line-height: 25px;
+    border-radius: 20px;
+    border: 2px solid #d4d4d4;
+    color: #d4d4d4;
+    position: absolute;
+    top: -47px;
+    right: 1px;
+    text-decoration: none;
+    font-size: 1.7rem;
+    width: 25px;
+    text-align: center;
+    height: 25px;
+">X</a>
+            <img id="gif_download_img" src="/ppomppu.html.bak/cdn.ppomppu.co.kr/images/lazyloading.jpg"
+                 style="width: 100%;height: auto;">
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    //-------------------------------------------------------------------
+    // gif 다운로드 보기 시작
+    //-------------------------------------------------------------------
+    //
+
+    var gif_down_layer_resize = null;
+
+    function jfnGifLayerPopupView(imgurl, w, h) {
+
+        var img_w = w;
+        var img_h = h;
+        if ($(document).width() < w - 20) {
+            img_w = $(document).width() - 20;
+            img_h = Math.round((h) * (img_w / w));
+        }
+        w = img_w;
+        h = img_h;
+
+        // 사파리 하단 사이즈 문제
+        gif_down_layer_resize = setInterval(function () {
+            $('.gif_dimBg').css({width: $(document).width(), height: $(document).height()});
+        }, 500);
+
+        // $('#gif_down-layer').css({width:w, height:h});
+        $('#gif_download_img').css({width: w, height: h});
+
+        $("#gif_download_img").attr("src", imgurl);
+        jfnGifLayerPopupShow(w, h);
+    }
+
+    function jfnGifLayerPopupShow(w, h) {
+
+        var $el = $('#gif_down_layer');        //레이어의 id를 $el 변수에 저장
+        var isgif_dim = $el.prev().hasClass('gif_dimBg');   //gif_dimmed 레이어를 감지하기 위한 boolean 변수
+
+        // if( $(document).width() < w - 20) w = $(document).width() - 70;
+        $('#gif_down_layer_box').css('width', w + 'px');
+        $('#gif_down_layer_box').css('height', h);
+
+
+        isgif_dim ? $('.gif_down-layer').fadeIn() : $el.fadeIn();
+
+        var $elWidth = ~~($el.outerWidth()),
+            $elHeight = ~~($el.outerHeight()),
+            docWidth = $(document).width(),
+            docHeight = $(document).height();
+
+        // 화면의 중앙에 레이어를 띄운다.
+        if ($elHeight < docHeight || $elWidth < docWidth) {
+            $el.css({
+                marginTop: -$elHeight / 2,
+                marginLeft: -$elWidth / 2
+            })
+        } else {
+            $el.css({top: 0, left: 0});
+        }
+    }
+
+    function jfnGifLayerClose() {
+        $('.gif_down-layer').fadeOut();
+
+        if (gif_down_layer_resize) {
+            clearInterval(gif_down_layer_resize);
+            gif_down_layer_resize = null;
+        }
+
+        setTimeout(function () {
+            $("#gif_download_img").attr("src", "//cdn.ppomppu.co.kr/images/lazyloading.jpg");
+        }, 400);
+
+        return false;
+    }
+
+    //-------------------------------------------------------------------
+    // gif 다운로드 보기 종료
+    //-------------------------------------------------------------------
+</script>
+<!-- GIF 다운로드  end -->
+</body>
+</html>
