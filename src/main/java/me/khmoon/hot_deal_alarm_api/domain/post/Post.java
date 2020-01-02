@@ -73,12 +73,10 @@ public class Post extends BaseTimeEntity {
     if (!this.postType.equals(post.postType)) this.postType = post.postType;
     if (!this.postWriter.equals(post.postWriter)) this.postWriter = post.postWriter;
     if (!this.postStatus.equals(post.postStatus)) this.postStatus = post.postStatus;
-    if (!(this.PostRecommendationCount == (post.PostRecommendationCount))) // 이건 update 안 나가려나
-      this.PostRecommendationCount = post.PostRecommendationCount;
-    if (!(this.PostDisLikeCount == (post.PostDisLikeCount))) this.PostDisLikeCount = post.PostDisLikeCount;
-    if (!(this.PostCommentCount == (post.PostCommentCount))) this.PostCommentCount = post.PostCommentCount;
-    if (!(this.PostOriginClickCount == (post.PostOriginClickCount)))
-      this.PostOriginClickCount = post.PostOriginClickCount;
+    this.PostRecommendationCount = post.PostRecommendationCount;
+    this.PostDisLikeCount = post.PostDisLikeCount;
+    this.PostCommentCount = post.PostCommentCount;
+    this.PostOriginClickCount = post.PostOriginClickCount;
     return this;
   }
 }
