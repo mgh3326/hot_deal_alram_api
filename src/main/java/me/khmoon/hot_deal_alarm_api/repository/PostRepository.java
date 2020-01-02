@@ -5,7 +5,10 @@ import me.khmoon.hot_deal_alarm_api.domain.post.Post;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.List;
+
+import static me.khmoon.hot_deal_alarm_api.helper.JpaResultHelper.getSingleResultOrNull;
 
 @Repository
 @RequiredArgsConstructor
@@ -36,5 +39,13 @@ public class PostRepository {
 
   public List<Post> findAll() {
     return em.createQuery("select p from Post p", Post.class).getResultList();
+  }
+
+  public Post findOneByOriginId(Long postOriginId, Long boardId, Long siteId) {
+    Query query = em.createQuery("select  p from Post p where p.postOriginId=:postOriginId and p.board.id=:boardId and p.board.site.id=:siteId", Post.class)
+            .setParameter("postOriginId", postOriginId)
+            .setParameter("boardId", boardId)
+            .setParameter("siteId", siteId);
+    return (Post) getSingleResultOrNull(query);
   }
 }

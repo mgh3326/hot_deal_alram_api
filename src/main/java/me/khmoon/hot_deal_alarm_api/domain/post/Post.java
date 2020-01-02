@@ -9,7 +9,6 @@ import me.khmoon.hot_deal_alarm_api.domain.board.Board;
 import me.khmoon.hot_deal_alarm_api.domain.user.UserPost;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +33,6 @@ public class Post extends BaseTimeEntity {
   private int PostDisLikeCount;//싫어요
   private int PostCommentCount;//댓글 수
   private int PostOriginClickCount;//실제 클릭수
-  private LocalDateTime PostOriginDateTime;
 
 
   @ManyToOne(fetch = LAZY)
@@ -49,7 +47,6 @@ public class Post extends BaseTimeEntity {
               int postRecommendationCount,
               int postCommentCount,
               int postOriginClickCount,
-              LocalDateTime postOriginDateTime,
               int postDisLikeCount, String postWriter) {
     this.postOriginId = postOriginId;
     this.postType = postType;
@@ -60,8 +57,10 @@ public class Post extends BaseTimeEntity {
     this.PostDisLikeCount = postDisLikeCount;
     this.PostCommentCount = postCommentCount;
     this.PostOriginClickCount = postOriginClickCount;
-    this.PostOriginDateTime = postOriginDateTime;
   }
+
+  @OneToMany(mappedBy = "post")
+  private List<UserPost> userPosts = new ArrayList<>();
 
   //==연관관계 메서드==//
   public void setBoard(Board board) {
@@ -69,6 +68,17 @@ public class Post extends BaseTimeEntity {
     board.getPosts().add(this);
   }
 
-  @OneToMany(mappedBy = "post")
-  private List<UserPost> userPosts = new ArrayList<>();
+  public Post update(Post post) {// 이렇게 equals를 확인해야하나
+    if (!this.postTitle.equals(post.postTitle)) this.postTitle = post.postTitle;
+    if (!this.postType.equals(post.postType)) this.postType = post.postType;
+    if (!this.postWriter.equals(post.postWriter)) this.postWriter = post.postWriter;
+    if (!this.postStatus.equals(post.postStatus)) this.postStatus = post.postStatus;
+    if (!(this.PostRecommendationCount == (post.PostRecommendationCount))) // 이건 update 안 나가려나
+      this.PostRecommendationCount = post.PostRecommendationCount;
+    if (!(this.PostDisLikeCount == (post.PostDisLikeCount))) this.PostDisLikeCount = post.PostDisLikeCount;
+    if (!(this.PostCommentCount == (post.PostCommentCount))) this.PostCommentCount = post.PostCommentCount;
+    if (!(this.PostOriginClickCount == (post.PostOriginClickCount)))
+      this.PostOriginClickCount = post.PostOriginClickCount;
+    return this;
+  }
 }

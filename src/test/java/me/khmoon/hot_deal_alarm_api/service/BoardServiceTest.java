@@ -53,7 +53,7 @@ class BoardServiceTest {
 
     Board board = Board.builder().boardName(boardName).boardParam(boardParam).build();
     boardService.add(site.getId(), board);
-    Board board1 = boardRepository.findOne(board.getId());
+    Board board1 = boardService.findOne(board.getId());
     assertEquals(board1.getBoardName(), boardName, "equal test board name");
     assertEquals(board1.getBoardParam(), boardParam, "equal test board name");
   }
@@ -67,7 +67,7 @@ class BoardServiceTest {
 
     Board board = Board.builder().boardName(boardName).boardParam(boardParam).build();
     boardService.add(siteName, board);
-    Board board1 = boardRepository.findOne(board.getId());
+    Board board1 = boardService.findOne(board.getId());
     assertEquals(board1.getBoardName(), boardName, "equal test board name");
     assertEquals(board1.getBoardParam(), boardParam, "equal test board name");
   }

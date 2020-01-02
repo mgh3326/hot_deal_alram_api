@@ -25,7 +25,10 @@ public class BoardRepository {
     return em.find(Board.class, id);
   }
 
-  public Board findOneByBoardName(BoardName boardName) {
-    return em.createQuery("select b from Board b where b.boardName=:boardName", Board.class).setParameter("boardName", boardName).getSingleResult();
+  public Board findOneByBoardName(BoardName boardName, Long siteId) {
+    return em.createQuery("select b from Board b where b.boardName=:boardName and b.site.id=:siteId", Board.class)
+            .setParameter("boardName", boardName)
+            .setParameter("siteId", siteId)
+            .getSingleResult();
   }
 }

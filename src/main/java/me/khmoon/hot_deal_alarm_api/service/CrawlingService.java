@@ -5,8 +5,9 @@ import me.khmoon.hot_deal_alarm_api.domain.board.Board;
 import me.khmoon.hot_deal_alarm_api.domain.page.Page;
 import me.khmoon.hot_deal_alarm_api.domain.post.Post;
 import me.khmoon.hot_deal_alarm_api.domain.post.PostStatus;
+import me.khmoon.hot_deal_alarm_api.domain.site.Site;
+import me.khmoon.hot_deal_alarm_api.domain.site.SiteName;
 import me.khmoon.hot_deal_alarm_api.propertiy.ApplicationProperties;
-import me.khmoon.hot_deal_alarm_api.repository.PageRepository;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -25,7 +26,8 @@ import java.util.List;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class CrawlingService {
-  private final PageRepository pageRepository;
+  private final PageService pageService;
+  private final PostService postService;
   private final ApplicationProperties applicationProperties;
   private String ppomppuListUrlFormat;
   private String userAgent;
@@ -36,15 +38,25 @@ public class CrawlingService {
     userAgent = applicationProperties.getUserAgent();
   }
 
-  public List<Post> Parse(Long pageId) {
-    Page page = pageRepository.findOne(pageId);
+  public List<Post> parse(Long pageId) {
+    Page page = pageService.findOne(pageId);
     Board board = page.getBoard();
     String boardParam = board.getBoardParam();
+    Site site = board.getSite();
+    SiteName siteName = site.getSiteName();
     int pageNum = page.getPageNum();
-    String ppomppuListUrl = String.format(ppomppuListUrlFormat, boardParam, pageNum);
+    List<Post> posts = new ArrayList<>();
+    if (siteName.equals(SiteName.PPOMPPU)) {
+      posts = ppomppuParse(boardParam, pageNum, board.getId(), site.getId());
+    }
+    return posts;
+  }
+
+  private List<Post> ppomppuParse(String boardParam, int pageNum, Long boardId, Long siteId) {
     ArrayList<Post> posts = new ArrayList<>();
     try {
-      Document doc = Jsoup.connect(ppomppuListUrl)
+      String url = String.format(ppomppuListUrlFormat, boardParam, pageNum);
+      Document doc = Jsoup.connect(url)
               .userAgent(userAgent)
               .header("Referer", String.format(ppomppuListUrlFormat, boardParam, pageNum + 1))
               .header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9")
@@ -75,11 +87,11 @@ public class CrawlingService {
         if (element.select("a > div.thmb_N2 > ul > li.title > span.cont > span[style=color:#ACACAC]").size() > 0) {
           status = PostStatus.COMP;
         }
-        String url = element.select("a").attr("abs:href");
-        MultiValueMap<String, String> queryParams = UriComponentsBuilder.fromUriString(url).build().getQueryParams();
+        String originUrl = element.select("a").attr("abs:href");
+        MultiValueMap<String, String> queryParams = UriComponentsBuilder.fromUriString(originUrl).build().getQueryParams();
         String originIdStr = queryParams.get("no").get(0);
         Long originId = Long.parseLong(originIdStr);
-
+        Post oneByOriginId = postService.findOneByOriginId(originId, boardId, siteId);
         Post post = Post.builder()
                 .postTitle(title)
                 .postType(type)
@@ -91,8 +103,11 @@ public class CrawlingService {
                 .postStatus(status)
                 .postOriginId(originId)
                 .build();
-        posts.add(post);
-
+        if (oneByOriginId != null) {
+          oneByOriginId.update(post);//이렇게만 해도 수정되는건가?
+        } else {
+          posts.add(post);
+        }
       }
     } catch (IOException e) {
       e.printStackTrace();

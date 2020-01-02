@@ -16,9 +16,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,8 +66,6 @@ class PostServiceTest {
     int postDisLikeCount = 0;
     PostStatus postStatus = PostStatus.READY;
     int postOriginClickCount = 1822;
-    LocalTime parse = LocalTime.parse("21:05:54");
-    LocalDateTime postOriginDateTime = LocalDate.now().atTime(parse);// 2018-07-26T02:30
     Post post = Post.builder()
             .postTitle(postTitle)
             .postOriginId(postOriginId)
@@ -81,7 +76,6 @@ class PostServiceTest {
             .postCommentCount(postCommentCount)
             .postStatus(postStatus)
             .postOriginClickCount(postOriginClickCount)
-            .postOriginDateTime(postOriginDateTime)
             .build();
     postService.savePost(board.getId(), post);
 
@@ -94,7 +88,6 @@ class PostServiceTest {
     assertEquals(post.getPostCommentCount(), postCommentCount, "equal test post");
     assertEquals(post.getPostStatus(), postStatus, "equal test post");
     assertEquals(post.getPostOriginClickCount(), postOriginClickCount, "equal test post");
-    assertEquals(post.getPostOriginDateTime(), postOriginDateTime, "equal test post");
   }
 
   @Test
@@ -115,8 +108,6 @@ class PostServiceTest {
     int postCommentCount = 0;
     PostStatus postStatus = PostStatus.READY;
     int postOriginClickCount = 1822;
-    LocalTime parse = LocalTime.parse("21:05:54");
-    LocalDateTime postOriginDateTime = LocalDate.now().atTime(parse);// 2018-07-26T02:30
     int postDisLikeCount = 0;
     Post post = Post.builder()
             .postTitle(postTitle)
@@ -128,7 +119,6 @@ class PostServiceTest {
             .postCommentCount(postCommentCount)
             .postStatus(postStatus)
             .postOriginClickCount(postOriginClickCount)
-            .postOriginDateTime(postOriginDateTime)
             .build();
     List<Post> posts = new ArrayList<>();
     posts.add(post);
@@ -142,7 +132,6 @@ class PostServiceTest {
             .postCommentCount(postCommentCount)
             .postStatus(postStatus)
             .postOriginClickCount(postOriginClickCount)
-            .postOriginDateTime(postOriginDateTime)
             .build();
     posts.add(post);
 

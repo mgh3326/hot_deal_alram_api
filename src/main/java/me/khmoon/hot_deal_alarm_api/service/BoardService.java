@@ -2,6 +2,7 @@ package me.khmoon.hot_deal_alarm_api.service;
 
 import lombok.RequiredArgsConstructor;
 import me.khmoon.hot_deal_alarm_api.domain.board.Board;
+import me.khmoon.hot_deal_alarm_api.domain.board.BoardName;
 import me.khmoon.hot_deal_alarm_api.domain.site.Site;
 import me.khmoon.hot_deal_alarm_api.domain.site.SiteName;
 import me.khmoon.hot_deal_alarm_api.repository.BoardRepository;
@@ -32,5 +33,13 @@ public class BoardService {
     board.setSite(site);
     boardRepository.save(board);
     return board.getId();
+  }
+
+  public Board findOne(Long id) {
+    return boardRepository.findOne(id);
+  }
+
+  public Board findOneByBoardName(BoardName boardName, Long siteId) {
+    return boardRepository.findOneByBoardName(boardName, siteId);
   }
 }
