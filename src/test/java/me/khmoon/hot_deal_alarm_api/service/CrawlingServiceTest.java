@@ -73,7 +73,7 @@ class CrawlingServiceTest {
     postService.savePostAll(board.getId(), posts);
     List<Post> posts1 = postService.findAll();
     assertEquals(posts.size(), posts1.size(), "equal test post");
-    assertEquals(posts1.get(0).getCreatedDateTime(), posts.get(0).getModifiedDateTime(), "equal test post");
+    assertEquals(posts1.get(0).getCreatedDateTime(), posts1.get(0).getModifiedDateTime(), "equal test post");
   }
 
   @Test
@@ -96,7 +96,7 @@ class CrawlingServiceTest {
     List<Post> posts1 = postService.findAll();
 
     assertEquals(posts.size(), posts1.size(), "equal test post");
-    assertEquals(posts1.get(0).getCreatedDateTime(), posts.get(0).getModifiedDateTime(), "equal test post");
+    assertEquals(posts1.get(0).getCreatedDateTime(), posts1.get(0).getModifiedDateTime(), "equal test post");
   }
 
   @Test
