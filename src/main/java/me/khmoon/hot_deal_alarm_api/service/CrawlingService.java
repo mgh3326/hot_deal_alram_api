@@ -30,11 +30,13 @@ public class CrawlingService {
   private final PostService postService;
   private final ApplicationProperties applicationProperties;
   private String ppomppuListUrlFormat;
+  private String dealbadaListUrlFormat;
   private String userAgent;
 
   @PostConstruct
   public void init() {
     ppomppuListUrlFormat = applicationProperties.getPpomppu().getUrl().getList();
+    dealbadaListUrlFormat = applicationProperties.getDealbada().getUrl().getList();
     userAgent = applicationProperties.getUserAgent();
   }
 
@@ -48,6 +50,8 @@ public class CrawlingService {
     List<Post> posts = new ArrayList<>();
     if (siteName.equals(SiteName.PPOMPPU)) {
       posts = ppomppuParse(boardParam, pageNum, board.getId(), site.getId());
+    } else if (siteName.equals(SiteName.DEALBADA)) {
+      posts = dealbadaParse(boardParam, pageNum, board.getId(), site.getId());
     }
     return posts;
   }
@@ -55,15 +59,7 @@ public class CrawlingService {
   private List<Post> ppomppuParse(String boardParam, int pageNum, Long boardId, Long siteId) {
     ArrayList<Post> posts = new ArrayList<>();
     try {
-      String url = String.format(ppomppuListUrlFormat, boardParam, pageNum);
-      Document doc = Jsoup.connect(url)
-              .userAgent(userAgent)
-              .header("Referer", String.format(ppomppuListUrlFormat, boardParam, pageNum + 1))
-              .header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9")
-              .header("Content-Type", "application/x-www-form-urlencoded")
-              .header("Accept-Encoding", "gzip, deflate")
-              .header("Accept-Language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7")
-              .get();
+      Document doc = documentByUrl(boardParam, pageNum, ppomppuListUrlFormat);
       Elements elements = doc.select("ul.bbsList_new").not(".bbsList_new[style=margin-top:15px;]")
               .select("li.none-border");
       for (Element element : elements) {
@@ -91,27 +87,79 @@ public class CrawlingService {
         MultiValueMap<String, String> queryParams = UriComponentsBuilder.fromUriString(originUrl).build().getQueryParams();
         String originIdStr = queryParams.get("no").get(0);
         Long originId = Long.parseLong(originIdStr);
-        Post oneByOriginId = postService.findOneByOriginId(originId, boardId, siteId);
-        Post post = Post.builder()
-                .postTitle(title)
-                .postType(type)
-                .postWriter(writer)
-                .postCommentCount(commentCount)
-                .postOriginClickCount(originClickCount)
-                .postRecommendationCount(recommendationCount)
-                .postDisLikeCount(disLikeCount)
-                .postStatus(status)
-                .postOriginId(originId)
-                .build();
-        if (oneByOriginId != null) {
-          oneByOriginId.update(post);//이렇게만 해도 수정되는건가?
-        } else {
-          posts.add(post);
-        }
+        postsUpdate(boardId, siteId, posts, writer, title, type, commentCount, recommendationCount, disLikeCount, originClickCount, status, originId);
       }
     } catch (IOException e) {
       e.printStackTrace();
     }
     return posts;
   }
+
+  private List<Post> dealbadaParse(String boardParam, int pageNum, Long boardId, Long siteId) {
+    ArrayList<Post> posts = new ArrayList<>();
+    try {
+      Document doc = documentByUrl(boardParam, pageNum, dealbadaListUrlFormat);
+
+      Elements elements = doc.select("#fboardlist > div > table > tbody").select("tr:not(.bo_notice)");
+      for (Element element : elements) {
+        String writer = element.select("td.td_name.sv_use > span > a > div").text();
+        String title = element.select("td.td_subject > a").text();
+        String type = element.select("td.td_cate > a").text();
+        String commentCountStr = element.select("td.td_subject > a > span.cnt_cmt").text();
+        int commentCount = 0;
+        if (!commentCountStr.equals("")) {
+          commentCount = Integer.parseInt(commentCountStr);
+        }
+        String recommendationCountStr = element.select("td.td_num_g > span:nth-child(1)").text();
+        int recommendationCount = Integer.parseInt(recommendationCountStr);
+        String disLikeCountStr = element.select("td.td_num_g > span:nth-child(2)").text();
+        int disLikeCount = Integer.parseInt(disLikeCountStr);
+        String originClickCountStr = element.select("td:nth-child(7)").text();
+        int originClickCount = Integer.parseInt(originClickCountStr);
+        PostStatus status = PostStatus.READY;
+        if (element.select("td.td_subject > a > a[style=color:#ACACAC]").size() > 0) {
+          status = PostStatus.COMP;
+        }
+        String originIdStr = element.select("td:nth-child(1)").text();
+        Long originId = Long.parseLong(originIdStr);
+
+        postsUpdate(boardId, siteId, posts, writer, title, type, commentCount, recommendationCount, disLikeCount, originClickCount, status, originId);
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return posts;
+  }
+
+  private void postsUpdate(Long boardId, Long siteId, ArrayList<Post> posts, String writer, String title, String type, int commentCount, int recommendationCount, int disLikeCount, int originClickCount, PostStatus status, Long originId) {
+    Post postByOriginId = postService.findOneByOriginId(originId, boardId, siteId);
+    Post post = Post.builder()
+            .postTitle(title)
+            .postType(type)
+            .postWriter(writer)
+            .postCommentCount(commentCount)
+            .postOriginClickCount(originClickCount)
+            .postRecommendationCount(recommendationCount)
+            .postDisLikeCount(disLikeCount)
+            .postStatus(status)
+            .postOriginId(originId)
+            .build();
+    if (postByOriginId != null) {
+      postByOriginId.update(post);//이렇게만 해도 수정 되서 저장 할 post 에서는 제외
+    } else {
+      posts.add(post);
+    }
+  }
+
+  private Document documentByUrl(String boardParam, int pageNum, String listUrlFormat) throws IOException {
+    return Jsoup.connect(String.format(listUrlFormat, boardParam, pageNum))
+            .userAgent(userAgent)
+            .header("Referer", String.format(listUrlFormat, boardParam, pageNum + 1))
+            .header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9")
+            .header("Content-Type", "application/x-www-form-urlencoded")
+            .header("Accept-Encoding", "gzip, deflate")
+            .header("Accept-Language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7")
+            .get();
+  }
+
 }

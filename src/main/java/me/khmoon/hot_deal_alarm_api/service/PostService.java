@@ -31,11 +31,7 @@ public class PostService {
     Board board = boardService.findOne(boardId);
     List<Long> result = new ArrayList<>();
     for (Post post : posts) {
-      if (post.getId() == null) {
-        post.setBoard(board);
-      } else {
-        System.out.println("post = " + post);
-      }
+      post.setBoard(board);
       result.add(postRepository.save(post));
     }
     return result;

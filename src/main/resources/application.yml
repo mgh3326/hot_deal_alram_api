@@ -29,3 +29,10 @@ my-values:
     param:
       domestic: ppomppu
       overseas: ppomppu4
+  dealbada:
+    url:
+      list: http://www.dealbada.com/bbs/board.php?bo_table=%s&page=%d
+      view: http://www.dealbada.com/bbs/board.php?bo_table=%s&wr_id=%d
+    param:
+      domestic: deal_domestic
+      overseas: deal_oversea

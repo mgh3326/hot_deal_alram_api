@@ -40,11 +40,20 @@ class PostServiceTest {
   private SiteName siteName = SiteName.PPOMPPU;
   private BoardName boardName = BoardName.DOMESTIC;
 
+  private String boardParamDealbada;
+  private String siteListUrlDealbada;
+  private String siteViewUrlDealbada;
+  private SiteName siteNameDealbada = SiteName.DEALBADA;
+
   @PostConstruct
   public void init() {
     siteListUrl = applicationProperties.getPpomppu().getUrl().getList();
     siteViewUrl = applicationProperties.getPpomppu().getUrl().getView();
     boardParam = applicationProperties.getPpomppu().getParam().getDomestic();
+
+    siteListUrlDealbada = applicationProperties.getDealbada().getUrl().getList();
+    siteViewUrlDealbada = applicationProperties.getDealbada().getUrl().getView();
+    boardParamDealbada = applicationProperties.getDealbada().getParam().getDomestic();
   }
 
   @Test
@@ -138,5 +147,48 @@ class PostServiceTest {
     postService.savePostAll(board.getId(), posts);
     List<Post> posts1 = postService.findAll();
     assertEquals(posts1.size(), 2, "equal test post");
+  }
+
+  @Test
+  void savePostDealbada() {
+    // 사이트 저장
+    Site site = Site.builder().siteName(siteNameDealbada).siteListUrl(siteListUrlDealbada).siteViewUrl(siteViewUrlDealbada).build();
+    siteService.add(site);
+
+    //board 저장
+    Board board = Board.builder().boardName(boardName).boardParam(boardParamDealbada).build();
+    boardService.add(site.getId(), board);
+
+    String postTitle = "  [G마켓] 컬쳐랜드 10만/5만원권 각각 현금 10% 캐시백 or 카드 7% 할인 (100,000/0)";
+    long postOriginId = 14423L;
+    String postType = "기타";
+    String postWriter = "탕진기업옥션";
+    int postRecommendationCount = 22;
+    int postCommentCount = 20;
+    int postDisLikeCount = 0;
+    PostStatus postStatus = PostStatus.READY;
+    int postOriginClickCount = 9003;
+    Post post = Post.builder()
+            .postTitle(postTitle)
+            .postOriginId(postOriginId)
+            .postType(postType)
+            .postWriter(postWriter)
+            .postRecommendationCount(postRecommendationCount)
+            .postDisLikeCount(postDisLikeCount)
+            .postCommentCount(postCommentCount)
+            .postStatus(postStatus)
+            .postOriginClickCount(postOriginClickCount)
+            .build();
+    postService.savePost(board.getId(), post);
+
+    assertEquals(post.getPostTitle(), postTitle, "equal test post");
+    assertEquals(post.getPostOriginId(), postOriginId, "equal test post");
+    assertEquals(post.getPostType(), postType, "equal test post");
+    assertEquals(post.getPostWriter(), postWriter, "equal test post");
+    assertEquals(post.getPostRecommendationCount(), postRecommendationCount, "equal test post");
+    assertEquals(post.getPostDisLikeCount(), postDisLikeCount, "equal test post");
+    assertEquals(post.getPostCommentCount(), postCommentCount, "equal test post");
+    assertEquals(post.getPostStatus(), postStatus, "equal test post");
+    assertEquals(post.getPostOriginClickCount(), postOriginClickCount, "equal test post");
   }
 }

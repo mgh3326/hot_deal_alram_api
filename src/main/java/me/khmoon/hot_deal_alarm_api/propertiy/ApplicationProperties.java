@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 public class ApplicationProperties {
   private String userAgent;
   private Ppomppu ppomppu;
+  private Dealbada dealbada;
 
   @Getter
   @Setter
@@ -32,7 +33,26 @@ public class ApplicationProperties {
       private String domestic;
       private String overseas;
     }
+  }
 
+  @Getter
+  @Setter
+  public static class Dealbada {
+    private Url url;
+    private Param param;
 
+    @Getter
+    @Setter
+    public static class Url {
+      private String list;
+      private String view;
+    }
+
+    @Getter
+    @Setter
+    public static class Param {
+      private String domestic;
+      private String overseas;
+    }
   }
 }
