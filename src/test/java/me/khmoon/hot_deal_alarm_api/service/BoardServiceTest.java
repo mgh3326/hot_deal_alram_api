@@ -5,7 +5,6 @@ import me.khmoon.hot_deal_alarm_api.domain.board.BoardName;
 import me.khmoon.hot_deal_alarm_api.domain.site.Site;
 import me.khmoon.hot_deal_alarm_api.domain.site.SiteName;
 import me.khmoon.hot_deal_alarm_api.propertiy.ApplicationProperties;
-import me.khmoon.hot_deal_alarm_api.repository.BoardRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,8 +25,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class BoardServiceTest {
   @Autowired
   private BoardService boardService;
-  @Autowired
-  private BoardRepository boardRepository;
   @Autowired
   private SiteService siteService;
   @Autowired
