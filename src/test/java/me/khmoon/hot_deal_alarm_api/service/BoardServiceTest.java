@@ -5,6 +5,7 @@ import me.khmoon.hot_deal_alarm_api.domain.board.BoardName;
 import me.khmoon.hot_deal_alarm_api.domain.site.Site;
 import me.khmoon.hot_deal_alarm_api.domain.site.SiteName;
 import me.khmoon.hot_deal_alarm_api.propertiy.ApplicationProperties;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,16 +41,21 @@ class BoardServiceTest {
     siteListUrl = applicationProperties.getPpomppu().getUrl().getList();
     siteViewUrl = applicationProperties.getPpomppu().getUrl().getView();
     boardParam = applicationProperties.getPpomppu().getParam().getDomestic();
+
+  }
+
+  @BeforeEach
+  void init2() {
+    Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
+    siteService.add(site);
   }
 
   @Test
   @DisplayName("게시판 저장 (id)")
   void add() {
-    Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
-    siteService.add(site);
-
+    Site site = siteService.findOneBySiteName(siteName);
     Board board = Board.builder().boardName(boardName).boardParam(boardParam).build();
-    boardService.add(site.getId(), board);
+    boardService.addWithSiteId(board, site.getId());
     Board board1 = boardService.findOne(board.getId());
     assertEquals(board1.getBoardName(), boardName, "equal test board name");
     assertEquals(board1.getBoardParam(), boardParam, "equal test board name");
@@ -59,11 +65,8 @@ class BoardServiceTest {
   @Test
   @DisplayName("게시판 저장 (site name)")
   void add2() {
-    Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
-    siteService.add(site);
-
     Board board = Board.builder().boardName(boardName).boardParam(boardParam).build();
-    boardService.add(siteName, board);
+    boardService.addWithSiteName(board, siteName);
     Board board1 = boardService.findOne(board.getId());
     assertEquals(board1.getBoardName(), boardName, "equal test board name");
     assertEquals(board1.getBoardParam(), boardParam, "equal test board name");
