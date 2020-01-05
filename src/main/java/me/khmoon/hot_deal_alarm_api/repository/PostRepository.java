@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
 
 import static me.khmoon.hot_deal_alarm_api.helper.JpaResultHelper.getSingleResultOrNull;
@@ -24,14 +25,14 @@ public class PostRepository {
     return post.getId();
   }
 
-  public void saveAll(List<Post> posts) {
-    em.persist(posts);
-  }
+  public List<Long> saveAll(List<Post> posts) {
+    List<Long> result = new ArrayList<>();
 
-  public void updateAll(List<Post> posts) {
-    em.merge(posts);
+    for (Post post : posts) {
+      result.add(save(post));
+    }
+    return result;
   }
-
 
   public Post findOne(Long id) {
     return em.find(Post.class, id);

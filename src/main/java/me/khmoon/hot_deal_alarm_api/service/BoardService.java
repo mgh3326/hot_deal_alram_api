@@ -19,20 +19,21 @@ public class BoardService {
 
   //게시판 추가
   @Transactional
-  public Long add(long siteId, Board board) {
-    Site site = siteRepository.findOne(siteId);
-    board.setSite(site);
+  public Long add(Board board) {
     boardRepository.save(board);
     return board.getId();
   }
 
-  //게시판 추가
-  @Transactional
-  public Long add(SiteName siteName, Board board) {
+  public Long addWithSiteId(Board board, long siteId) {
+    Site site = siteRepository.findOne(siteId);
+    board.setSite(site);
+    return add(board);
+  }
+
+  public Long addWithSiteName(Board board, SiteName siteName) {
     Site site = siteRepository.findOneBySiteName(siteName);
     board.setSite(site);
-    boardRepository.save(board);
-    return board.getId();
+    return add(board);
   }
 
   public Board findOne(Long id) {
@@ -42,4 +43,6 @@ public class BoardService {
   public Board findOneByBoardName(BoardName boardName, Long siteId) {
     return boardRepository.findOneByBoardName(boardName, siteId);
   }
+
+
 }

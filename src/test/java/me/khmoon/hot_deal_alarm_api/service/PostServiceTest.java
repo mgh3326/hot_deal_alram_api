@@ -64,7 +64,7 @@ class PostServiceTest {
 
     //board 저장
     Board board = Board.builder().boardName(boardName).boardParam(boardParam).build();
-    boardService.add(site.getId(), board);
+    boardService.addWithSiteId(board, site.getId());
 
     String postTitle = "[티몬] 자뎅 커피/음료 230mlx30팩 / 230mlx24팩 ( 9,900원 / 무...";
     long postOriginId = 339492L;
@@ -86,7 +86,7 @@ class PostServiceTest {
             .postStatus(postStatus)
             .postOriginClickCount(postOriginClickCount)
             .build();
-    postService.savePost(board.getId(), post);
+    postService.savePostWithBoardId(post, board.getId());
 
     assertEquals(post.getPostTitle(), postTitle, "equal test post");
     assertEquals(post.getPostOriginId(), postOriginId, "equal test post");
@@ -97,6 +97,8 @@ class PostServiceTest {
     assertEquals(post.getPostCommentCount(), postCommentCount, "equal test post");
     assertEquals(post.getPostStatus(), postStatus, "equal test post");
     assertEquals(post.getPostOriginClickCount(), postOriginClickCount, "equal test post");
+    assertEquals(post.getBoard().getBoardName(), boardName, "equal test post");
+    assertEquals(post.getBoard().getBoardParam(), boardParam, "equal test post");
   }
 
   @Test
@@ -107,7 +109,7 @@ class PostServiceTest {
 
     //board 저장
     Board board = Board.builder().boardName(boardName).boardParam(boardParam).build();
-    boardService.add(site.getId(), board);
+    boardService.addWithSiteId(board, site.getId());
 
     String postTitle = "[티몬] 자뎅 커피/음료 230mlx30팩 / 230mlx24팩 ( 9,900원 / 무...";
     long postOriginId = 339492L;
@@ -129,6 +131,7 @@ class PostServiceTest {
             .postStatus(postStatus)
             .postOriginClickCount(postOriginClickCount)
             .build();
+    post.setBoard(board);
     List<Post> posts = new ArrayList<>();
     posts.add(post);
     post = Post.builder()
@@ -142,11 +145,17 @@ class PostServiceTest {
             .postStatus(postStatus)
             .postOriginClickCount(postOriginClickCount)
             .build();
+    post.setBoard(board);
+
     posts.add(post);
 
-    postService.savePostAll(board.getId(), posts);
+    postService.savePostAll(posts);
     List<Post> posts1 = postService.findAll();
     assertEquals(posts1.size(), 2, "equal test post");
+    assertEquals(posts1.get(0).getBoard().getBoardName(), boardName, "equal test post");
+    assertEquals(posts1.get(0).getBoard().getBoardParam(), boardParam, "equal test post");
+    assertEquals(posts1.get(1).getBoard().getBoardName(), boardName, "equal test post");
+    assertEquals(posts1.get(1).getBoard().getBoardParam(), boardParam, "equal test post");
   }
 
   @Test
@@ -157,7 +166,7 @@ class PostServiceTest {
 
     //board 저장
     Board board = Board.builder().boardName(boardName).boardParam(boardParamDealbada).build();
-    boardService.add(site.getId(), board);
+    boardService.addWithSiteId(board, site.getId());
 
     String postTitle = "  [G마켓] 컬쳐랜드 10만/5만원권 각각 현금 10% 캐시백 or 카드 7% 할인 (100,000/0)";
     long postOriginId = 14423L;
@@ -179,7 +188,7 @@ class PostServiceTest {
             .postStatus(postStatus)
             .postOriginClickCount(postOriginClickCount)
             .build();
-    postService.savePost(board.getId(), post);
+    postService.savePostWithBoardId(post, board.getId());
 
     assertEquals(post.getPostTitle(), postTitle, "equal test post");
     assertEquals(post.getPostOriginId(), postOriginId, "equal test post");
@@ -190,5 +199,7 @@ class PostServiceTest {
     assertEquals(post.getPostCommentCount(), postCommentCount, "equal test post");
     assertEquals(post.getPostStatus(), postStatus, "equal test post");
     assertEquals(post.getPostOriginClickCount(), postOriginClickCount, "equal test post");
+    assertEquals(post.getBoard().getBoardName(), boardName, "equal test post");
+    assertEquals(post.getBoard().getBoardParam(), boardParamDealbada, "equal test post");
   }
 }

@@ -147,6 +147,7 @@ public class CrawlingService {
     if (postByOriginId != null) {
       postByOriginId.update(post);//이렇게만 해도 수정 되서 저장 할 post 에서는 제외
     } else {
+//      post.setBoard(board); // TODO 이렇게 했다가 Post Servie 계층으로 바꿔서 진행해봄
       posts.add(post);
     }
   }

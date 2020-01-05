@@ -7,7 +7,6 @@ import me.khmoon.hot_deal_alarm_api.repository.PostRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,22 +18,28 @@ public class PostService {
 
   //페이지 추가
   @Transactional
-  public Long savePost(Long boardId, Post post) {
-    Board board = boardService.findOne(boardId);
-    post.setBoard(board);//TODO Save랑 Update 분리가 필요하겠다.
+  public Long savePost(Post post) {
     postRepository.save(post);
     return post.getId();
   }
 
-  @Transactional
-  public List<Long> savePostAll(Long boardId, List<Post> posts) {
+  public Long savePostWithBoardId(Post post, Long boardId) {
     Board board = boardService.findOne(boardId);
-    List<Long> result = new ArrayList<>();
+    post.setBoard(board);
+    return savePost(post);
+  }
+
+  @Transactional
+  public List<Long> savePostAll(List<Post> posts) {
+    return postRepository.saveAll(posts);
+  }
+
+  public List<Long> savePostAllWithBoardId(List<Post> posts, Long boardId) {
+    Board board = boardService.findOne(boardId);
     for (Post post : posts) {
       post.setBoard(board);
-      result.add(postRepository.save(post));
     }
-    return result;
+    return savePostAll(posts);
   }
 
   public Post findOne(Long id) {

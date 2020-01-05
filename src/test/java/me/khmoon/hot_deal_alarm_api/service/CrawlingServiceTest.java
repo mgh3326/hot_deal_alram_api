@@ -72,7 +72,7 @@ class CrawlingServiceTest {
 
     //board 저장
     Board board = Board.builder().boardName(boardName).boardParam(boardParamDomestic).build();
-    boardService.add(site.getId(), board);
+    boardService.addWithSiteId(board, site.getId());
 
     int pageNum = 2;
     int pageRefreshSecond = 60;
@@ -80,7 +80,7 @@ class CrawlingServiceTest {
     pageService.savePage(board.getId(), page);
 
     List<Post> posts = crawlingService.parse(page.getId());
-    postService.savePostAll(board.getId(), posts);
+    postService.savePostAllWithBoardId(posts, board.getId());
     List<Post> posts1 = postService.findAll();
     assertEquals(posts.size(), posts1.size(), "equal test post");
     if (posts1.size() > 0) {
@@ -97,7 +97,7 @@ class CrawlingServiceTest {
 
     //board 저장
     Board board = Board.builder().boardName(boardName).boardParam(boardParamDealbada).build();
-    boardService.add(site.getId(), board);
+    boardService.addWithSiteId(board, site.getId());
 
     int pageNum = 2;
     int pageRefreshSecond = 60;
@@ -105,7 +105,7 @@ class CrawlingServiceTest {
     pageService.savePage(board.getId(), page);
 
     List<Post> posts = crawlingService.parse(page.getId());
-    postService.savePostAll(board.getId(), posts);
+    postService.savePostAllWithBoardId(posts, board.getId());
     List<Post> posts1 = postService.findAll();
     assertEquals(posts.size(), posts1.size(), "equal test post");
     if (posts1.size() > 0) {
@@ -121,7 +121,7 @@ class CrawlingServiceTest {
 
     //board 저장
     Board board = Board.builder().boardName(boardNameOverseas).boardParam(boardParamOverseas).build();
-    boardService.add(site.getId(), board);
+    boardService.addWithSiteId(board, site.getId());
 
     int pageNum = 3;
     int pageRefreshSecond = 60;
@@ -129,7 +129,7 @@ class CrawlingServiceTest {
     pageService.savePage(board.getId(), page);
 
     List<Post> posts = crawlingService.parse(page.getId());
-    postService.savePostAll(board.getId(), posts);
+    postService.savePostAllWithBoardId(posts, board.getId());
     List<Post> posts1 = postService.findAll();
 
     assertEquals(posts.size(), posts1.size(), "equal test post");
@@ -145,7 +145,7 @@ class CrawlingServiceTest {
     siteService.add(Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build());
     Site site = siteService.findOneBySiteName(siteName);
     //board 저장
-    boardService.add(site.getId(), Board.builder().boardName(boardName).boardParam(boardParamDomestic).build());
+    boardService.addWithSiteId(Board.builder().boardName(boardName).boardParam(boardParamDomestic).build(), site.getId());
     Board board = boardService.findOneByBoardName(boardName, site.getId());
     int pageNum = 4;
     int pageRefreshSecond = 60;
@@ -154,12 +154,15 @@ class CrawlingServiceTest {
     Set<Long> postIdSet = new HashSet<>();
     List<Post> posts = crawlingService.parse(page.getId());
     for (Post post : posts) postIdSet.add(post.getPostOriginId());
-    postService.savePostAll(board.getId(), posts);
+    postService.savePostAllWithBoardId(posts, board.getId());
     List<Post> posts2 = crawlingService.parse(page.getId());
     for (Post post : posts2) postIdSet.add(post.getPostOriginId());
-    postService.savePostAll(board.getId(), posts2);
+    postService.savePostAllWithBoardId(posts2, board.getId());
     List<Post> posts1 = postService.findAll();
     System.out.println("postIdSet.size() = " + postIdSet.size());
-    assertEquals(posts1.size(), postIdSet.size(), "equal test post");
+    assertEquals(postIdSet.size(), posts1.size(), "equal test post");
+    if (posts1.size() > 0) {
+      assertEquals(postIdSet.size(), posts1.get(0).getBoard().getPosts().size(), "equal test post.board");
+    }
   }
 }

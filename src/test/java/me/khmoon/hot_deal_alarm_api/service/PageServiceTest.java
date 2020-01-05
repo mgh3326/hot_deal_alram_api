@@ -55,7 +55,7 @@ class PageServiceTest {
 
     //board 저장
     Board board = Board.builder().boardName(boardName).boardParam(boardParam).build();
-    boardService.add(site.getId(), board);
+    boardService.addWithSiteId(board, site.getId());
 
     int pageNum = 1;
     int pageRefreshSecond = 60;
