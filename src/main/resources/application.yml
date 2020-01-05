@@ -36,3 +36,10 @@ my-values:
     param:
       domestic: deal_domestic
       overseas: deal_oversea
+  clien:
+    url:
+      list: https://m.clien.net/service/board/jirum?po=%d # 0부터 시작하는것이 특이점
+      view: https://m.clien.net/service/board/jirum/%d
+    param:
+      thrifty: jirum
+

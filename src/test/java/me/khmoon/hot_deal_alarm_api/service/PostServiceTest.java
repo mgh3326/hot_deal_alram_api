@@ -45,8 +45,17 @@ class PostServiceTest {
   private String siteViewUrlDealbada;
   private SiteName siteNameDealbada = SiteName.DEALBADA;
 
+  private BoardName boardNameThrify = BoardName.THRIFTY;
+  private String siteListUrlClien;
+  private String siteViewUrlClien;
+  private SiteName siteNameClien = SiteName.CLIEN;
+  private String boardParamClien;
+
+
   @PostConstruct
   public void init() {
+
+
     siteListUrl = applicationProperties.getPpomppu().getUrl().getList();
     siteViewUrl = applicationProperties.getPpomppu().getUrl().getView();
     boardParam = applicationProperties.getPpomppu().getParam().getDomestic();
@@ -54,6 +63,10 @@ class PostServiceTest {
     siteListUrlDealbada = applicationProperties.getDealbada().getUrl().getList();
     siteViewUrlDealbada = applicationProperties.getDealbada().getUrl().getView();
     boardParamDealbada = applicationProperties.getDealbada().getParam().getDomestic();
+
+    siteListUrlClien = applicationProperties.getClien().getUrl().getList();
+    siteViewUrlClien = applicationProperties.getClien().getUrl().getView();
+    boardParamClien = applicationProperties.getClien().getParam().getThrifty();
   }
 
   @Test
@@ -201,5 +214,50 @@ class PostServiceTest {
     assertEquals(post.getPostOriginClickCount(), postOriginClickCount, "equal test post");
     assertEquals(post.getBoard().getBoardName(), boardName, "equal test post");
     assertEquals(post.getBoard().getBoardParam(), boardParamDealbada, "equal test post");
+  }
+
+  @Test
+  void savePostClien() {
+    // 사이트 저장
+    Site site = Site.builder().siteName(siteNameClien).siteListUrl(siteListUrlClien).siteViewUrl(siteViewUrlClien).build();
+    siteService.add(site);
+
+    //board 저장
+    Board board = Board.builder().boardName(boardNameThrify).boardParam(boardParamClien).build();
+    boardService.addWithSiteId(board, site.getId());
+
+    String postTitle = "  [G마켓] 컬쳐랜드 10만/5만원권 각각 현금 10% 캐시백 or 카드 7% 할인 (100,000/0)";
+    long postOriginId = 14423L;
+    String postType = "기타";
+    String postWriter = "탕진기업옥션";
+    int postRecommendationCount = 22;
+    int postCommentCount = 20;
+    int postDisLikeCount = 0;
+    PostStatus postStatus = PostStatus.READY;
+    int postOriginClickCount = 9003;
+    Post post = Post.builder()
+            .postTitle(postTitle)
+            .postOriginId(postOriginId)
+            .postType(postType)
+            .postWriter(postWriter)
+            .postRecommendationCount(postRecommendationCount)
+            .postDisLikeCount(postDisLikeCount)
+            .postCommentCount(postCommentCount)
+            .postStatus(postStatus)
+            .postOriginClickCount(postOriginClickCount)
+            .build();
+    postService.savePostWithBoardId(post, board.getId());
+
+    assertEquals(post.getPostTitle(), postTitle, "equal test post");
+    assertEquals(post.getPostOriginId(), postOriginId, "equal test post");
+    assertEquals(post.getPostType(), postType, "equal test post");
+    assertEquals(post.getPostWriter(), postWriter, "equal test post");
+    assertEquals(post.getPostRecommendationCount(), postRecommendationCount, "equal test post");
+    assertEquals(post.getPostDisLikeCount(), postDisLikeCount, "equal test post");
+    assertEquals(post.getPostCommentCount(), postCommentCount, "equal test post");
+    assertEquals(post.getPostStatus(), postStatus, "equal test post");
+    assertEquals(post.getPostOriginClickCount(), postOriginClickCount, "equal test post");
+    assertEquals(boardNameThrify, post.getBoard().getBoardName(), "equal test post");
+    assertEquals(boardParamClien, post.getBoard().getBoardParam(), "equal test post");
   }
 }

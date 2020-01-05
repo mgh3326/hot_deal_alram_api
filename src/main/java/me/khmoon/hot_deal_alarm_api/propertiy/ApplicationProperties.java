@@ -13,6 +13,7 @@ public class ApplicationProperties {
   private String userAgent;
   private Ppomppu ppomppu;
   private Dealbada dealbada;
+  private Clien clien;
 
   @Getter
   @Setter
@@ -35,6 +36,7 @@ public class ApplicationProperties {
     }
   }
 
+
   @Getter
   @Setter
   public static class Dealbada {
@@ -53,6 +55,27 @@ public class ApplicationProperties {
     public static class Param {
       private String domestic;
       private String overseas;
+    }
+  }
+
+
+  @Getter
+  @Setter
+  public static class Clien {
+    private Url url;
+    private Param param;
+
+    @Getter
+    @Setter
+    public static class Url {
+      private String list;
+      private String view;
+    }
+
+    @Getter
+    @Setter
+    public static class Param {
+      private String thrifty;
     }
   }
 }

@@ -158,7 +158,7 @@ public class CrawlingService {
             .header("Referer", String.format(listUrlFormat, boardParam, pageNum + 1))
             .header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9")
             .header("Content-Type", "application/x-www-form-urlencoded")
-            .header("Accept-Encoding", "gzip, deflate")
+            .header("Accept-Encoding", "gzip, deflate, br")
             .header("Accept-Language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7")
             .get();
   }

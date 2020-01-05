@@ -77,7 +77,7 @@ class CrawlingServiceTest {
     int pageNum = 2;
     int pageRefreshSecond = 60;
     Page page = Page.builder().pageNum(pageNum).pageRefreshSecond(pageRefreshSecond).build();
-    pageService.savePage(board.getId(), page);
+    pageService.savePageWithBoardId(page, board.getId());
 
     List<Post> posts = crawlingService.parse(page.getId());
     postService.savePostAllWithBoardId(posts, board.getId());
@@ -102,7 +102,7 @@ class CrawlingServiceTest {
     int pageNum = 2;
     int pageRefreshSecond = 60;
     Page page = Page.builder().pageNum(pageNum).pageRefreshSecond(pageRefreshSecond).build();
-    pageService.savePage(board.getId(), page);
+    pageService.savePageWithBoardId(page, board.getId());
 
     List<Post> posts = crawlingService.parse(page.getId());
     postService.savePostAllWithBoardId(posts, board.getId());
@@ -126,7 +126,7 @@ class CrawlingServiceTest {
     int pageNum = 3;
     int pageRefreshSecond = 60;
     Page page = Page.builder().pageNum(pageNum).pageRefreshSecond(pageRefreshSecond).build();
-    pageService.savePage(board.getId(), page);
+    pageService.savePageWithBoardId(page, board.getId());
 
     List<Post> posts = crawlingService.parse(page.getId());
     postService.savePostAllWithBoardId(posts, board.getId());
@@ -150,7 +150,7 @@ class CrawlingServiceTest {
     int pageNum = 4;
     int pageRefreshSecond = 60;
     Page page = Page.builder().pageNum(pageNum).pageRefreshSecond(pageRefreshSecond).build();
-    pageService.savePage(board.getId(), page);
+    pageService.savePageWithBoardId(page, board.getId());
     Set<Long> postIdSet = new HashSet<>();
     List<Post> posts = crawlingService.parse(page.getId());
     for (Post post : posts) postIdSet.add(post.getPostOriginId());

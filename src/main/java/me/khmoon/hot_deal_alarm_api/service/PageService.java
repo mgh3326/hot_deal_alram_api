@@ -16,11 +16,16 @@ public class PageService {
 
   //페이지 추가
   @Transactional
-  public Long savePage(Long boardId, Page page) {
-    Board board = boardService.findOne(boardId);
-    page.setBoard(board);
+  public Long savePage(Page page) {
     pageRepository.save(page);
     return page.getId();
+  }
+
+  @Transactional
+  public Long savePageWithBoardId(Page page, Long boardId) {
+    Board board = boardService.findOne(boardId);
+    page.setBoard(board);
+    return savePage(page);
   }
 
   public Page findOne(Long id) {
