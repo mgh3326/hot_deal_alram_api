@@ -14,6 +14,7 @@ public class ApplicationProperties {
   private Ppomppu ppomppu;
   private Dealbada dealbada;
   private Clien clien;
+  private Coolenjoy coolenjoy;
 
   @Getter
   @Setter
@@ -58,10 +59,29 @@ public class ApplicationProperties {
     }
   }
 
-
   @Getter
   @Setter
   public static class Clien {
+    private Url url;
+    private Param param;
+
+    @Getter
+    @Setter
+    public static class Url {
+      private String list;
+      private String view;
+    }
+
+    @Getter
+    @Setter
+    public static class Param {
+      private String thrifty;
+    }
+  }
+
+  @Getter
+  @Setter
+  public static class Coolenjoy {
     private Url url;
     private Param param;
 

@@ -42,4 +42,10 @@ my-values:
       view: https://m.clien.net/service/board/%s/%d
     param:
       thrifty: jirum
+  coolenjoy:
+    url:
+      list: http://www.coolenjoy.net/bbs/%s/p%d
+      view: http://www.coolenjoy.net/bbs/%s/%d
+    param:
+      thrifty: jirum
 
