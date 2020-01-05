@@ -12,14 +12,14 @@ spring:
     properties:
       hibernate:
         show_sql: true
-  #        format_sql: true
+        format_sql: true
   h2:
     console:
       enabled: true
 logging:
   level:
     org.hibernate.SQL: debug
-#    org.hibernate.type: trace
+    org.hibernate.type: trace
 my-values:
   user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36"
   ppomppu:
@@ -38,8 +38,8 @@ my-values:
       overseas: deal_oversea
   clien:
     url:
-      list: https://m.clien.net/service/board/jirum?po=%d # 0부터 시작하는것이 특이점
-      view: https://m.clien.net/service/board/jirum/%d
+      list: https://m.clien.net/service/board/%s?po=%d # 0부터 시작하는것이 특이점
+      view: https://m.clien.net/service/board/%s/%d
     param:
       thrifty: jirum
 

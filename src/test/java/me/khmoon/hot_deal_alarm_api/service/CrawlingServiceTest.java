@@ -51,6 +51,11 @@ class CrawlingServiceTest {
   private String boardParamDealbada;
   private String siteListUrlDealbada;
   private String siteViewUrlDealbada;
+  private SiteName siteNameClien = SiteName.CLIEN;
+  private String boardParamClien;
+  private String siteListUrlClien;
+  private String siteViewUrlClien;
+  private BoardName boardNameClien = BoardName.THRIFTY;
 
   @PostConstruct
   public void init() {
@@ -62,6 +67,10 @@ class CrawlingServiceTest {
     siteListUrlDealbada = applicationProperties.getDealbada().getUrl().getList();
     siteViewUrlDealbada = applicationProperties.getDealbada().getUrl().getView();
     boardParamDealbada = applicationProperties.getDealbada().getParam().getDomestic();
+
+    siteListUrlClien = applicationProperties.getClien().getUrl().getList();
+    siteViewUrlClien = applicationProperties.getClien().getUrl().getView();
+    boardParamClien = applicationProperties.getClien().getParam().getThrifty();
   }
 
   @Test
@@ -100,6 +109,30 @@ class CrawlingServiceTest {
     boardService.addWithSiteId(board, site.getId());
 
     int pageNum = 2;
+    int pageRefreshSecond = 60;
+    Page page = Page.builder().pageNum(pageNum).pageRefreshSecond(pageRefreshSecond).build();
+    pageService.savePageWithBoardId(page, board.getId());
+
+    List<Post> posts = crawlingService.parse(page.getId());
+    postService.savePostAllWithBoardId(posts, board.getId());
+    List<Post> posts1 = postService.findAll();
+    assertEquals(posts.size(), posts1.size(), "equal test post");
+    if (posts1.size() > 0) {
+      assertEquals(posts1.get(0).getCreatedDateTime(), posts1.get(0).getModifiedDateTime(), "equal test post");
+    }
+  }
+
+  @Test
+  void parseClien() {
+    // 사이트 저장
+    Site site = Site.builder().siteName(siteNameClien).siteListUrl(siteListUrlClien).siteViewUrl(siteViewUrlClien).build();
+    siteService.add(site);
+
+    //board 저장
+    Board board = Board.builder().boardName(boardNameClien).boardParam(boardParamClien).build();
+    boardService.addWithSiteId(board, site.getId());
+
+    int pageNum = 0;
     int pageRefreshSecond = 60;
     Page page = Page.builder().pageNum(pageNum).pageRefreshSecond(pageRefreshSecond).build();
     pageService.savePageWithBoardId(page, board.getId());

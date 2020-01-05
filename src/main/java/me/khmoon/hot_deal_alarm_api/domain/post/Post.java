@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import me.khmoon.hot_deal_alarm_api.domain.BaseTimeEntity;
 import me.khmoon.hot_deal_alarm_api.domain.board.Board;
 import me.khmoon.hot_deal_alarm_api.domain.user.UserPost;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class Post extends BaseTimeEntity {
   @Enumerated(EnumType.STRING)
   private PostStatus postStatus; // READY, COMP (진행중, 종료됨)
   private int PostRecommendationCount;//추천수
+  @ColumnDefault("0")
   private int PostDisLikeCount;//싫어요
   private int PostCommentCount;//댓글 수
   private int PostOriginClickCount;//실제 클릭수
