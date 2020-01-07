@@ -23,4 +23,8 @@ public class SiteService {
   public Site findOneBySiteName(SiteName siteName) {
     return siteRepository.findOneBySiteName(siteName);
   }
+
+  public Site findOne(Long id) {
+    return siteRepository.findOne(id);
+  }
 }

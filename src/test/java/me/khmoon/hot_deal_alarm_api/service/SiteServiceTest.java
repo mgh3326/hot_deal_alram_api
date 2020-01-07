@@ -27,8 +27,6 @@ class SiteServiceTest {
   @Autowired
   private SiteService siteService;
   @Autowired
-  private SiteRepository siteRepository;
-  @Autowired
   private ApplicationProperties applicationProperties;
   private String siteListUrl;
   private String siteViewUrl;
@@ -48,7 +46,7 @@ class SiteServiceTest {
   void add() {
     Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
     siteService.add(site);
-    Site site1 = siteRepository.findOne(site.getId());
+    Site site1 = siteService.findOne(site.getId());
     assertEquals(site1.getSiteName(), siteName);
     assertEquals(site1.getSiteListUrl(), siteListUrl);
     assertEquals(site1.getSiteViewUrl(), siteViewUrl);
