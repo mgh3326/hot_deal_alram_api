@@ -25,7 +25,7 @@ public class SiteRepository {
     return em.createQuery("select s from Site s where s.siteName=:siteName", Site.class).setParameter("siteName", siteName).getSingleResult();
   }
 
-  private List<Site> findAll() {
+  public List<Site> findAll() {
     return em.createQuery("select s from Site s", Site.class).getResultList();
   }
 }

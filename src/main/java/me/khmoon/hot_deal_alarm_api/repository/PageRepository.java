@@ -2,7 +2,6 @@ package me.khmoon.hot_deal_alarm_api.repository;
 
 import lombok.RequiredArgsConstructor;
 import me.khmoon.hot_deal_alarm_api.domain.page.Page;
-import me.khmoon.hot_deal_alarm_api.domain.site.Site;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -27,5 +26,11 @@ public class PageRepository {
 
   public List<Page> findAll() {
     return em.createQuery("select p from Page p", Page.class).getResultList();
+  }
+
+  public List<Page> findAllBySiteId(Long siteId) {
+    return em.createQuery("select p from Page p where p.board.site.id=:siteId", Page.class)
+            .setParameter("siteId", siteId)
+            .getResultList();
   }
 }

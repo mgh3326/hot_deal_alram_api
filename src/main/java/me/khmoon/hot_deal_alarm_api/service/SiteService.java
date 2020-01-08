@@ -7,6 +7,8 @@ import me.khmoon.hot_deal_alarm_api.repository.SiteRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -26,5 +28,9 @@ public class SiteService {
 
   public Site findOne(Long id) {
     return siteRepository.findOne(id);
+  }
+
+  public List<Site> findAll() {
+    return siteRepository.findAll();
   }
 }

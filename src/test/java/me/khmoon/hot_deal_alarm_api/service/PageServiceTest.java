@@ -16,8 +16,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
@@ -32,6 +36,10 @@ class PageServiceTest {
   private SiteService siteService;
   @Autowired
   private ApplicationProperties applicationProperties;
+
+  @Autowired
+  private EntityManager em;
+
   private String boardParam;
   private String siteListUrl;
   private String siteViewUrl;
@@ -71,6 +79,22 @@ class PageServiceTest {
     pageService.savePageWithBoardId(page, board.getId());
     assertEquals(pageNum, page.getPageNum(), "equal test page page_num");
     assertEquals(pageRefreshSecond, page.getPageRefreshSecond(), "equal test page page_num");
+
+    LocalDateTime preModifiedDateTime = page.getModifiedDateTime();
+    try {
+      Thread.sleep(1); // 이걸 안해주면 저장 시간과 일치해버리네
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+    page.setModifiedDateTime(LocalDateTime.now());
+    Long aLong = pageService.savePage(page);
+    Page one = pageService.findOne(aLong);
+    LocalDateTime modifiedDateTime = one.getModifiedDateTime();
+    assertNotEquals(modifiedDateTime, preModifiedDateTime, "modified datetime");
+
+    List<Page> pages = pageService.findAllBySiteId(site.getId());
+    assertEquals(1, pages.size(), "findAllBySiteId page size");
+
   }
 
   @Test
