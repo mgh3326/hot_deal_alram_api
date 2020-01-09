@@ -41,4 +41,8 @@ public class PageService {
   public List<Page> findAllBySiteId(Long SiteId) {
     return pageRepository.findAllBySiteId(SiteId);
   }
+
+  public Long countBySiteId(Long siteId) {
+    return pageRepository.countBySiteId(siteId);
+  }
 }

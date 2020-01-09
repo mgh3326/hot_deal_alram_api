@@ -93,7 +93,9 @@ class PageServiceTest {
     assertNotEquals(modifiedDateTime, preModifiedDateTime, "modified datetime");
 
     List<Page> pages = pageService.findAllBySiteId(site.getId());
+    Long count = pageService.countBySiteId(site.getId());
     assertEquals(1, pages.size(), "findAllBySiteId page size");
+    assertEquals(1, count, "findAllBySiteId page size");
 
   }
 

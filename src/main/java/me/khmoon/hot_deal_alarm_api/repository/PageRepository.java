@@ -33,4 +33,10 @@ public class PageRepository {
             .setParameter("siteId", siteId)
             .getResultList();
   }
+
+  public Long countBySiteId(Long siteId) {
+    return em.createQuery("select count(p) from Page p where p.board.site.id=:siteId", Long.class)
+            .setParameter("siteId", siteId)
+            .getSingleResult();
+  }
 }

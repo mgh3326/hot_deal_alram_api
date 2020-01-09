@@ -2,7 +2,6 @@ package me.khmoon.hot_deal_alarm_api.programmableScheduler;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import me.khmoon.hot_deal_alarm_api.domain.page.Page;
 import me.khmoon.hot_deal_alarm_api.domain.site.Site;
 import me.khmoon.hot_deal_alarm_api.service.PageService;
 import me.khmoon.hot_deal_alarm_api.service.SiteService;
@@ -61,9 +60,8 @@ public class ProgrammableScheduler {
 
   private Trigger getTrigger(Long siteId) {
     // 작업 주기 설정
-    List<Page> pages = pageService.findAllBySiteId(siteId); // TODO 이런건 count로 하면 좋을 것 같다.
-    System.out.println("pages.size() = " + pages.size());
-    return new PeriodicTrigger(1, TimeUnit.SECONDS);
-//    return new PeriodicTrigger(60 / pages.size(), TimeUnit.SECONDS);
+    Long pageSize = pageService.countBySiteId(siteId);
+    System.out.println("pages.size() = " + pageSize);
+    return new PeriodicTrigger(60 / pageSize, TimeUnit.SECONDS);
   }
 }
