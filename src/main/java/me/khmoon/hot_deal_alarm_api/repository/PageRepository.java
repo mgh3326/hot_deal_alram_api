@@ -47,15 +47,14 @@ public class PageRepository {
   }
 
   public Page findOneForRefreshing(int refreshingSecond) {
-    LocalDateTime now = LocalDateTime.now();
-    Query query = em.createQuery("select p from Page p where p.modifiedDateTime <= :now", Page.class)
-            .setParameter("now", now.minusSeconds(refreshingSecond));//TODO 60초 (칼럼에서)를 받아서 넣어야 되는데
+    Query query = em.createQuery("select p from Page p where p.modifiedDateTime <= :refreshingDateTime", Page.class)
+            .setParameter("refreshingDateTime", LocalDateTime.now().minusSeconds(refreshingSecond));//TODO 60초 (칼럼에서)를 받아서 넣어야 되는데
     return (Page) getSingleResultOrNull(query);
   }
 
-  public Page findOneBySiteById(Long siteId) {
-
-    Query query = em.createQuery("select p from Page p where p.board.site.id=:siteId and p.pageRefreshSecond < 60", Page.class)
+  public Page findOneForRefreshingBySiteId(int refreshingSecond, Long siteId) {
+    Query query = em.createQuery("select p from Page p where p.board.site.id=:siteId and p.modifiedDateTime <= :refreshingDateTime", Page.class)
+            .setParameter("refreshingDateTime", LocalDateTime.now().minusSeconds(refreshingSecond))
             .setParameter("siteId", siteId);
     return (Page) getSingleResultOrNull(query);
   }

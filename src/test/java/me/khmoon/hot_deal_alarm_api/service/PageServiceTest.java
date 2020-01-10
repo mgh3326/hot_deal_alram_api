@@ -95,7 +95,9 @@ class PageServiceTest {
     assertEquals(1, count, "findAllBySiteId page size");
 
     Page pageForRefreshing = pageService.findOneForRefreshing(60);
+    Page pageForRefreshingBySiteId = pageService.findOneForRefreshingBySiteId(60, site.getId());
     assertNull(pageForRefreshing, "findAllBySiteId page size");
+    assertNull(pageForRefreshingBySiteId, "findAllBySiteId page size");
     one = pageService.findOne(aLong);
     one.setModifiedDateTime(LocalDateTime.now());
     pageService.savePage(one);// DB가 왜 안 바뀌지
@@ -106,7 +108,9 @@ class PageServiceTest {
       e.printStackTrace();
     }
     Page oneForRefreshing = pageService.findOneForRefreshing(1); // 1초 된거 있나 확인하도록!
+    Page oneForRefreshingBySiteId = pageService.findOneForRefreshingBySiteId(1, site.getId()); // 1초 된거 있나 확인하도록!
     assertNotNull(oneForRefreshing, "findAllBySiteId page size");
+    assertNotNull(oneForRefreshingBySiteId, "findAllBySiteId page size");
   }
 
   @Test
