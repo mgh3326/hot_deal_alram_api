@@ -73,14 +73,14 @@ public class CrawlingService {
       Elements elements = doc.select("body > div.nav_container > div").select("div.list_item").select("div.symph-row");
       for (Element element : elements) {
         String writer = element.select("div.list_infomation > div.list_author > span.nickname").text();
-        if (writer.equals("")) {// writer가 이미지로 된 경우도 존재
+        if ("".equals(writer)) {// writer가 이미지로 된 경우도 존재
           writer = element.select("div.list_infomation > div.list_author > span.nickimg > img").attr("alt");
         }
         String title = element.select("div.list_title > a > span[data-role=list-title-text]").text();
         String type = element.select("div.list_infomation > div.list_number > span").text();
         String commentCountStr = element.select("div.list_title > div.list_reply > span:nth-child(1)").text();
         int commentCount = 0;
-        if (!commentCountStr.equals("")) {
+        if (!"".equals(commentCountStr)) {
           commentCount = Integer.parseInt(commentCountStr);
         }
         String originClickCountStr = element.select("div.list_infomation > div.list_number > div.list_hit > span").text();
@@ -124,7 +124,7 @@ public class CrawlingService {
         String type = element.select("a > div.thmb_N2 > ul > li.exp > span.ty").text();
         String commentCountStr = element.select("a > div.thmb_N2 > ul > li.title > span.rp").text();
         int commentCount = 0;
-        if (!commentCountStr.equals("")) {
+        if (!"".equals(commentCountStr)) {
           commentCount = Integer.parseInt(commentCountStr);
         }
         String countLikeDisLike = element.select("a > div.thmb_N2 > ul > li.exp > span:nth-child(4)").text();
@@ -163,7 +163,7 @@ public class CrawlingService {
         String type = element.select("td.td_cate > a").text();
         String commentCountStr = element.select("td.td_subject > a > span.cnt_cmt").text();
         int commentCount = 0;
-        if (!commentCountStr.equals("")) {
+        if (!"".equals(commentCountStr)) {
           commentCount = Integer.parseInt(commentCountStr);
         }
         String recommendationCountStr = element.select("td.td_num_g > span:nth-child(1)").text();
