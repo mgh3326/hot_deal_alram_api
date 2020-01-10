@@ -44,6 +44,7 @@ public class CrawlingService {
     userAgent = applicationProperties.getUserAgent();
   }
 
+  @Transactional
   public List<Post> parse(Long pageId) {
     Page page = pageService.findOne(pageId);
     Board board = page.getBoard();

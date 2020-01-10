@@ -34,6 +34,7 @@ public class PostService {
     return postRepository.saveAll(posts);
   }
 
+  @Transactional
   public List<Long> savePostAllWithBoardId(List<Post> posts, Long boardId) {
     Board board = boardService.findOne(boardId);
     for (Post post : posts) {
