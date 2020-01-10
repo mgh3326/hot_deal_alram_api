@@ -45,4 +45,8 @@ public class PageService {
   public Long countBySiteId(Long siteId) {
     return pageRepository.countBySiteId(siteId);
   }
+
+  public Page findOneForRefreshing(int refreshingSecond) { // TODO redis 를 사용하는게 좋을것 같다.
+    return pageRepository.findOneForRefreshing(refreshingSecond);
+  }
 }

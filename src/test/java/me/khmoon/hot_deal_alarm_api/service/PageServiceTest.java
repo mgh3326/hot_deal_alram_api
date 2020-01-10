@@ -20,8 +20,7 @@ import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
@@ -36,10 +35,8 @@ class PageServiceTest {
   private SiteService siteService;
   @Autowired
   private ApplicationProperties applicationProperties;
-
   @Autowired
   private EntityManager em;
-
   private String boardParam;
   private String siteListUrl;
   private String siteViewUrl;
@@ -82,11 +79,11 @@ class PageServiceTest {
 
     LocalDateTime preModifiedDateTime = page.getModifiedDateTime();
     try {
-      Thread.sleep(1); // 이걸 안해주면 저장 시간과 일치해버리네
+      Thread.sleep(1); // 0.001초 지나고
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
-    page.setModifiedDateTime(LocalDateTime.now());
+    page.setModifiedDateTime(LocalDateTime.now()); // Set을 해도 변경이 안되므로 테스트 할때 Sleep을 이용한 Test를 진행해보아야 겠다. TODO 왜 또 되지
     Long aLong = pageService.savePage(page);
     Page one = pageService.findOne(aLong);
     LocalDateTime modifiedDateTime = one.getModifiedDateTime();
@@ -97,6 +94,19 @@ class PageServiceTest {
     assertEquals(1, pages.size(), "findAllBySiteId page size");
     assertEquals(1, count, "findAllBySiteId page size");
 
+    Page pageForRefreshing = pageService.findOneForRefreshing(60);
+    assertNull(pageForRefreshing, "findAllBySiteId page size");
+    one = pageService.findOne(aLong);
+    one.setModifiedDateTime(LocalDateTime.now());
+    pageService.savePage(one);// DB가 왜 안 바뀌지
+    em.flush();// flush를 해줘야 update query가 날아가나 보다
+    try {
+      Thread.sleep(1000); // 1초 지나고
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+    Page oneForRefreshing = pageService.findOneForRefreshing(1); // 1초 된거 있나 확인하도록!
+    assertNotNull(oneForRefreshing, "findAllBySiteId page size");
   }
 
   @Test
