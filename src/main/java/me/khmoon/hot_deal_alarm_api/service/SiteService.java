@@ -30,7 +30,11 @@ public class SiteService {
     return siteRepository.findOne(id);
   }
 
-  public List<Site> findAll() {
+  public List<Site> findSites() {
     return siteRepository.findAll();
+  }
+
+  public List<Site> findAllWithBoard() {
+    return siteRepository.findAllWithBoard();
   }
 }

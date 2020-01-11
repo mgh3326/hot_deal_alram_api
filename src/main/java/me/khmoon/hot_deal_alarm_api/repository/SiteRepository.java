@@ -28,4 +28,9 @@ public class SiteRepository {
   public List<Site> findAll() {
     return em.createQuery("select s from Site s", Site.class).getResultList();
   }
+
+  public List<Site> findAllWithBoard() {
+    return em.createQuery("select s from Site s" +
+            " join fetch s.boards b", Site.class).getResultList();
+  }
 }

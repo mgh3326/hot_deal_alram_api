@@ -35,7 +35,7 @@ public class ProgrammableScheduler {
   }
 
   public void startScheduler() {
-    List<Site> sites = siteService.findAll();
+    List<Site> sites = siteService.findSites();
     int size = sites.size();
     System.out.println("size = " + size);
     schedulerArray = new ThreadPoolTaskScheduler[size];
