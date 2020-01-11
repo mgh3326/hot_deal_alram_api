@@ -71,44 +71,44 @@ class PageServiceTest {
     boardService.addWithSiteId(board, site.getId());
 
     int pageNum = 1;
-    int pageRefreshSecond = 60;
+    int pageRefreshSecond = 1;
     Page page = Page.builder().pageNum(pageNum).pageRefreshSecond(pageRefreshSecond).build();
     pageService.savePageWithBoardId(page, board.getId());
     assertEquals(pageNum, page.getPageNum(), "equal test page page_num");
     assertEquals(pageRefreshSecond, page.getPageRefreshSecond(), "equal test page page_num");
-
-    LocalDateTime preModifiedDateTime = page.getModifiedDateTime();
+    LocalDateTime prePageRefreshingDateTime = page.getPageRefreshingDateTime();
     try {
       Thread.sleep(1); // 0.001초 지나고
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
-    page.setModifiedDateTime(LocalDateTime.now()); // Set을 해도 변경이 안되므로 테스트 할때 Sleep을 이용한 Test를 진행해보아야 겠다. TODO 왜 또 되지
-    Long aLong = pageService.savePage(page);
-    Page one = pageService.findOne(aLong);
-    LocalDateTime modifiedDateTime = one.getModifiedDateTime();
-    assertNotEquals(modifiedDateTime, preModifiedDateTime, "modified datetime");
+    page.updatePageRefreshingDateTime();
+//    em.flush();
+
+    Page one = pageService.findOne(page.getId());
+    LocalDateTime pageRefreshingDateTime = one.getPageRefreshingDateTime();
+    assertNotEquals(prePageRefreshingDateTime, pageRefreshingDateTime, "modified datetime");
 
     List<Page> pages = pageService.findAllBySiteId(site.getId());
     Long count = pageService.countBySiteId(site.getId());
     assertEquals(1, pages.size(), "findAllBySiteId page size");
     assertEquals(1, count, "findAllBySiteId page size");
 
-    Page pageForRefreshing = pageService.findOneForRefreshing(60);
-    Page pageForRefreshingBySiteId = pageService.findOneForRefreshingBySiteId(60, site.getId());
+    Page pageForRefreshing = pageService.findOneForRefreshing();
+    Page pageForRefreshingBySiteId = pageService.findOneForRefreshingBySiteId(site.getId());
     assertNull(pageForRefreshing, "findAllBySiteId page size");
     assertNull(pageForRefreshingBySiteId, "findAllBySiteId page size");
-    one = pageService.findOne(aLong);
-    one.setModifiedDateTime(LocalDateTime.now());
-    pageService.savePage(one);// DB가 왜 안 바뀌지
-    em.flush();// flush를 해줘야 update query가 날아가나 보다
+    one = pageService.findOne(page.getId());
+    one.updatePageRefreshingDateTime();
+
+//    em.flush();
     try {
       Thread.sleep(1000); // 1초 지나고
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
-    Page oneForRefreshing = pageService.findOneForRefreshing(1); // 1초 된거 있나 확인하도록!
-    Page oneForRefreshingBySiteId = pageService.findOneForRefreshingBySiteId(1, site.getId()); // 1초 된거 있나 확인하도록!
+    Page oneForRefreshing = pageService.findOneForRefreshing(); // 1초 된거 있나 확인하도록!
+    Page oneForRefreshingBySiteId = pageService.findOneForRefreshingBySiteId(site.getId()); // 1초 된거 있나 확인하도록!
     assertNotNull(oneForRefreshing, "findAllBySiteId page size");
     assertNotNull(oneForRefreshingBySiteId, "findAllBySiteId page size");
   }

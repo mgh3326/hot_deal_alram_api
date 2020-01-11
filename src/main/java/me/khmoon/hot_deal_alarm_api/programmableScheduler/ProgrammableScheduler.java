@@ -14,7 +14,6 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.support.PeriodicTrigger;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -52,7 +51,7 @@ public class ProgrammableScheduler {
   private Runnable getRunnable(Long siteId) {
     return () -> {
       log.info(String.format("SiteID : %d", siteId));
-      Page page = pageService.findOneForRefreshingBySiteId(60, siteId);
+      Page page = pageService.findOneForRefreshingBySiteId(siteId);
       if (page == null) {
         try {
           Random random = new Random();
@@ -64,7 +63,7 @@ public class ProgrammableScheduler {
         try {
           Random random = new Random();
           Thread.sleep(random.nextInt(1000) + 1000);
-          page.setModifiedDateTime(LocalDateTime.now());
+          page.updatePageRefreshingDateTime();
           pageService.savePage(page);
         } catch (InterruptedException e) {
           e.printStackTrace();

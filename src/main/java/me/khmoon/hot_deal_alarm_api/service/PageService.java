@@ -46,12 +46,12 @@ public class PageService {
     return pageRepository.countBySiteId(siteId);
   }
 
-  public Page findOneForRefreshing(int refreshingSecond) { // TODO redis 를 사용하는게 좋을것 같다.
-    return pageRepository.findOneForRefreshing(refreshingSecond);
+  public Page findOneForRefreshing() { // TODO redis 를 사용하는게 좋을것 같다.
+    return pageRepository.findOneForRefreshing();
   }
 
-  public Page findOneForRefreshingBySiteId(int refreshingSecond, Long siteId) {
-    return pageRepository.findOneForRefreshingBySiteId(refreshingSecond, siteId);
+  public Page findOneForRefreshingBySiteId(Long siteId) {
+    return pageRepository.findOneForRefreshingBySiteId(siteId);
   }
 
 }
