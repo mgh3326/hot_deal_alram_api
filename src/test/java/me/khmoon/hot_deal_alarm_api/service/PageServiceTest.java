@@ -8,11 +8,9 @@ import me.khmoon.hot_deal_alarm_api.domain.site.SiteName;
 import me.khmoon.hot_deal_alarm_api.propertiy.ApplicationProperties;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
@@ -23,7 +21,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
-@ExtendWith(SpringExtension.class)
+
 @SpringBootTest
 @Transactional
 class PageServiceTest {
