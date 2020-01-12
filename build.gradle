@@ -1,9 +1,17 @@
+//querydsl 추가
+buildscript {
+    dependencies {
+        classpath("gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:1.0.10")
+    }
+}
 plugins {
     id 'org.springframework.boot' version '2.2.2.RELEASE'
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
     id 'java'
     id "jacoco"
 }
+apply plugin: "com.ewerk.gradle.plugins.querydsl"
+
 ext["hibernate-validator.version"] = "6.1.0.Final" // CVE-2019-10219 (Medium) detected in hibernate-validator-6.0.18.Final.jar 따른 추가
 
 group = 'me.khmoon'
@@ -43,6 +51,10 @@ dependencies {
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
     implementation('org.springframework.boot:spring-boot-starter-actuator')
     implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.7'
+
+    //querydsl 추가
+    implementation("com.querydsl:querydsl-jpa") // querydsl
+    implementation("com.querydsl:querydsl-apt") // querydsl
 }
 
 test {
@@ -50,3 +62,23 @@ test {
 }
 check.dependsOn jacocoTestReport
 
+//querydsl 추가
+def querydslDir = 'src/main/generated'
+querydsl {
+    library = "com.querydsl:querydsl-apt"
+    jpa = true
+    querydslSourcesDir = querydslDir
+}
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java', querydslDir]
+        }
+    }
+}
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
+}
+configurations {
+    querydsl.extendsFrom compileClasspath
+}
