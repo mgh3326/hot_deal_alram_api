@@ -1,14 +1,9 @@
-//querydsl 추가
-buildscript {
-    dependencies {
-        classpath("gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:1.0.10")
-    }
-}
 plugins {
     id 'org.springframework.boot' version '2.2.2.RELEASE'
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
     id 'java'
     id "jacoco"
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
 apply plugin: "com.ewerk.gradle.plugins.querydsl"
 
@@ -55,7 +50,7 @@ dependencies {
     //querydsl 추가
     implementation("com.querydsl:querydsl-jpa") // querydsl
     implementation("com.querydsl:querydsl-apt") // querydsl
-    implementation("com.google.guava:guava:28.2-jre") // CVE-2018-10237 (Medium) detected in guava-18.0.jar 이슈에 따라서
+    implementation("com.google.guava:guava:24.1.1-jre") // CVE-2018-10237 (Medium) detected in guava-18.0.jar 이슈에 따라서
 }
 
 test {
