@@ -53,8 +53,10 @@ public class PageRepository {
     return (Page) getSingleResultOrNull(query);
   }
 
-  public Page findOneForRefreshingBySiteId(Long siteId) {
-    Query query = em.createQuery("select p from Page p where p.board.site.id=:siteId and p.pageRefreshingDateTime <= :now order by p.pageRefreshingDateTime", Page.class)
+  public Page findOneForRefreshingBySiteId(Long siteId) { // Board를 eager 하게 가져오면 좋을것 같아 변경 (Board 쿼리가 별도로 한 번 더 나가는 현상 제거)
+    Query query = em.createQuery("select p from Page p" +
+            " join fetch p.board b" +
+            " where b.site.id=:siteId and p.pageRefreshingDateTime <= :now order by p.pageRefreshingDateTime", Page.class)
             .setMaxResults(1)
             .setParameter("now", LocalDateTime.now())
             .setParameter("siteId", siteId);

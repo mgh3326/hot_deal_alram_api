@@ -1,6 +1,7 @@
 package me.khmoon.hot_deal_alarm_api.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import me.khmoon.hot_deal_alarm_api.domain.board.Board;
 import me.khmoon.hot_deal_alarm_api.domain.page.Page;
 import me.khmoon.hot_deal_alarm_api.repository.PageRepository;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Slf4j
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class PageService {
@@ -53,5 +55,6 @@ public class PageService {
   public Page findOneForRefreshingBySiteId(Long siteId) {
     return pageRepository.findOneForRefreshingBySiteId(siteId);
   }
+
 
 }

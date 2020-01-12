@@ -6,7 +6,6 @@ import me.khmoon.hot_deal_alarm_api.domain.board.BoardName;
 import me.khmoon.hot_deal_alarm_api.domain.site.Site;
 import me.khmoon.hot_deal_alarm_api.domain.site.SiteName;
 import me.khmoon.hot_deal_alarm_api.repository.BoardRepository;
-import me.khmoon.hot_deal_alarm_api.repository.SiteRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardService {
   private final BoardRepository boardRepository;
-  private final SiteRepository siteRepository;
+  private final SiteService siteService;
 
   //게시판 추가
   @Transactional
@@ -27,13 +26,13 @@ public class BoardService {
   }
 
   public Long addWithSiteId(Board board, long siteId) {
-    Site site = siteRepository.findOne(siteId);
+    Site site = siteService.findOne(siteId);
     board.setSite(site);
     return add(board);
   }
 
   public Long addWithSiteName(Board board, SiteName siteName) {
-    Site site = siteRepository.findOneBySiteName(siteName);
+    Site site = siteService.findOneBySiteName(siteName);
     board.setSite(site);
     return add(board);
   }
