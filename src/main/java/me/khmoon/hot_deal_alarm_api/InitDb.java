@@ -12,9 +12,9 @@ import me.khmoon.hot_deal_alarm_api.service.PageService;
 import me.khmoon.hot_deal_alarm_api.service.SiteService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
-import javax.transaction.Transactional;
 
 @Component
 @Profile({"beta", "dev", "local"})

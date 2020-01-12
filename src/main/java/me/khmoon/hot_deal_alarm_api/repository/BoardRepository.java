@@ -31,4 +31,9 @@ public class BoardRepository {
             .setParameter("siteId", siteId)
             .getSingleResult();
   }
+
+  public List<Board> findAllWithSite() {
+    return em.createQuery("select b from Board b" +
+            " join fetch b.site s order by s.id", Board.class).getResultList();// TODO order by 성능과 site에서 board를 fetch join하는 것 중에서 성능 비교를 해볼 필요가 있을것 같다.
+  }
 }

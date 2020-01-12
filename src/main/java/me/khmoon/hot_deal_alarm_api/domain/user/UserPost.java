@@ -15,7 +15,7 @@ import static javax.persistence.FetchType.LAZY;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserPost {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue
   @Column(name = "user_post_id")
   private Long id;
   @ManyToOne(fetch = LAZY)

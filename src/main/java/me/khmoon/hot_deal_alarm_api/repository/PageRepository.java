@@ -46,17 +46,19 @@ public class PageRepository {
             .getSingleResult();
   }
 
-  public Page findOneForRefreshing(int refreshingSecond) {
-    Query query = em.createQuery("select p from Page p where p.modifiedDateTime <= :refreshingDateTime", Page.class)
+  public Page findOneForRefreshing() {
+    Query query = em.createQuery("select p from Page p where  p.pageRefreshingDateTime <= :now order by p.pageRefreshingDateTime", Page.class)
             .setMaxResults(1)
-            .setParameter("refreshingDateTime", LocalDateTime.now().minusSeconds(refreshingSecond));//TODO 60초 (칼럼에서)를 받아서 넣어야 되는데
+            .setParameter("now", LocalDateTime.now());
     return (Page) getSingleResultOrNull(query);
   }
 
-  public Page findOneForRefreshingBySiteId(int refreshingSecond, Long siteId) {
-    Query query = em.createQuery("select p from Page p where p.board.site.id=:siteId and p.modifiedDateTime <= :refreshingDateTime order by p.modifiedDateTime", Page.class)
+  public Page findOneForRefreshingBySiteId(Long siteId) { // Board를 eager 하게 가져오면 좋을것 같아 변경 (Board 쿼리가 별도로 한 번 더 나가는 현상 제거)
+    Query query = em.createQuery("select p from Page p" +
+            " join fetch p.board b" +
+            " where b.site.id=:siteId and p.pageRefreshingDateTime <= :now order by p.pageRefreshingDateTime", Page.class)
             .setMaxResults(1)
-            .setParameter("refreshingDateTime", LocalDateTime.now().minusSeconds(refreshingSecond))
+            .setParameter("now", LocalDateTime.now())
             .setParameter("siteId", siteId);
     return (Page) getSingleResultOrNull(query);
   }

@@ -3,24 +3,21 @@ package me.khmoon.hot_deal_alarm_api.service;
 import me.khmoon.hot_deal_alarm_api.domain.site.Site;
 import me.khmoon.hot_deal_alarm_api.domain.site.SiteName;
 import me.khmoon.hot_deal_alarm_api.propertiy.ApplicationProperties;
-import me.khmoon.hot_deal_alarm_api.repository.SiteRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ActiveProfiles("test")
-@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @Transactional
 class SiteServiceTest {
@@ -28,6 +25,8 @@ class SiteServiceTest {
   private SiteService siteService;
   @Autowired
   private ApplicationProperties applicationProperties;
+  @Autowired
+  private EntityManager em;
   private String siteListUrl;
   private String siteViewUrl;
 
@@ -58,7 +57,9 @@ class SiteServiceTest {
     Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
     siteService.add(site);
     Site site2 = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
-    assertThrows(DataIntegrityViolationException.class, () -> siteService.add(site2));
+    siteService.add(site2);
+    assertThrows(PersistenceException.class, () -> em.flush());
+    //DataIntegrityViolationException 기존에 이 exception은 save할 때 나오던게 generate value를 기본으로 변경해보니, save가 바로 안 나가서 exception처리를 이렇게 변경하였다.
   }
 
   @Test

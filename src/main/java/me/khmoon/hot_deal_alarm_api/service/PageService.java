@@ -1,6 +1,7 @@
 package me.khmoon.hot_deal_alarm_api.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import me.khmoon.hot_deal_alarm_api.domain.board.Board;
 import me.khmoon.hot_deal_alarm_api.domain.page.Page;
 import me.khmoon.hot_deal_alarm_api.repository.PageRepository;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Slf4j
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class PageService {
@@ -46,12 +48,13 @@ public class PageService {
     return pageRepository.countBySiteId(siteId);
   }
 
-  public Page findOneForRefreshing(int refreshingSecond) { // TODO redis 를 사용하는게 좋을것 같다.
-    return pageRepository.findOneForRefreshing(refreshingSecond);
+  public Page findOneForRefreshing() { // TODO redis 를 사용하는게 좋을것 같다.
+    return pageRepository.findOneForRefreshing();
   }
 
-  public Page findOneForRefreshingBySiteId(int refreshingSecond, Long siteId) {
-    return pageRepository.findOneForRefreshingBySiteId(refreshingSecond, siteId);
+  public Page findOneForRefreshingBySiteId(Long siteId) {
+    return pageRepository.findOneForRefreshingBySiteId(siteId);
   }
+
 
 }
