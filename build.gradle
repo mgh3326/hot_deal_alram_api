@@ -49,12 +49,13 @@ dependencies {
     }
     implementation 'org.jsoup:jsoup:1.12.1'
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
-    implementation('org.springframework.boot:spring-boot-starter-actuator')
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.8'
 
     //querydsl 추가
     implementation("com.querydsl:querydsl-jpa") // querydsl
     implementation("com.querydsl:querydsl-apt") // querydsl
+    implementation("com.google.guava:guava:28.2-jre") // CVE-2018-10237 (Medium) detected in guava-18.0.jar 이슈에 따라서
 }
 
 test {
