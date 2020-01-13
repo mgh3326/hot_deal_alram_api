@@ -30,12 +30,12 @@ public class PostService {
   }
 
   @Transactional
-  public List<Long> savePostAll(List<Post> posts) {
+  public List<Post> savePostAll(List<Post> posts) {
     return postRepository.saveAll(posts);
   }
 
   @Transactional
-  public List<Long> savePostAllWithBoardId(List<Post> posts, Long boardId) {
+  public List<Post> savePostAllWithBoardId(List<Post> posts, Long boardId) {
     Board board = boardService.findOne(boardId);
     for (Post post : posts) {
       post.setBoard(board);
@@ -44,7 +44,7 @@ public class PostService {
   }
 
   public Post findOne(Long id) {
-    return postRepository.findOne(id);
+    return postRepository.findById(id).orElseThrow();
   }
 
   public List<Post> findAll() {
@@ -52,7 +52,7 @@ public class PostService {
   }
 
   public Post findOneByOriginId(Long postOriginId, Long boardId, Long siteId) {
-    return postRepository.findOneByOriginId(postOriginId, boardId, siteId);
+    return postRepository.findOneByOriginId(postOriginId, boardId, siteId).orElse(null); //TODO null 말고 Optional을 사용해보도록 하자
   }
 
 }

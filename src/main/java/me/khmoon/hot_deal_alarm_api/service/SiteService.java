@@ -23,11 +23,11 @@ public class SiteService {
   }
 
   public Site findOneBySiteName(SiteName siteName) {
-    return siteRepository.findOneBySiteName(siteName);
+    return siteRepository.findBySiteName(siteName).orElseThrow();
   }
 
   public Site findOne(Long id) {
-    return siteRepository.findOne(id);
+    return siteRepository.findById(id).orElseThrow();
   }
 
   public List<Site> findSites() {
