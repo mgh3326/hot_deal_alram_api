@@ -5,9 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import me.khmoon.hot_deal_alarm_api.domain.board.Board;
 import me.khmoon.hot_deal_alarm_api.domain.page.Page;
 import me.khmoon.hot_deal_alarm_api.repository.PageRepository;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -33,7 +35,7 @@ public class PageService {
   }
 
   public Page findOne(Long id) {
-    return pageRepository.findOne(id);
+    return pageRepository.findById(id).orElseThrow();
   }
 
   public List<Page> findAll() {
@@ -48,12 +50,20 @@ public class PageService {
     return pageRepository.countBySiteId(siteId);
   }
 
-  public Page findOneForRefreshing() { // TODO redis 를 사용하는게 좋을것 같다.
-    return pageRepository.findOneForRefreshing();
+  public Page findOneForRefreshing() { // redis를 사용 할 의미가 없을것 같다.(redisdp 없는걸 찾아야 하므로)
+    List<Page> oneForRefreshing = pageRepository.findOneForRefreshing(LocalDateTime.now(), PageRequest.of(0, 1));
+    if (oneForRefreshing.size() == 0) {
+      return null;
+    }
+    return oneForRefreshing.get(0); // TODO null 대신에 optional을 활용해보도록 하자
   }
 
   public Page findOneForRefreshingBySiteId(Long siteId) {
-    return pageRepository.findOneForRefreshingBySiteId(siteId);
+    List<Page> oneForRefreshingBySiteId = pageRepository.findOneForRefreshingBySiteId(siteId, LocalDateTime.now(), PageRequest.of(0, 1));
+    if (oneForRefreshingBySiteId.size() == 0) {
+      return null;
+    }
+    return oneForRefreshingBySiteId.get(0);
   }
 
 

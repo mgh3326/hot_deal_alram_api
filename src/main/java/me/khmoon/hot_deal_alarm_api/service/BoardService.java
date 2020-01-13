@@ -38,11 +38,11 @@ public class BoardService {
   }
 
   public Board findOne(Long id) {
-    return boardRepository.findOne(id);
+    return boardRepository.findById(id).orElseThrow();
   }
 
   public Board findOneByBoardName(BoardName boardName, Long siteId) {
-    return boardRepository.findOneByBoardName(boardName, siteId);
+    return boardRepository.findOneByBoardName(boardName, siteId).orElseThrow();
   }
 
   public List<Board> findAllWithSite() {

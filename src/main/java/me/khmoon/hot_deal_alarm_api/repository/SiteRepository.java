@@ -1,36 +1,17 @@
 package me.khmoon.hot_deal_alarm_api.repository;
 
-import lombok.RequiredArgsConstructor;
 import me.khmoon.hot_deal_alarm_api.domain.site.Site;
 import me.khmoon.hot_deal_alarm_api.domain.site.SiteName;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
-import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
-@Repository
-@RequiredArgsConstructor
-public class SiteRepository {
-  private final EntityManager em;
+public interface SiteRepository extends JpaRepository<Site, Long> {
+  Optional<Site> findBySiteName(SiteName siteName);
 
-  public void save(Site site) {
-    em.persist(site);
-  }
-
-  public Site findOne(Long id) {
-    return em.find(Site.class, id);
-  }
-
-  public Site findOneBySiteName(SiteName siteName) {
-    return em.createQuery("select s from Site s where s.siteName=:siteName", Site.class).setParameter("siteName", siteName).getSingleResult();
-  }
-
-  public List<Site> findAll() {
-    return em.createQuery("select s from Site s", Site.class).getResultList();
-  }
-
-  public List<Site> findAllWithBoard() {
-    return em.createQuery("select s from Site s" +
-            " join fetch s.boards b", Site.class).getResultList();
-  }
+  @Query("select s from Site s" +
+          " join fetch s.boards b")
+  List<Site> findAllWithBoard();
 }
