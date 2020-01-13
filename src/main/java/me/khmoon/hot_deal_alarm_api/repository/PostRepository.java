@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface PostRepository extends JpaRepository<Post, Long> {
   @Query("select  p from Post p where p.postOriginId=:postOriginId and p.board.id=:boardId and p.board.site.id=:siteId")
   Optional<Post> findOneByOriginId(@Param("postOriginId") Long postOriginId, @Param("boardId") Long boardId, @Param("siteId") Long siteId);
+  // TODO findOneByOriginId 단일 쿼리가 아닌 in query를 이용하여 한번에 받아 성능 개선해보도록 하자
 }

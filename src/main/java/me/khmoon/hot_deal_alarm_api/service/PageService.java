@@ -50,7 +50,7 @@ public class PageService {
     return pageRepository.countBySiteId(siteId);
   }
 
-  public Page findOneForRefreshing() { // redis를 사용 할 의미가 없을것 같다.(redisdp 없는걸 찾아야 하므로)
+  public Page findOneForRefreshing() { // redis를 사용 할 의미가 없을것 같다.(redis에 없는걸 찾아야 하므로)
     List<Page> oneForRefreshing = pageRepository.findOneForRefreshing(LocalDateTime.now(), PageRequest.of(0, 1));
     if (oneForRefreshing.size() == 0) {
       return null;
