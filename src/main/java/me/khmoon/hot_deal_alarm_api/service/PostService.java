@@ -51,8 +51,12 @@ public class PostService {
     return postRepository.findAll();
   }
 
-  public Post findOneByOriginId(Long postOriginId, Long boardId, Long siteId) {
-    return postRepository.findOneByOriginId(postOriginId, boardId, siteId).orElse(null); //TODO null 말고 Optional을 사용해보도록 하자
+  public Post findOneByOriginId(Long postOriginId, Long boardId) {
+    return postRepository.findOneByOriginId(postOriginId, boardId).orElse(null); //TODO null 말고 Optional을 사용해보도록 하자
+  }
+
+  public List<Post> findInOriginIds(List<Long> postOriginIds, Long boardId) {
+    return postRepository.findInOriginIds(postOriginIds, boardId);
   }
 
 }
