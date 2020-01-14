@@ -84,8 +84,11 @@ class PageServiceTest {
 //    em.flush();
 
     Page one = pageService.findOne(page.getId());
+    Page one2 = pageService.findOneWithBoardWithSite(page.getId());
     LocalDateTime pageRefreshingDateTime = one.getPageRefreshingDateTime();
+    LocalDateTime pageRefreshingDateTime2 = one2.getPageRefreshingDateTime();
     assertNotEquals(prePageRefreshingDateTime, pageRefreshingDateTime, "modified datetime");
+    assertNotEquals(prePageRefreshingDateTime, pageRefreshingDateTime2, "modified datetime");
 
     List<Page> pages = pageService.findAllBySiteId(site.getId());
     Long count = pageService.countBySiteId(site.getId());

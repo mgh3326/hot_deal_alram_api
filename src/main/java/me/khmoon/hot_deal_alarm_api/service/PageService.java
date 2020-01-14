@@ -38,6 +38,10 @@ public class PageService {
     return pageRepository.findById(id).orElseThrow();
   }
 
+  public Page findOneWithBoardWithSite(Long id) {
+    return pageRepository.findOneWithBoardWithSite(id).orElseThrow();
+  }
+
   public List<Page> findAll() {
     return pageRepository.findAll();
   }

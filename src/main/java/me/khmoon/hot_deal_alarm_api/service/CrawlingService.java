@@ -46,7 +46,7 @@ public class CrawlingService {
 
   @Transactional
   public List<Post> parse(Long pageId) {
-    Page page = pageService.findOne(pageId);
+    Page page = pageService.findOneWithBoardWithSite(pageId);
     Board board = page.getBoard();
     String boardParam = board.getBoardParam();
     Site site = board.getSite();
@@ -55,19 +55,19 @@ public class CrawlingService {
     List<Post> posts = new ArrayList<>();
     switch (siteName) {
       case PPOMPPU:
-        posts = ppomppuParse(boardParam, pageNum, board.getId(), site.getId());
+        posts = ppomppuParse(boardParam, pageNum, board.getId());
         break;
       case DEALBADA:
-        posts = dealbadaParse(boardParam, pageNum, board.getId(), site.getId());
+        posts = dealbadaParse(boardParam, pageNum, board.getId());
         break;
       case CLIEN:
-        posts = clienParse(boardParam, pageNum, board.getId(), site.getId());
+        posts = clienParse(boardParam, pageNum, board.getId());
         break;
     }
     return posts;
   }
 
-  private List<Post> clienParse(String boardParam, int pageNum, Long boardId, Long siteId) {
+  private List<Post> clienParse(String boardParam, int pageNum, Long boardId) {
     List<Post> posts = new ArrayList<>();
     try {
       Document doc = documentByUrl(boardParam, pageNum, clienListUrlFormat);
@@ -104,7 +104,7 @@ public class CrawlingService {
         }
         String originIdStr = element.attr("data-board-sn");
         Long originId = Long.parseLong(originIdStr);
-        postsUpdate(boardId, siteId, posts, writer, title, type, commentCount, recommendationCount, disLikeCount, originClickCount, status, originId);
+        postsUpdate(boardId, posts, writer, title, type, commentCount, recommendationCount, disLikeCount, originClickCount, status, originId);
       }
     } catch (IOException e) {
       e.printStackTrace();
@@ -113,7 +113,7 @@ public class CrawlingService {
 
   }
 
-  private List<Post> ppomppuParse(String boardParam, int pageNum, Long boardId, Long siteId) {
+  private List<Post> ppomppuParse(String boardParam, int pageNum, Long boardId) {
     List<Post> posts = new ArrayList<>();
     try {
       Document doc = documentByUrl(boardParam, pageNum, ppomppuListUrlFormat);
@@ -144,7 +144,7 @@ public class CrawlingService {
         MultiValueMap<String, String> queryParams = UriComponentsBuilder.fromUriString(originUrl).build().getQueryParams();
         String originIdStr = queryParams.get("no").get(0);
         Long originId = Long.parseLong(originIdStr);
-        postsUpdate(boardId, siteId, posts, writer, title, type, commentCount, recommendationCount, disLikeCount, originClickCount, status, originId);
+        postsUpdate(boardId, posts, writer, title, type, commentCount, recommendationCount, disLikeCount, originClickCount, status, originId);
       }
     } catch (IOException e) {
       e.printStackTrace();
@@ -152,7 +152,7 @@ public class CrawlingService {
     return posts;
   }
 
-  private List<Post> dealbadaParse(String boardParam, int pageNum, Long boardId, Long siteId) {
+  private List<Post> dealbadaParse(String boardParam, int pageNum, Long boardId) {
     List<Post> posts = new ArrayList<>();
     try {
       Document doc = documentByUrl(boardParam, pageNum, dealbadaListUrlFormat);
@@ -180,7 +180,7 @@ public class CrawlingService {
         String originIdStr = element.select("td:nth-child(1)").text();
         Long originId = Long.parseLong(originIdStr);
 
-        postsUpdate(boardId, siteId, posts, writer, title, type, commentCount, recommendationCount, disLikeCount, originClickCount, status, originId);
+        postsUpdate(boardId, posts, writer, title, type, commentCount, recommendationCount, disLikeCount, originClickCount, status, originId);
       }
     } catch (IOException e) {
       e.printStackTrace();
@@ -188,8 +188,8 @@ public class CrawlingService {
     return posts;
   }
 
-  private void postsUpdate(Long boardId, Long siteId, List<Post> posts, String writer, String title, String type, int commentCount, int recommendationCount, int disLikeCount, int originClickCount, PostStatus status, Long originId) {
-    Post postByOriginId = postService.findOneByOriginId(originId, boardId, siteId);
+  private void postsUpdate(Long boardId, List<Post> posts, String writer, String title, String type, int commentCount, int recommendationCount, int disLikeCount, int originClickCount, PostStatus status, Long originId) {
+    Post postByOriginId = postService.findOneByOriginId(originId, boardId);
     Post post = Post.builder()
             .postTitle(title)
             .postType(type)

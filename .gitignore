@@ -42,3 +42,4 @@ src/main/resources/application-beta.yml
 
 .DS_Store
 generated/
+spy.log
