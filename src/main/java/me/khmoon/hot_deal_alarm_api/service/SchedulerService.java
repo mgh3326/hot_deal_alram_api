@@ -26,7 +26,7 @@ public class SchedulerService {
     if (page == null) {
       try {
         Random random = new Random();
-        Thread.sleep(random.nextInt(5000));
+        Thread.sleep(random.nextInt(5000) + 3000);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }

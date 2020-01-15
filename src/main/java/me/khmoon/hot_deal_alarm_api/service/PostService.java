@@ -8,6 +8,7 @@ import me.khmoon.hot_deal_alarm_api.repository.PostRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -60,7 +61,11 @@ public class PostService {
   }
 
   public List<Post> findInOriginIds(List<Long> postOriginIds, Long boardId) {
-    return postRepository.findInOriginIds(postOriginIds, boardId);
+    if (postOriginIds.size() > 0) {
+      return postRepository.findInOriginIds(postOriginIds, boardId);
+    } else {
+      return new ArrayList<>();
+    }
   }
 
 
