@@ -7,12 +7,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -57,9 +57,7 @@ class SiteServiceTest {
     Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
     siteService.add(site);
     Site site2 = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
-    siteService.add(site2);
-    assertThrows(PersistenceException.class, () -> em.flush());
-    //DataIntegrityViolationException 기존에 이 exception은 save할 때 나오던게 generate value를 기본으로 변경해보니, save가 바로 안 나가서 exception처리를 이렇게 변경하였다.
+    assertThrows(DataIntegrityViolationException.class, () -> siteService.add(site2));
   }
 
   @Test
