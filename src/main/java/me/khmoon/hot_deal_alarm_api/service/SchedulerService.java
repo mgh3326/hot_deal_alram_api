@@ -40,6 +40,7 @@ public class SchedulerService {
         e.printStackTrace();
       }
       List<Post> posts = crawlingService.parse(page.getId());
+      posts = postService.postUpdatePossible(page.getBoard().getId(), posts);
       postService.savePostAllWithBoardId(posts, page.getBoard().getId());
     }
   }

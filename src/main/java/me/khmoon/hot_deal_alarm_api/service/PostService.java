@@ -3,11 +3,15 @@ package me.khmoon.hot_deal_alarm_api.service;
 import lombok.RequiredArgsConstructor;
 import me.khmoon.hot_deal_alarm_api.domain.board.Board;
 import me.khmoon.hot_deal_alarm_api.domain.post.Post;
+import me.khmoon.hot_deal_alarm_api.domain.post.PostStatus;
 import me.khmoon.hot_deal_alarm_api.repository.PostRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -59,4 +63,36 @@ public class PostService {
     return postRepository.findInOriginIds(postOriginIds, boardId);
   }
 
+
+  public void postsAdd(List<Post> posts, String writer, String title, String type, int commentCount, int recommendationCount, int disLikeCount, int originClickCount, PostStatus status, Long originId) {
+    Post post = Post.builder()
+            .postTitle(title)
+            .postType(type)
+            .postWriter(writer)
+            .postCommentCount(commentCount)
+            .postOriginClickCount(originClickCount)
+            .postRecommendationCount(recommendationCount)
+            .postDisLikeCount(disLikeCount)
+            .postStatus(status)
+            .postOriginId(originId)
+            .build();
+    posts.add(post);
+  }
+
+  @Transactional
+  public List<Post> postUpdatePossible(Long boardId, List<Post> posts) {
+    List<Long> postOriginIds = posts.stream().map(Post::getPostOriginId).collect(Collectors.toList());
+    List<Post> postInOriginIds = findInOriginIds(postOriginIds, boardId);
+    Set<Long> postInOriginIdSet = postInOriginIds.stream().map(Post::getPostOriginId).collect(Collectors.toSet());
+    Map<Long, Post> collect = posts.stream()
+            .filter(post -> postInOriginIdSet.contains(post.getPostOriginId()))
+            .collect(Collectors.toMap(Post::getPostOriginId, post -> post));
+    posts = posts.stream().filter(post -> !postInOriginIdSet.contains(post.getPostOriginId())).collect(Collectors.toList());// TODO filter 부분이 아주 유사한데 이부분을 합칠수 없을까?
+
+    for (Post postInOriginId : postInOriginIds) {
+      Post post = collect.get(postInOriginId.getPostOriginId());
+      postInOriginId.update(post);//이렇게만 해도 수정 되서 저장 할 post 에서는 제외
+    }
+    return posts;
+  }
 }

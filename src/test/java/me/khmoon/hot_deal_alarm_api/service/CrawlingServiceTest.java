@@ -189,9 +189,11 @@ class CrawlingServiceTest {
     Set<Long> postIdSet = new HashSet<>();
     List<Post> posts = crawlingService.parse(page.getId());
     for (Post post : posts) postIdSet.add(post.getPostOriginId());
+    posts = postService.postUpdatePossible(page.getBoard().getId(), posts);
     postService.savePostAllWithBoardId(posts, board.getId());
     List<Post> posts2 = crawlingService.parse(page.getId());
     for (Post post : posts2) postIdSet.add(post.getPostOriginId());
+    posts2 = postService.postUpdatePossible(page.getBoard().getId(), posts2);
     postService.savePostAllWithBoardId(posts2, board.getId());
     List<Post> posts1 = postService.findAll();
     System.out.println("postIdSet.size() = " + postIdSet.size());
