@@ -55,19 +55,19 @@ public class CrawlingService {
     List<Post> posts = new ArrayList<>();
     switch (siteName) {
       case PPOMPPU:
-        posts = ppomppuParse(boardParam, pageNum, board.getId());
+        posts = ppomppuParse(boardParam, pageNum);
         break;
       case DEALBADA:
-        posts = dealbadaParse(boardParam, pageNum, board.getId());
+        posts = dealbadaParse(boardParam, pageNum);
         break;
       case CLIEN:
-        posts = clienParse(boardParam, pageNum, board.getId());
+        posts = clienParse(boardParam, pageNum);
         break;
     }
     return posts;
   }
 
-  private List<Post> clienParse(String boardParam, int pageNum, Long boardId) {
+  private List<Post> clienParse(String boardParam, int pageNum) {
     List<Post> posts = new ArrayList<>();
     try {
       Document doc = documentByUrl(boardParam, pageNum, clienListUrlFormat);
@@ -114,7 +114,7 @@ public class CrawlingService {
   }
 
 
-  private List<Post> ppomppuParse(String boardParam, int pageNum, Long boardId) {
+  private List<Post> ppomppuParse(String boardParam, int pageNum) {
     List<Post> posts = new ArrayList<>();
     try {
       Document doc = documentByUrl(boardParam, pageNum, ppomppuListUrlFormat);
@@ -153,7 +153,7 @@ public class CrawlingService {
     return posts;
   }
 
-  private List<Post> dealbadaParse(String boardParam, int pageNum, Long boardId) {
+  private List<Post> dealbadaParse(String boardParam, int pageNum) {
     List<Post> posts = new ArrayList<>();
     try {
       Document doc = documentByUrl(boardParam, pageNum, dealbadaListUrlFormat);
@@ -161,7 +161,7 @@ public class CrawlingService {
       Elements elements = doc.select("#fboardlist > div > table > tbody").select("tr:not(.bo_notice)");
       for (Element element : elements) {
         String writer = element.select("td.td_name.sv_use > span > a > div").text();
-        String title = element.select("td.td_subject > a").text();
+        String title = element.select("td.td_subject > a").get(0).textNodes().get(0).text();
         String type = element.select("td.td_cate > a").text();
         String commentCountStr = element.select("td.td_subject > a > span.cnt_cmt").text();
         int commentCount = 0;
