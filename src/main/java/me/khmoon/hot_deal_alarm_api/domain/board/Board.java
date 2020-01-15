@@ -20,7 +20,7 @@ import static javax.persistence.FetchType.LAZY;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Board {
   @Id
-  @GeneratedValue()
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "board_id")
   private Long id;
 

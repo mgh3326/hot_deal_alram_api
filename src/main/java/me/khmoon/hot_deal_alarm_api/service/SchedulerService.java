@@ -26,7 +26,7 @@ public class SchedulerService {
     if (page == null) {
       try {
         Random random = new Random();
-        Thread.sleep(random.nextInt(5000));
+        Thread.sleep(random.nextInt(5000) + 3000);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -40,6 +40,7 @@ public class SchedulerService {
         e.printStackTrace();
       }
       List<Post> posts = crawlingService.parse(page.getId());
+      posts = postService.postUpdatePossible(page.getBoard().getId(), posts);
       postService.savePostAllWithBoardId(posts, page.getBoard().getId());
     }
   }

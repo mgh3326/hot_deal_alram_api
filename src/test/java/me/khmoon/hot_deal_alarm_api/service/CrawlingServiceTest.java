@@ -89,9 +89,9 @@ class CrawlingServiceTest {
 
     List<Post> posts = crawlingService.parse(page.getId());
     postService.savePostAllWithBoardId(posts, board.getId());
-    List<Long> originIds = posts.stream().map(Post::getPostOriginId).collect(Collectors.toList());
+    List<Long> postOriginIds = posts.stream().map(Post::getPostOriginId).collect(Collectors.toList());
     List<Post> posts1 = postService.findAll();
-    List<Post> inOriginIds = postService.findInOriginIds(originIds, board.getId());
+    List<Post> inOriginIds = postService.findInOriginIds(postOriginIds, board.getId());
     assertEquals(posts.size(), posts1.size(), "equal test post");
     assertEquals(posts.size(), inOriginIds.size(), "equal test post");
     if (posts1.size() > 0) {
@@ -189,9 +189,11 @@ class CrawlingServiceTest {
     Set<Long> postIdSet = new HashSet<>();
     List<Post> posts = crawlingService.parse(page.getId());
     for (Post post : posts) postIdSet.add(post.getPostOriginId());
+    posts = postService.postUpdatePossible(page.getBoard().getId(), posts);
     postService.savePostAllWithBoardId(posts, board.getId());
     List<Post> posts2 = crawlingService.parse(page.getId());
     for (Post post : posts2) postIdSet.add(post.getPostOriginId());
+    posts2 = postService.postUpdatePossible(page.getBoard().getId(), posts2);
     postService.savePostAllWithBoardId(posts2, board.getId());
     List<Post> posts1 = postService.findAll();
     System.out.println("postIdSet.size() = " + postIdSet.size());
