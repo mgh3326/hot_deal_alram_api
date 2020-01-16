@@ -24,16 +24,16 @@ public class InitDb {
 
   @PostConstruct
   public void init() {
-    initService.dbInitPpomppu();
-    initService.dbInitDealbada();
-    initService.dbInitClien();
-    initService.dbInitCoolenjoy();
+    initService.dbInitPpomppu(1, 5);
+    initService.dbInitDealbada(1, 5);
+    initService.dbInitClien(0, 5);
+    initService.dbInitCoolenjoy(0, 5);
   }
 
   @Component
   @Transactional
   @RequiredArgsConstructor
-  static class InitService {
+  public static class InitService {
     private final SiteService siteService;
     private final ApplicationProperties applicationProperties;
     private final BoardService boardService;
@@ -49,42 +49,42 @@ public class InitDb {
       }
     }
 
-    public void dbInitPpomppu() {
+    public void dbInitPpomppu(int startPageNum, int pageNumSize) {
       String siteListUrl = applicationProperties.getPpomppu().getUrl().getList();
       String siteViewUrl = applicationProperties.getPpomppu().getUrl().getView();
       SiteName siteName = SiteName.PPOMPPU;
       Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
       siteService.add(site);
-      addBoard(site, BoardName.DOMESTIC, applicationProperties.getPpomppu().getParam().getDomestic(), 1, 5);
-      addBoard(site, BoardName.OVERSEAS, applicationProperties.getPpomppu().getParam().getOverseas(), 1, 5);
+      addBoard(site, BoardName.DOMESTIC, applicationProperties.getPpomppu().getParam().getDomestic(), startPageNum, pageNumSize);
+      addBoard(site, BoardName.OVERSEAS, applicationProperties.getPpomppu().getParam().getOverseas(), startPageNum, pageNumSize);
     }
 
-    public void dbInitDealbada() {
+    public void dbInitDealbada(int startPageNum, int pageNumSize) {
       String siteListUrl = applicationProperties.getDealbada().getUrl().getList();
       String siteViewUrl = applicationProperties.getDealbada().getUrl().getView();
       SiteName siteName = SiteName.DEALBADA;
       Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
       siteService.add(site);
-      addBoard(site, BoardName.DOMESTIC, applicationProperties.getDealbada().getParam().getDomestic(), 1, 5);
-      addBoard(site, BoardName.OVERSEAS, applicationProperties.getDealbada().getParam().getOverseas(), 1, 5);
+      addBoard(site, BoardName.DOMESTIC, applicationProperties.getDealbada().getParam().getDomestic(), startPageNum, pageNumSize);
+      addBoard(site, BoardName.OVERSEAS, applicationProperties.getDealbada().getParam().getOverseas(), startPageNum, pageNumSize);
     }
 
-    public void dbInitClien() {
+    public void dbInitClien(int startPageNum, int pageNumSize) {
       String siteListUrl = applicationProperties.getClien().getUrl().getList();
       String siteViewUrl = applicationProperties.getClien().getUrl().getView();
       SiteName siteName = SiteName.CLIEN;
       Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
       siteService.add(site);
-      addBoard(site, BoardName.THRIFTY, applicationProperties.getClien().getParam().getThrifty(), 0, 5);
+      addBoard(site, BoardName.THRIFTY, applicationProperties.getClien().getParam().getThrifty(), startPageNum, pageNumSize);
     }
 
-    public void dbInitCoolenjoy() {
+    public void dbInitCoolenjoy(int startPageNum, int pageNumSize) {
       String siteListUrl = applicationProperties.getCoolenjoy().getUrl().getList();
       String siteViewUrl = applicationProperties.getCoolenjoy().getUrl().getView();
       SiteName siteName = SiteName.COOLENJOY;
       Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
       siteService.add(site);
-      addBoard(site, BoardName.THRIFTY, applicationProperties.getCoolenjoy().getParam().getThrifty(), 0, 5);
+      addBoard(site, BoardName.THRIFTY, applicationProperties.getCoolenjoy().getParam().getThrifty(), startPageNum, pageNumSize);
     }
   }
 }

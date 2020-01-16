@@ -1,24 +1,17 @@
 package me.khmoon.hot_deal_alarm_api;
 
 
+import me.khmoon.hot_deal_alarm_api.common.BaseServiceTest;
 import me.khmoon.hot_deal_alarm_api.domain.page.Page;
 import me.khmoon.hot_deal_alarm_api.service.PageService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
-@ActiveProfiles("test")
-
-@SpringBootTest
-@Transactional
-class InitDbTest {
+class InitDbTest extends BaseServiceTest {
   @Autowired
   private InitDb.InitService initService;
   @Autowired
@@ -27,12 +20,13 @@ class InitDbTest {
   @Test
   void init() {
     // init
-    initService.dbInitPpomppu();
-    initService.dbInitDealbada();
-    initService.dbInitClien();
-    initService.dbInitCoolenjoy();
+    int pageNumSize = 5;
+    initService.dbInitPpomppu(1, pageNumSize);
+    initService.dbInitDealbada(1, pageNumSize);
+    initService.dbInitClien(0, pageNumSize);
+    initService.dbInitCoolenjoy(0, pageNumSize);
     List<Page> pages = pageService.findAll();
-    assertEquals(6 * 5, pages.size());
+    assertEquals(6 * pageNumSize, pages.size());
 
   }
 }
