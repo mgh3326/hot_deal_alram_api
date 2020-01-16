@@ -45,6 +45,18 @@ class SiteApiControllerTest extends BaseControllerTest {
             .andExpect(jsonPath("$[0].boards").exists())
             .andExpect(jsonPath("$[0].boards[0]").exists())
             .andExpect(jsonPath("$[0].boards[0].boardName").exists())
+            .andExpect(jsonPath("$[1].siteName").value("DEALBADA"))
+            .andExpect(jsonPath("$[1].boards").exists())
+            .andExpect(jsonPath("$[1].boards[0]").exists())
+            .andExpect(jsonPath("$[1].boards[0].boardName").exists())
+            .andExpect(jsonPath("$[2].siteName").value("CLIEN"))
+            .andExpect(jsonPath("$[2].boards").exists())
+            .andExpect(jsonPath("$[2].boards[0]").exists())
+            .andExpect(jsonPath("$[2].boards[0].boardName").exists())
+            .andExpect(jsonPath("$[3].siteName").value("COOLENJOY"))
+            .andExpect(jsonPath("$[3].boards").exists())
+            .andExpect(jsonPath("$[3].boards[0]").exists())
+            .andExpect(jsonPath("$[3].boards[0].boardName").exists())
     ;
   }
 }
