@@ -30,11 +30,11 @@ public class Post extends BaseTimeEntity {
   private String postWriter;
   @Enumerated(EnumType.STRING)
   private PostStatus postStatus; // READY, COMP (진행중, 종료됨)
-  private int PostRecommendationCount;//추천수
+  private int postRecommendationCount;//추천수
   @ColumnDefault("0")
-  private int PostDisLikeCount;//싫어요
-  private int PostCommentCount;//댓글 수
-  private int PostOriginClickCount;//실제 클릭수
+  private int postDisLikeCount;//싫어요
+  private int postCommentCount;//댓글 수
+  private int postOriginClickCount;//실제 클릭수
 
 
   @ManyToOne(fetch = LAZY)
@@ -55,10 +55,10 @@ public class Post extends BaseTimeEntity {
     this.postTitle = postTitle;
     this.postWriter = postWriter;
     this.postStatus = postStatus;
-    this.PostRecommendationCount = postRecommendationCount;
-    this.PostDisLikeCount = postDisLikeCount;
-    this.PostCommentCount = postCommentCount;
-    this.PostOriginClickCount = postOriginClickCount;
+    this.postRecommendationCount = postRecommendationCount;
+    this.postDisLikeCount = postDisLikeCount;
+    this.postCommentCount = postCommentCount;
+    this.postOriginClickCount = postOriginClickCount;
   }
 
   @OneToMany(mappedBy = "post")
@@ -75,10 +75,10 @@ public class Post extends BaseTimeEntity {
     if (!this.postType.equals(post.postType)) this.postType = post.postType;
     if (!this.postWriter.equals(post.postWriter)) this.postWriter = post.postWriter;
     if (!this.postStatus.equals(post.postStatus)) this.postStatus = post.postStatus;
-    this.PostRecommendationCount = post.PostRecommendationCount;
-    this.PostDisLikeCount = post.PostDisLikeCount;
-    this.PostCommentCount = post.PostCommentCount;
-    this.PostOriginClickCount = post.PostOriginClickCount;
+    this.postRecommendationCount = post.postRecommendationCount;
+    this.postDisLikeCount = post.postDisLikeCount;
+    this.postCommentCount = post.postCommentCount;
+    this.postOriginClickCount = post.postOriginClickCount;
     return this;
   }
 }

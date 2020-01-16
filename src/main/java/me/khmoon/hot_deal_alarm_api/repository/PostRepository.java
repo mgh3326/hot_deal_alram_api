@@ -1,6 +1,8 @@
 package me.khmoon.hot_deal_alarm_api.repository;
 
 import me.khmoon.hot_deal_alarm_api.domain.post.Post;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,4 +19,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
   @Query("select p from Post p where p.board.id = :boardId and p.postOriginId in :postOriginIds")
   List<Post> findInOriginIds(@Param("postOriginIds") List<Long> postOriginIds, @Param("boardId") Long boardId); // 적용하자!
 
+  @Query("select p from Post p where p.board.id = :boardId")
+  Slice<Post> findPostByBoardId(@Param("boardId") Long boardId, Pageable pageable);
 }

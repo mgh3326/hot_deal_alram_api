@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface SiteRepository extends JpaRepository<Site, Long> {
   Optional<Site> findBySiteName(SiteName siteName);
 
-  @Query("select s from Site s" +
+  @Query("select distinct s from Site s" +
           " join fetch s.boards b")
   List<Site> findAllWithBoard();
 }

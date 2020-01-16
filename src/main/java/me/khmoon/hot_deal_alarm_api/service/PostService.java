@@ -5,6 +5,10 @@ import me.khmoon.hot_deal_alarm_api.domain.board.Board;
 import me.khmoon.hot_deal_alarm_api.domain.post.Post;
 import me.khmoon.hot_deal_alarm_api.domain.post.PostStatus;
 import me.khmoon.hot_deal_alarm_api.repository.PostRepository;
+import me.khmoon.hot_deal_alarm_api.repository.post.query.PostDto;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -99,5 +103,14 @@ public class PostService {
       postInOriginId.update(post);//이렇게만 해도 수정 되서 저장 할 post 에서는 제외
     }
     return posts;
+  }
+
+  public List<PostDto> findPostDtoAll(Long boardId, int page) {
+    PageRequest pageRequest = PageRequest.of(page, 50, Sort.by(Sort.Direction.DESC,
+            "postOriginId"));
+    Slice<Post> postByBoardId = postRepository.findPostByBoardId(boardId, pageRequest);
+    List<Post> content = postByBoardId.getContent();
+    boolean last = postByBoardId.isLast(); // 이것도 담아 줘야겠네
+    return content.stream().map(PostDto::new).collect(Collectors.toList());
   }
 }
