@@ -35,18 +35,4 @@ public class SiteService {
   public List<Site> findSites() {
     return siteRepository.findAll();
   }
-
-  public List<SiteDto> findSiteDtoAllIn() {//쿼리가 site한번, board 한번 총 2번의 쿼리가 나간다는 것이 단점인것 같다.
-    List<Site> result = siteRepository.findAll();// TODO 이게 효율적일까 distinct 쿼리(findSiteDtoAllDistinct)가 효율적일까?
-    return result.stream()
-            .map(SiteDto::new)
-            .collect(Collectors.toList());
-  }
-
-  public List<SiteDto> findSiteDtoAllDistinct() {//아마 distinct를 사용하여도 되는데 paging을 하지 못한다는 단점을 갖은 것으로 생각된다.
-    List<Site> result = siteRepository.findAllWithBoard();
-    return result.stream()
-            .map(SiteDto::new)
-            .collect(Collectors.toList());
-  }
 }
