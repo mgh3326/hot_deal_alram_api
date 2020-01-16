@@ -46,6 +46,7 @@ class CrawlingServiceTest extends BaseServiceTest {
   private String siteViewUrlClien;
   private BoardName boardNameClien = BoardName.THRIFTY;
 
+
   @PostConstruct
   public void init() {
     siteListUrl = applicationProperties.getPpomppu().getUrl().getList();
@@ -142,6 +143,8 @@ class CrawlingServiceTest extends BaseServiceTest {
   void parsePpomppuOverseas() {
     // 사이트 저장
     Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
+    List<Site> sites = siteService.findSites();
+    assertEquals(0, sites.size(), "사이트 갯수가 0이어야 되는데");
     siteService.add(site);
 
     //board 저장

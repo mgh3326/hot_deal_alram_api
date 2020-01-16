@@ -16,4 +16,6 @@ public class BaseServiceTest {
   protected ApplicationProperties applicationProperties;
   @Autowired
   protected EntityManager em;
+
+
 }

@@ -3,6 +3,9 @@ package me.khmoon.hot_deal_alarm_api;
 
 import me.khmoon.hot_deal_alarm_api.common.BaseServiceTest;
 import me.khmoon.hot_deal_alarm_api.domain.page.Page;
+import me.khmoon.hot_deal_alarm_api.repository.BoardRepository;
+import me.khmoon.hot_deal_alarm_api.repository.SiteRepository;
+import me.khmoon.hot_deal_alarm_api.service.InitService;
 import me.khmoon.hot_deal_alarm_api.service.PageService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +16,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class InitDbTest extends BaseServiceTest {
   @Autowired
-  private InitDb.InitService initService;
+  protected SiteRepository siteRepository;
   @Autowired
   private PageService pageService;
+  @Autowired
+  protected BoardRepository boardRepository;
+  @Autowired
+  private InitService initService;
 
   @Test
   void init() {

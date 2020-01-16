@@ -7,10 +7,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
 @SpringBootTest
+@Transactional
 public class BaseControllerTest {
   @Autowired
   protected MockMvc mockMvc;
