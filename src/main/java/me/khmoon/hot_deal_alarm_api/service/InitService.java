@@ -29,7 +29,7 @@ public class InitService {
     }
   }
 
-  public void dbInitPpomppu(int startPageNum, int pageNumSize) {
+  public void dbInitPpomppu(int startPageNum, int pageNumSize) {//TODO 게시판 별로 파라미터를 분리할 필요가 있겠다.
     String siteListUrl = applicationProperties.getPpomppu().getUrl().getList();
     String siteViewUrl = applicationProperties.getPpomppu().getUrl().getView();
     SiteName siteName = SiteName.PPOMPPU;
