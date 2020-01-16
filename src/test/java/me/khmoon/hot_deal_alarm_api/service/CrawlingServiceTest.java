@@ -1,17 +1,14 @@
 package me.khmoon.hot_deal_alarm_api.service;
 
+import me.khmoon.hot_deal_alarm_api.common.BaseServiceTest;
 import me.khmoon.hot_deal_alarm_api.domain.board.Board;
 import me.khmoon.hot_deal_alarm_api.domain.board.BoardName;
 import me.khmoon.hot_deal_alarm_api.domain.page.Page;
 import me.khmoon.hot_deal_alarm_api.domain.post.Post;
 import me.khmoon.hot_deal_alarm_api.domain.site.Site;
 import me.khmoon.hot_deal_alarm_api.domain.site.SiteName;
-import me.khmoon.hot_deal_alarm_api.propertiy.ApplicationProperties;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import java.util.HashSet;
@@ -21,11 +18,7 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@ActiveProfiles("test")
-
-@SpringBootTest
-@Transactional
-class CrawlingServiceTest {
+class CrawlingServiceTest extends BaseServiceTest {
   @Autowired
   private BoardService boardService;
   @Autowired
@@ -36,8 +29,6 @@ class CrawlingServiceTest {
   private CrawlingService crawlingService;
   @Autowired
   private PostService postService;
-  @Autowired
-  private ApplicationProperties applicationProperties;
   private String boardParamDomestic;
   private String boardParamOverseas;
   private String siteListUrl;
@@ -45,7 +36,6 @@ class CrawlingServiceTest {
   private SiteName siteName = SiteName.PPOMPPU;
   private BoardName boardName = BoardName.DOMESTIC;
   private BoardName boardNameOverseas = BoardName.OVERSEAS;
-
   private SiteName siteNameDealbada = SiteName.DEALBADA;
   private String boardParamDealbada;
   private String siteListUrlDealbada;

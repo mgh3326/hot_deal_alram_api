@@ -1,46 +1,34 @@
 package me.khmoon.hot_deal_alarm_api.service;
 
+import me.khmoon.hot_deal_alarm_api.common.BaseServiceTest;
 import me.khmoon.hot_deal_alarm_api.domain.board.Board;
 import me.khmoon.hot_deal_alarm_api.domain.board.BoardName;
 import me.khmoon.hot_deal_alarm_api.domain.page.Page;
 import me.khmoon.hot_deal_alarm_api.domain.site.Site;
 import me.khmoon.hot_deal_alarm_api.domain.site.SiteName;
-import me.khmoon.hot_deal_alarm_api.propertiy.ApplicationProperties;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ActiveProfiles("test")
 
-@SpringBootTest
-@Transactional
-class PageServiceTest {
+class PageServiceTest extends BaseServiceTest {
   @Autowired
   private BoardService boardService;
   @Autowired
   private PageService pageService;
   @Autowired
   private SiteService siteService;
-  @Autowired
-  private ApplicationProperties applicationProperties;
-  @Autowired
-  private EntityManager em;
   private String boardParam;
   private String siteListUrl;
   private String siteViewUrl;
   private SiteName siteName = SiteName.PPOMPPU;
   private BoardName boardName = BoardName.DOMESTIC;
-
   private SiteName siteNameDealbada = SiteName.DEALBADA;
   private String boardParamDealbada;
   private String siteListUrlDealbada;
