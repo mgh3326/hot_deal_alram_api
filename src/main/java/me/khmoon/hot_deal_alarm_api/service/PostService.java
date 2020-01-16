@@ -5,10 +5,8 @@ import me.khmoon.hot_deal_alarm_api.domain.board.Board;
 import me.khmoon.hot_deal_alarm_api.domain.post.Post;
 import me.khmoon.hot_deal_alarm_api.domain.post.PostStatus;
 import me.khmoon.hot_deal_alarm_api.repository.PostRepository;
-import me.khmoon.hot_deal_alarm_api.repository.post.query.PostDto;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.Sort;
+import me.khmoon.hot_deal_alarm_api.repository.post.query.PostQueryRepository;
+import me.khmoon.hot_deal_alarm_api.repository.post.query.PostRes;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +21,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PostService {
   private final PostRepository postRepository;
+  private final PostQueryRepository postQueryRepository;
   private final BoardService boardService;
 
   //페이지 추가
@@ -105,12 +104,13 @@ public class PostService {
     return posts;
   }
 
-  public List<PostDto> findPostDtoAll(Long boardId, int page) {
-    PageRequest pageRequest = PageRequest.of(page, 50, Sort.by(Sort.Direction.DESC,
-            "postOriginId"));
-    Slice<Post> postByBoardId = postRepository.findPostByBoardId(boardId, pageRequest);
-    List<Post> content = postByBoardId.getContent();
-    boolean last = postByBoardId.isLast(); // 이것도 담아 줘야겠네
-    return content.stream().map(PostDto::new).collect(Collectors.toList());
+  public PostRes findPostDtoAll(Long boardId, int page) {
+    return postQueryRepository.findPostDtoAll(boardId, page);
+
+  }
+
+  public void saveParsed(Long boardId, List<Post> posts) {
+    posts = postUpdatePossible(boardId, posts);
+    savePostAllWithBoardId(posts, boardId);
   }
 }
