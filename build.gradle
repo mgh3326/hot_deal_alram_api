@@ -7,8 +7,6 @@ plugins {
 }
 apply plugin: "com.ewerk.gradle.plugins.querydsl"
 
-ext["hibernate-validator.version"] = "6.1.0.Final" // CVE-2019-10219 (Medium) detected in hibernate-validator-6.0.18.Final.jar 따른 추가
-
 group = 'me.khmoon'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
