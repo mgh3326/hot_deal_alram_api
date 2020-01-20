@@ -1,11 +1,10 @@
 plugins {
     id 'org.springframework.boot' version '2.2.3.RELEASE'
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
     id 'java'
     id "jacoco"
-    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
-apply plugin: "com.ewerk.gradle.plugins.querydsl"
 
 group = 'me.khmoon'
 version = '0.0.1-SNAPSHOT'
@@ -47,7 +46,6 @@ dependencies {
 
     //querydsl 추가
     implementation "com.querydsl:querydsl-jpa" // querydsl
-    implementation "com.querydsl:querydsl-apt" // querydsl
     // https://mvnrepository.com/artifact/org.modelmapper/modelmapper
     implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.6'
 
@@ -59,23 +57,19 @@ test {
 }
 check.dependsOn jacocoTestReport
 
-//querydsl 추가
-def querydslDir = 'src/main/generated'
+//querydsl 추가 시작
+def querydslDir = "$buildDir/generated/querydsl"
 querydsl {
-    library = "com.querydsl:querydsl-apt"
     jpa = true
     querydslSourcesDir = querydslDir
 }
 sourceSets {
-    main {
-        java {
-            srcDirs = ['src/main/java', querydslDir]
-        }
-    }
-}
-compileQuerydsl {
-    options.annotationProcessorPath = configurations.querydsl
+    main.java.srcDir querydslDir
 }
 configurations {
     querydsl.extendsFrom compileClasspath
 }
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
+}
+//querydsl 추가 끝
