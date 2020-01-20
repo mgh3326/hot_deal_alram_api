@@ -86,7 +86,7 @@ class CrawlingServiceTest extends BaseServiceTest {
     assertEquals(posts.size(), posts1.size(), "equal test post");
     assertEquals(posts.size(), inOriginIds.size(), "equal test post");
     if (posts1.size() > 0) {
-      assertEquals(posts1.get(0).getCreatedDateTime(), posts1.get(0).getModifiedDateTime(), "equal test post");
+      assertEquals(posts1.get(0).getCreatedDate(), posts1.get(0).getLastModifiedDate(), "equal test post");
     }
   }
 
@@ -111,7 +111,7 @@ class CrawlingServiceTest extends BaseServiceTest {
     List<Post> posts1 = postService.findAll();
     assertEquals(posts.size(), posts1.size(), "equal test post");
     if (posts1.size() > 0) {
-      assertEquals(posts1.get(0).getCreatedDateTime(), posts1.get(0).getModifiedDateTime(), "equal test post");
+      assertEquals(posts1.get(0).getCreatedDate(), posts1.get(0).getLastModifiedDate(), "equal test post");
     }
   }
 
@@ -135,7 +135,7 @@ class CrawlingServiceTest extends BaseServiceTest {
     List<Post> posts1 = postService.findAll();
     assertEquals(posts.size(), posts1.size(), "equal test post");
     if (posts1.size() > 0) {
-      assertEquals(posts1.get(0).getCreatedDateTime(), posts1.get(0).getModifiedDateTime(), "equal test post");
+      assertEquals(posts1.get(0).getCreatedDate(), posts1.get(0).getLastModifiedDate(), "equal test post");
     }
   }
 
@@ -162,7 +162,7 @@ class CrawlingServiceTest extends BaseServiceTest {
 
     assertEquals(posts.size(), posts1.size(), "equal test post");
     if (posts1.size() > 0) {//CI 에서 안 될때가 있어서 만든 조건
-      assertEquals(posts1.get(0).getCreatedDateTime(), posts1.get(0).getModifiedDateTime(), "equal test post");
+      assertEquals(posts1.get(0).getCreatedDate(), posts1.get(0).getLastModifiedDate(), "equal test post");
     }
   }
 
