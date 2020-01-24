@@ -12,6 +12,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.List;
 
+import org.springframework.hateoas.MediaTypes;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -35,7 +37,7 @@ class SiteApiControllerTest extends BaseControllerTest {
     List<Page> pages = pageService.findAll();
     assertEquals(6 * pageNumSize, pages.size());
 
-    mockMvc.perform(MockMvcRequestBuilders.get("/api/sites/").accept(MediaType.APPLICATION_JSON))
+    mockMvc.perform(MockMvcRequestBuilders.get("/api/sites/").contentType(MediaTypes.HAL_JSON))
             .andDo(print())
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.size()").value(4))

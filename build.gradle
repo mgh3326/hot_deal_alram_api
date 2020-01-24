@@ -48,6 +48,8 @@ dependencies {
     implementation "com.querydsl:querydsl-jpa" // querydsl
     // https://mvnrepository.com/artifact/org.modelmapper/modelmapper
     implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.6'
+    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+    implementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 
 //    implementation("com.google.guava:guava:24.1.1-jre") // CVE-2018-10237 (Medium) detected in guava-18.0.jar 이슈에 따라서
 }
