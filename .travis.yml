@@ -5,7 +5,8 @@ jdk:
 branches:
   only:
     - master
-
+services:
+  - redis-server
 # Travis CI 서버의 Cache 활성화
 cache:
   directories:
