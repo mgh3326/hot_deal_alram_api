@@ -21,15 +21,19 @@ public class ProgrammableScheduler {
   private final SiteService siteService;
   private final PageService pageService;
   private final SchedulerService schedulerService;
-  ThreadPoolTaskScheduler[] schedulerArray;
+  private static ThreadPoolTaskScheduler[] schedulerArray;
 
   public void stopScheduler() { // TODO 데이터 변동에 따라서 이게 재 실행 되야할 것 같다. (Annotaion으로 구성하면 좋을것 같다.)
+    if (schedulerArray == null)
+      return;
     for (ThreadPoolTaskScheduler scheduler : schedulerArray) {
       scheduler.shutdown();
     }
+    //여기 new 해준걸 없앨 필요는 없을까?
   }
 
   public void startScheduler() {
+    stopScheduler();
     List<Site> sites = siteService.findSites();
     int size = sites.size();
     System.out.println("siteSize = " + size);
@@ -51,6 +55,6 @@ public class ProgrammableScheduler {
     // 작업 주기 설정
     Long pageSize = pageService.countBySiteId(siteId);
     log.info(String.format("pagesSize = %d sideId = %d", pageSize, siteId));
-    return new PeriodicTrigger(60 / pageSize, TimeUnit.SECONDS);
+    return new PeriodicTrigger(60 , TimeUnit.SECONDS);
   }
 }
