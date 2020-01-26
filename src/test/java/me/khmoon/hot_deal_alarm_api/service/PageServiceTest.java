@@ -130,10 +130,10 @@ class PageServiceTest extends BaseServiceTest {
       pageService.savePageWithBoardId(Page.builder().pageNum(pageNum).pageRefreshSecond(pageRefreshSecond).build(), board.getId());
     }
     //
+    pageService.deleteRedis(site.getId()); // 이전에 있을걸 대비
     Long pageIdBySiteId = pageService.findRedisPageIdBySiteId(site.getId());
     assertNull(pageIdBySiteId);
     List<Page> pages = pageService.findAllForRefreshingBySiteId(site.getId());
-    pageService.deleteRedis(site.getId());
     for (Page page : pages) {
       page.updatePageRefreshingDateTime();
       pageService.saveRedis(site.getId(), page.getId());

@@ -9,20 +9,23 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
 public class PageRedisRepository {
   private final SiteService siteService;
-  private final RedisTemplate<String, Long> redisTemplate;
+  private final RedisTemplate<String, String> redisTemplate;
   @Resource(name = "redisTemplate")
-  private ListOperations<String, Long> listOperations;
+  private ListOperations<String, String> listOperations;
 
   public Long findPageIdBySiteId(Long siteId) {
     Site site = siteService.findOne(siteId);
     SiteName siteName = site.getSiteName();
-    return listOperations.leftPop(siteName.toString());
+    String pop = listOperations.leftPop(siteName.toString());
+    if (pop == null) {
+      return null;
+    }
+    return Long.valueOf(pop);
   }
 
   public void save(Long siteId, Long pageId) {
@@ -32,18 +35,18 @@ public class PageRedisRepository {
   }
 
   public void save(String siteNameStr, Long pageId) {
-    listOperations.rightPush(siteNameStr, pageId);
+    listOperations.rightPush(siteNameStr, pageId.toString());
   }
 
-  public void saveAll(Long siteId, List<Long> pageIds) {
-    Site site = siteService.findOne(siteId);
-    SiteName siteName = site.getSiteName();
-    saveAll(siteName.toString(), pageIds);
-  }
-
-  public void saveAll(String siteNameStr, List<Long> pageIds) {
-    listOperations.rightPushAll(siteNameStr, pageIds);
-  }
+//  public void saveAll(Long siteId, List<Long> pageIds) {
+//    Site site = siteService.findOne(siteId);
+//    SiteName siteName = site.getSiteName();
+//    saveAll(siteName.toString(), pageIds);
+//  }
+//
+//  public void saveAll(String siteNameStr, List<Long> pageIds) {
+//    listOperations.rightPushAll(siteNameStr, pageIds);
+//  }
 
   public void delete(Long siteId) {
     Site site = siteService.findOne(siteId);

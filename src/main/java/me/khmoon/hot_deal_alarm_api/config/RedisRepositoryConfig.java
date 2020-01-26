@@ -8,7 +8,6 @@ import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
-import org.springframework.data.redis.serializer.GenericToStringSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
@@ -34,7 +33,7 @@ public class RedisRepositoryConfig {
   public RedisTemplate<?, ?> redisTemplate() {
     RedisTemplate<byte[], byte[]> redisTemplate = new RedisTemplate<>();
     redisTemplate.setKeySerializer(new StringRedisSerializer());
-    redisTemplate.setValueSerializer(new GenericToStringSerializer<>(Long.class));//이거 수정해야 다른 포맷에도 사용 할 수 있겠다.
+    redisTemplate.setValueSerializer(new StringRedisSerializer());
     redisTemplate.setConnectionFactory(redisConnectionFactory());
     return redisTemplate;
   }
