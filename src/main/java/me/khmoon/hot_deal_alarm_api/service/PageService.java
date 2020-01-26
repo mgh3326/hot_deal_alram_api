@@ -83,4 +83,12 @@ public class PageService {
   public void saveRedis(Long siteId, Long pageId) {
     pageRedisRepository.save(siteId, pageId);
   }
+
+  public void deleteRedis(Long siteId) {
+    pageRedisRepository.delete(siteId);
+  }
+
+  public Page findOneWithBoard(Long pageId) {
+    return pageRepository.findOneWithBoard(pageId).orElseThrow();
+  }
 }

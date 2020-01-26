@@ -48,7 +48,13 @@ public class ProgrammableScheduler {
   }
 
   private Runnable getRunnable(Long siteId) {
-    return () -> schedulerService.updatePostFromPage(siteId);
+    return () -> {
+      try {
+        schedulerService.updatePostFromPage(siteId);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    };
   }
 
   private Trigger getTrigger(Long siteId) {

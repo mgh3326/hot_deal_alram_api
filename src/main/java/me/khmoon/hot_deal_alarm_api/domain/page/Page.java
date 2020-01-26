@@ -24,7 +24,7 @@ public class Page extends BaseTimeEntity {
   private Long id;
 
   @NotNull
-  private int pageNum;
+  private int pageNum; // Long 으로 바꿔야하지 않을까?
   @NotNull
   private int pageRefreshSecond;//페이지 크롤링 시간
   @NotNull
