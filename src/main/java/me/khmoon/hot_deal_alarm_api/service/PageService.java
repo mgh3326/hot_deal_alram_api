@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.khmoon.hot_deal_alarm_api.domain.board.Board;
 import me.khmoon.hot_deal_alarm_api.domain.page.Page;
+import me.khmoon.hot_deal_alarm_api.repository.PageRedisRepository;
 import me.khmoon.hot_deal_alarm_api.repository.PageRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.List;
 public class PageService {
   private final PageRepository pageRepository;
   private final BoardService boardService;
+  private final PageRedisRepository pageRedisRepository;
 
   //페이지 추가
   @Transactional
@@ -70,5 +72,15 @@ public class PageService {
     return oneForRefreshingBySiteId.get(0);
   }
 
+  public List<Page> findAllForRefreshingBySiteId(Long siteId) {
+    return pageRepository.findAllForRefreshingBySiteId(siteId, LocalDateTime.now());
+  }
 
+  public Long findRedisPageIdBySiteId(Long siteId) {
+    return pageRedisRepository.findPageIdBySiteId(siteId);
+  }
+
+  public void saveRedis(Long siteId, Long pageId) {
+    pageRedisRepository.save(siteId, pageId);
+  }
 }

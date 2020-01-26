@@ -51,11 +51,9 @@ class PageServiceTest extends BaseServiceTest {
     // 사이트 저장
     Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
     siteService.add(site);
-
     //board 저장
     Board board = Board.builder().boardName(boardName).boardParam(boardParam).build();
     boardService.addWithSiteId(board, site.getId());
-
     int pageNum = 1;
     int pageRefreshSecond = 1;
     Page page = Page.builder().pageNum(pageNum).pageRefreshSecond(pageRefreshSecond).build();
@@ -119,5 +117,30 @@ class PageServiceTest extends BaseServiceTest {
     pageService.savePageWithBoardId(page, board.getId());
     assertEquals(pageNum, page.getPageNum(), "equal test page page_num");
     assertEquals(pageRefreshSecond, page.getPageRefreshSecond(), "equal test page page_num");
+  }
+
+  @Test
+  void findPageIdBySiteId() {
+    // site 넣기
+    Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
+    siteService.add(site);
+    //board 저장
+    Board board = Board.builder().boardName(boardName).boardParam(boardParam).build();
+    boardService.addWithSiteId(board, site.getId());
+    //page 넣기
+    int pageRefreshSecond = 1;
+    for (int pageNum = 1; pageNum <= 1; pageNum++) {
+      pageService.savePageWithBoardId(Page.builder().pageNum(pageNum).pageRefreshSecond(pageRefreshSecond).build(), board.getId());
+    }
+    //
+    Long pageIdBySiteId = pageService.findRedisPageIdBySiteId(site.getId());
+    assertNull(pageIdBySiteId);
+    List<Page> pages = pageService.findAllForRefreshingBySiteId(site.getId());
+    for (Page page : pages) {
+      page.updatePageRefreshingDateTime();
+      pageService.saveRedis(site.getId(), page.getId());
+    }
+    pageIdBySiteId = pageService.findRedisPageIdBySiteId(site.getId());
+    assertNotNull(pageIdBySiteId);
   }
 }

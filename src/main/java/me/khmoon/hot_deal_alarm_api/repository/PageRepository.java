@@ -32,6 +32,11 @@ public interface PageRepository extends JpaRepository<Page, Long> {
 
   @Query("select p from Page p" +
           " join fetch p.board b" +
+          " where b.site.id=:siteId and p.pageRefreshingDateTime <= :now order by p.pageRefreshingDateTime")
+  List<Page> findAllForRefreshingBySiteId(@Param("siteId") Long siteId, @Param("now") LocalDateTime now);
+
+  @Query("select p from Page p" +
+          " join fetch p.board b" +
           " join fetch b.site s" +
           " where p.id = :id")
   Optional<Page> findOneWithBoardWithSite(@Param("id") Long id);
