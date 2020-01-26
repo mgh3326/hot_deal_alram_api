@@ -18,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 class PageServiceTest extends BaseServiceTest {
+
   @Autowired
   private BoardService boardService;
   @Autowired
@@ -51,11 +52,9 @@ class PageServiceTest extends BaseServiceTest {
     // 사이트 저장
     Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
     siteService.add(site);
-
     //board 저장
     Board board = Board.builder().boardName(boardName).boardParam(boardParam).build();
     boardService.addWithSiteId(board, site.getId());
-
     int pageNum = 1;
     int pageRefreshSecond = 1;
     Page page = Page.builder().pageNum(pageNum).pageRefreshSecond(pageRefreshSecond).build();
@@ -83,10 +82,8 @@ class PageServiceTest extends BaseServiceTest {
     assertEquals(1, pages.size(), "findAllBySiteId page size");
     assertEquals(1, count, "findAllBySiteId page size");
 
-    Page pageForRefreshing = pageService.findOneForRefreshing();
-    Page pageForRefreshingBySiteId = pageService.findOneForRefreshingBySiteId(site.getId());
-    assertNull(pageForRefreshing, "findAllBySiteId page size");
-    assertNull(pageForRefreshingBySiteId, "findAllBySiteId page size");
+    List<Page> pagesForRefreshing = pageService.findAllForRefreshingBySiteId(site.getId());
+    assertEquals(0, pagesForRefreshing.size());
     one = pageService.findOne(page.getId());
     one.updatePageRefreshingDateTime();
 
@@ -96,10 +93,8 @@ class PageServiceTest extends BaseServiceTest {
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
-    Page oneForRefreshing = pageService.findOneForRefreshing(); // 1초 된거 있나 확인하도록!
-    Page oneForRefreshingBySiteId = pageService.findOneForRefreshingBySiteId(site.getId()); // 1초 된거 있나 확인하도록!
-    assertNotNull(oneForRefreshing, "findAllBySiteId page size");
-    assertNotNull(oneForRefreshingBySiteId, "findAllBySiteId page size");
+    List<Page> onesForRefreshing = pageService.findAllForRefreshingBySiteId(site.getId());
+    assertNotEquals(0, onesForRefreshing.size());
   }
 
   @Test
@@ -119,5 +114,34 @@ class PageServiceTest extends BaseServiceTest {
     pageService.savePageWithBoardId(page, board.getId());
     assertEquals(pageNum, page.getPageNum(), "equal test page page_num");
     assertEquals(pageRefreshSecond, page.getPageRefreshSecond(), "equal test page page_num");
+  }
+
+  @Test
+  void findPageIdBySiteId() {
+    // site 넣기
+    Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
+    siteService.add(site);
+    //board 저장
+    Board board = Board.builder().boardName(boardName).boardParam(boardParam).build();
+    boardService.addWithSiteId(board, site.getId());
+    //page 넣기
+    int pageRefreshSecond = 1;
+    for (int pageNum = 1; pageNum <= 1; pageNum++) {
+      pageService.savePageWithBoardId(Page.builder().pageNum(pageNum).pageRefreshSecond(pageRefreshSecond).build(), board.getId());
+    }
+    //
+    pageService.deleteRedis(site.getId()); // 이전에 있을걸 대비
+    Long pageIdBySiteId = pageService.findRedisPageIdBySiteId(site.getId());
+    assertNull(pageIdBySiteId);
+    List<Page> pages = pageService.findAllForRefreshingBySiteId(site.getId());
+    for (Page page : pages) {
+      page.updatePageRefreshingDateTime();
+      pageService.saveRedis(site.getId(), page.getId());
+    }
+
+    pageIdBySiteId = pageService.findRedisPageIdBySiteId(site.getId());
+    assertNotNull(pageIdBySiteId);
+    pageIdBySiteId = pageService.findRedisPageIdBySiteId(site.getId());
+    assertNull(pageIdBySiteId);
   }
 }
