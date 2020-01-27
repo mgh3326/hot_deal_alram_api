@@ -9,13 +9,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
-public class PostRes {
+public class PostAllRes {
   boolean isLast;
-  List<PostDto> posts = new ArrayList<>();
+  List<PostAllDto> posts = new ArrayList<>();
 
-  public PostRes(Slice<Post> postSlice) {
+  public PostAllRes(Slice<Post> postSlice) {
     List<Post> content = postSlice.getContent();
-    posts = content.stream().map(PostDto::new).collect(Collectors.toList());
+    this.posts = content.stream().map(PostAllDto::new).collect(Collectors.toList());
     this.isLast = postSlice.isLast(); // 이것도 담아 줘야겠네
   }
 }

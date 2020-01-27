@@ -1,6 +1,7 @@
 package me.khmoon.hot_deal_alarm_api.api;
 
 import lombok.RequiredArgsConstructor;
+import me.khmoon.hot_deal_alarm_api.repository.post.query.PostAllRes;
 import me.khmoon.hot_deal_alarm_api.repository.post.query.PostRes;
 import me.khmoon.hot_deal_alarm_api.service.PostService;
 import org.springframework.hateoas.MediaTypes;
@@ -22,7 +23,7 @@ public class PostApiController {
   }
 
   @GetMapping("/all")
-  public PostRes postsAll(@RequestParam(value = "page", defaultValue = "0") int page) {
+  public PostAllRes postsAll(@RequestParam(value = "page", defaultValue = "0") int page) {
     return postService.findPostDtoAll(page);
   }
 }

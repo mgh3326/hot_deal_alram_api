@@ -22,7 +22,8 @@ public class Site {
 
   @Enumerated(EnumType.STRING)
   private SiteName siteName;
-
+  @Enumerated(EnumType.STRING)
+  private SiteKoreanName siteKoreanName;
   private String siteListUrl;
   private String siteViewUrl;
 
@@ -34,5 +35,19 @@ public class Site {
     this.siteName = siteName;
     this.siteViewUrl = siteViewUrl;
     this.siteListUrl = siteListUrl;
+    switch (siteName) {
+      case PPOMPPU:
+        this.siteKoreanName = SiteKoreanName.뽐뿌;
+        break;
+      case DEALBADA:
+        this.siteKoreanName = SiteKoreanName.딜바다;
+        break;
+      case CLIEN:
+        this.siteKoreanName = SiteKoreanName.클리앙;
+        break;
+      case COOLENJOY:
+        this.siteKoreanName = SiteKoreanName.쿨엔조이;
+        break;
+    }
   }
 }

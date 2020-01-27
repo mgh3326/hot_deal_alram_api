@@ -20,10 +20,11 @@ public class PostQueryRepository {
     return new PostRes(postByBoardId);
   }
 
-  public PostRes findPostDtoAll(int page) {
+  public PostAllRes findPostDtoAll(int page) {
     PageRequest pageRequest = PageRequest.of(page, 50, Sort.by(Sort.Direction.DESC,
             "createdDate"));
     Slice<Post> posts = postRepository.findPosts(pageRequest);
-    return new PostRes(posts);
+    PostAllRes postAllRes = new PostAllRes(posts);
+    return postAllRes;
   }
 }

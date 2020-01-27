@@ -26,6 +26,8 @@ public class Board {
 
   @Enumerated(EnumType.STRING)
   private BoardName boardName;
+  @Enumerated(EnumType.STRING)
+  private BoardKoreanName boardKoreanName;
   private String boardParam;
 
   @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
@@ -42,6 +44,17 @@ public class Board {
   public Board(BoardName boardName, String boardParam) {
     this.boardName = boardName;
     this.boardParam = boardParam;
+    switch (boardName) {
+      case DOMESTIC:
+        this.boardKoreanName = BoardKoreanName.국내;
+        break;
+      case OVERSEAS:
+        this.boardKoreanName = BoardKoreanName.해외;
+        break;
+      case THRIFTY:
+        this.boardKoreanName = BoardKoreanName.알구게;
+        break;
+    }
   }
 
   //==연관관계 메서드==//

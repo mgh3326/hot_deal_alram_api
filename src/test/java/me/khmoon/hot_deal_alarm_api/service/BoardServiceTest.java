@@ -2,6 +2,7 @@ package me.khmoon.hot_deal_alarm_api.service;
 
 import me.khmoon.hot_deal_alarm_api.common.BaseServiceTest;
 import me.khmoon.hot_deal_alarm_api.domain.board.Board;
+import me.khmoon.hot_deal_alarm_api.domain.board.BoardKoreanName;
 import me.khmoon.hot_deal_alarm_api.domain.board.BoardName;
 import me.khmoon.hot_deal_alarm_api.domain.site.Site;
 import me.khmoon.hot_deal_alarm_api.domain.site.SiteName;
@@ -25,6 +26,7 @@ class BoardServiceTest extends BaseServiceTest {
   private String siteViewUrl;
   private SiteName siteName = SiteName.PPOMPPU;
   private BoardName boardName = BoardName.DOMESTIC;
+  private BoardKoreanName boardKoreanName = BoardKoreanName.국내;
 
   @PostConstruct
   public void init() {
@@ -49,6 +51,7 @@ class BoardServiceTest extends BaseServiceTest {
     Board board1 = boardService.findOne(board.getId());
     assertEquals(board1.getBoardName(), boardName, "equal test board name");
     assertEquals(board1.getBoardParam(), boardParam, "equal test board name");
+    assertEquals(boardKoreanName, board1.getBoardKoreanName(), "equal test board name");
   }
 
 

@@ -5,6 +5,7 @@ import me.khmoon.hot_deal_alarm_api.domain.board.Board;
 import me.khmoon.hot_deal_alarm_api.domain.post.Post;
 import me.khmoon.hot_deal_alarm_api.domain.post.PostStatus;
 import me.khmoon.hot_deal_alarm_api.repository.PostRepository;
+import me.khmoon.hot_deal_alarm_api.repository.post.query.PostAllRes;
 import me.khmoon.hot_deal_alarm_api.repository.post.query.PostQueryRepository;
 import me.khmoon.hot_deal_alarm_api.repository.post.query.PostRes;
 import org.springframework.stereotype.Service;
@@ -114,7 +115,7 @@ public class PostService {
     savePostAllWithBoardId(posts, boardId);
   }
 
-  public PostRes findPostDtoAll(int page) {
+  public PostAllRes findPostDtoAll(int page) {
     return postQueryRepository.findPostDtoAll(page);
   }
 }

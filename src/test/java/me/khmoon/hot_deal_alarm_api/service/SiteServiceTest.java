@@ -2,6 +2,7 @@ package me.khmoon.hot_deal_alarm_api.service;
 
 import me.khmoon.hot_deal_alarm_api.common.BaseServiceTest;
 import me.khmoon.hot_deal_alarm_api.domain.site.Site;
+import me.khmoon.hot_deal_alarm_api.domain.site.SiteKoreanName;
 import me.khmoon.hot_deal_alarm_api.domain.site.SiteName;
 import me.khmoon.hot_deal_alarm_api.propertiy.ApplicationProperties;
 import org.junit.jupiter.api.DisplayName;
@@ -31,6 +32,7 @@ class SiteServiceTest extends BaseServiceTest {
 
 
   private SiteName siteName = SiteName.PPOMPPU;
+  private SiteKoreanName siteKoreanName = SiteKoreanName.뽐뿌;
 
 
   @Test
@@ -42,6 +44,7 @@ class SiteServiceTest extends BaseServiceTest {
     assertEquals(site1.getSiteName(), siteName);
     assertEquals(site1.getSiteListUrl(), siteListUrl);
     assertEquals(site1.getSiteViewUrl(), siteViewUrl);
+    assertEquals(siteKoreanName, site1.getSiteKoreanName());
   }
 
   @Test
