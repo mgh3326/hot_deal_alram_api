@@ -10,7 +10,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -25,17 +24,9 @@ class PageServiceTest extends BaseServiceTest {
   private PageService pageService;
   @Autowired
   private SiteService siteService;
-  private String boardParam;
   private SiteName siteName = SiteName.PPOMPPU;
   private BoardName boardName = BoardName.DOMESTIC;
   private SiteName siteNameDealbada = SiteName.DEALBADA;
-  private String boardParamDealbada;
-
-  @PostConstruct
-  public void init() {
-    boardParam = applicationProperties.getPpomppu().getParam().getDomestic();
-    boardParamDealbada = applicationProperties.getDealbada().getParam().getDomestic();
-  }
 
   @Test
   @DisplayName("페이지 저장")
@@ -44,7 +35,7 @@ class PageServiceTest extends BaseServiceTest {
     Site site = Site.builder().siteName(siteName).build();
     siteService.add(site);
     //board 저장
-    Board board = Board.builder().boardName(boardName).boardParam(boardParam).build();
+    Board board = Board.builder().boardName(boardName).build();
     boardService.addWithSiteId(board, site.getId());
     int pageNum = 1;
     int pageRefreshSecond = 1;
@@ -96,7 +87,7 @@ class PageServiceTest extends BaseServiceTest {
     siteService.add(site);
 
     //board 저장
-    Board board = Board.builder().boardName(boardName).boardParam(boardParamDealbada).build();
+    Board board = Board.builder().boardName(boardName).build();
     boardService.addWithSiteId(board, site.getId());
 
     int pageNum = 1;
@@ -113,7 +104,7 @@ class PageServiceTest extends BaseServiceTest {
     Site site = Site.builder().siteName(siteName).build();
     siteService.add(site);
     //board 저장
-    Board board = Board.builder().boardName(boardName).boardParam(boardParam).build();
+    Board board = Board.builder().boardName(boardName).build();
     boardService.addWithSiteId(board, site.getId());
     //page 넣기
     int pageRefreshSecond = 1;

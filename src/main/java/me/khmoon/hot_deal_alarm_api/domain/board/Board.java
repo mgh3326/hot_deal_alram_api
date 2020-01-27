@@ -41,9 +41,8 @@ public class Board {
   private Site site;
 
   @Builder
-  public Board(BoardName boardName, String boardParam) {
+  public Board(BoardName boardName) {
     this.boardName = boardName;
-    this.boardParam = boardParam;
     switch (boardName) {
       case DOMESTIC:
         this.boardKoreanName = BoardKoreanName.국내;
@@ -61,5 +60,9 @@ public class Board {
   public void setSite(Site site) {
     this.site = site;
     site.getBoards().add(this);
+  }
+
+  public void addParam(String boardParam) {
+    this.boardParam = boardParam;
   }
 }

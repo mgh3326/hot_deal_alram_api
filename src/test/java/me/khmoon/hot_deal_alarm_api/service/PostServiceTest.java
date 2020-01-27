@@ -31,7 +31,6 @@ class PostServiceTest extends BaseServiceTest {
   private BoardName boardNameThrifty = BoardName.THRIFTY;
   private SiteName siteNameClien = SiteName.CLIEN;
   private String boardParamClien;
-  private String boardParamCoolenjoy;
   private SiteName siteNameCoolenjoy = SiteName.COOLENJOY;
 
   @PostConstruct
@@ -39,7 +38,6 @@ class PostServiceTest extends BaseServiceTest {
     boardParam = applicationProperties.getPpomppu().getParam().getDomestic();
     boardParamDealbada = applicationProperties.getDealbada().getParam().getDomestic();
     boardParamClien = applicationProperties.getClien().getParam().getThrifty();
-    boardParamCoolenjoy = applicationProperties.getCoolenjoy().getParam().getThrifty();
   }
 
   @Test
@@ -49,7 +47,7 @@ class PostServiceTest extends BaseServiceTest {
     siteService.add(site);
 
     //board 저장
-    Board board = Board.builder().boardName(boardName).boardParam(boardParam).build();
+    Board board = Board.builder().boardName(boardName).build();
     boardService.addWithSiteId(board, site.getId());
 
     String postTitle = "[티몬] 자뎅 커피/음료 230mlx30팩 / 230mlx24팩 ( 9,900원 / 무...";
@@ -84,7 +82,7 @@ class PostServiceTest extends BaseServiceTest {
     siteService.add(site);
 
     //board 저장
-    Board board = Board.builder().boardName(boardName).boardParam(boardParam).build();
+    Board board = Board.builder().boardName(boardName).build();
     boardService.addWithSiteId(board, site.getId());
 
     String postTitle = "[티몬] 자뎅 커피/음료 230mlx30팩 / 230mlx24팩 ( 9,900원 / 무...";
@@ -141,7 +139,7 @@ class PostServiceTest extends BaseServiceTest {
     siteService.add(site);
 
     //board 저장
-    Board board = Board.builder().boardName(boardName).boardParam(boardParamDealbada).build();
+    Board board = Board.builder().boardName(boardName).build();
     boardService.addWithSiteId(board, site.getId());
 
     String postTitle = "  [G마켓] 컬쳐랜드 10만/5만원권 각각 현금 10% 캐시백 or 카드 7% 할인 (100,000/0)";
@@ -177,7 +175,7 @@ class PostServiceTest extends BaseServiceTest {
     siteService.add(site);
 
     //board 저장
-    Board board = Board.builder().boardName(boardNameThrifty).boardParam(boardParamClien).build();
+    Board board = Board.builder().boardName(boardNameThrifty).build();
     boardService.addWithSiteId(board, site.getId());
 
     String postTitle = "  [G마켓] 컬쳐랜드 10만/5만원권 각각 현금 10% 캐시백 or 카드 7% 할인 (100,000/0)";
@@ -212,7 +210,7 @@ class PostServiceTest extends BaseServiceTest {
     siteService.add(site);
 
     //board 저장
-    Board board = Board.builder().boardName(boardNameThrifty).boardParam(boardParamCoolenjoy).build();
+    Board board = Board.builder().boardName(boardNameThrifty).build();
     boardService.addWithSiteId(board, site.getId());
 
     String postTitle = "[Amazon] WD Elements 데스크톱 하드 드라이브 8TB 12…";

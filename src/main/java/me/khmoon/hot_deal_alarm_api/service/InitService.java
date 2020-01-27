@@ -6,7 +6,6 @@ import me.khmoon.hot_deal_alarm_api.domain.board.BoardName;
 import me.khmoon.hot_deal_alarm_api.domain.page.Page;
 import me.khmoon.hot_deal_alarm_api.domain.site.Site;
 import me.khmoon.hot_deal_alarm_api.domain.site.SiteName;
-import me.khmoon.hot_deal_alarm_api.propertiy.ApplicationProperties;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,12 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class InitService {
   private final SiteService siteService;
-  private final ApplicationProperties applicationProperties;
   private final BoardService boardService;
   private final PageService pageService;
 
-  private void addBoard(Site site, BoardName boardName, String boardParam, int startPageNum, int pageNumSize) {
-    Board board = Board.builder().boardName(boardName).boardParam(boardParam).build();
+  private void addBoard(Site site, BoardName boardName, int startPageNum, int pageNumSize) {
+    Board board = Board.builder().boardName(boardName).build();
     boardService.addWithSiteId(board, site.getId());
     int pageRefreshSecond = 60;
     for (int pageNum = startPageNum; pageNum < pageNumSize + startPageNum; pageNum++) {
@@ -32,26 +30,26 @@ public class InitService {
   public void dbInitPpomppu(int startPageNum, int pageNumSize) {//TODO 게시판 별로 파라미터를 분리할 필요가 있겠다.
     Site site = Site.builder().siteName(SiteName.PPOMPPU).build();
     siteService.add(site);
-    addBoard(site, BoardName.DOMESTIC, applicationProperties.getPpomppu().getParam().getDomestic(), startPageNum, pageNumSize);
-    addBoard(site, BoardName.OVERSEAS, applicationProperties.getPpomppu().getParam().getOverseas(), startPageNum, pageNumSize);
+    addBoard(site, BoardName.DOMESTIC, startPageNum, pageNumSize);
+    addBoard(site, BoardName.OVERSEAS, startPageNum, pageNumSize);
   }
 
   public void dbInitDealbada(int startPageNum, int pageNumSize) {
     Site site = Site.builder().siteName(SiteName.DEALBADA).build();
     siteService.add(site);
-    addBoard(site, BoardName.DOMESTIC, applicationProperties.getDealbada().getParam().getDomestic(), startPageNum, pageNumSize);
-    addBoard(site, BoardName.OVERSEAS, applicationProperties.getDealbada().getParam().getOverseas(), startPageNum, pageNumSize);
+    addBoard(site, BoardName.DOMESTIC, startPageNum, pageNumSize);
+    addBoard(site, BoardName.OVERSEAS, startPageNum, pageNumSize);
   }
 
   public void dbInitClien(int startPageNum, int pageNumSize) {
     Site site = Site.builder().siteName(SiteName.CLIEN).build();
     siteService.add(site);
-    addBoard(site, BoardName.THRIFTY, applicationProperties.getClien().getParam().getThrifty(), startPageNum, pageNumSize);
+    addBoard(site, BoardName.THRIFTY, startPageNum, pageNumSize);
   }
 
   public void dbInitCoolenjoy(int startPageNum, int pageNumSize) {
     Site site = Site.builder().siteName(SiteName.COOLENJOY).build();
     siteService.add(site);
-    addBoard(site, BoardName.THRIFTY, applicationProperties.getCoolenjoy().getParam().getThrifty(), startPageNum, pageNumSize);
+    addBoard(site, BoardName.THRIFTY, startPageNum, pageNumSize);
   }
 }

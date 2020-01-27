@@ -10,7 +10,6 @@ import me.khmoon.hot_deal_alarm_api.domain.site.SiteName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.PostConstruct;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,25 +28,13 @@ class CrawlingServiceTest extends BaseServiceTest {
   private CrawlingService crawlingService;
   @Autowired
   private PostService postService;
-  private String boardParamDomestic;
-  private String boardParamOverseas;
   private SiteName siteName = SiteName.PPOMPPU;
   private BoardName boardName = BoardName.DOMESTIC;
   private BoardName boardNameOverseas = BoardName.OVERSEAS;
   private SiteName siteNameDealbada = SiteName.DEALBADA;
-  private String boardParamDealbada;
   private SiteName siteNameClien = SiteName.CLIEN;
-  private String boardParamClien;
   private BoardName boardNameClien = BoardName.THRIFTY;
 
-
-  @PostConstruct
-  public void init() {
-    boardParamDomestic = applicationProperties.getPpomppu().getParam().getDomestic();
-    boardParamOverseas = applicationProperties.getPpomppu().getParam().getOverseas();
-    boardParamDealbada = applicationProperties.getDealbada().getParam().getDomestic();
-    boardParamClien = applicationProperties.getClien().getParam().getThrifty();
-  }
 
   @Test
   void parsePpomppuDomestic() {
@@ -56,7 +43,7 @@ class CrawlingServiceTest extends BaseServiceTest {
     siteService.add(site);
 
     //board 저장
-    Board board = Board.builder().boardName(boardName).boardParam(boardParamDomestic).build();
+    Board board = Board.builder().boardName(boardName).build();
     boardService.addWithSiteId(board, site.getId());
 
     int pageNum = 2;
@@ -84,7 +71,7 @@ class CrawlingServiceTest extends BaseServiceTest {
     siteService.add(site);
 
     //board 저장
-    Board board = Board.builder().boardName(boardName).boardParam(boardParamDealbada).build();
+    Board board = Board.builder().boardName(boardName).build();
     boardService.addWithSiteId(board, site.getId());
 
     int pageNum = 2;
@@ -108,7 +95,7 @@ class CrawlingServiceTest extends BaseServiceTest {
     siteService.add(site);
 
     //board 저장
-    Board board = Board.builder().boardName(boardNameClien).boardParam(boardParamClien).build();
+    Board board = Board.builder().boardName(boardNameClien).build();
     boardService.addWithSiteId(board, site.getId());
 
     int pageNum = 0;
@@ -134,7 +121,7 @@ class CrawlingServiceTest extends BaseServiceTest {
     siteService.add(site);
 
     //board 저장
-    Board board = Board.builder().boardName(boardNameOverseas).boardParam(boardParamOverseas).build();
+    Board board = Board.builder().boardName(boardNameOverseas).build();
     boardService.addWithSiteId(board, site.getId());
 
     int pageNum = 3;
@@ -159,7 +146,7 @@ class CrawlingServiceTest extends BaseServiceTest {
     siteService.add(Site.builder().siteName(siteName).build());
     Site site = siteService.findOneBySiteName(siteName);
     //board 저장
-    boardService.addWithSiteId(Board.builder().boardName(boardName).boardParam(boardParamDomestic).build(), site.getId());
+    boardService.addWithSiteId(Board.builder().boardName(boardName).build(), site.getId());
     Board board = boardService.findOneByBoardName(boardName, site.getId());
     int pageNum = 4;
     int pageRefreshSecond = 60;

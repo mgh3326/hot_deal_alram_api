@@ -41,7 +41,7 @@ class BoardServiceTest extends BaseServiceTest {
   @DisplayName("게시판 저장 (id)")
   void add() {
     Site site = siteService.findOneBySiteName(siteName);
-    Board board = Board.builder().boardName(boardName).boardParam(boardParam).build();
+    Board board = Board.builder().boardName(boardName).build();
     boardService.addWithSiteId(board, site.getId());
     Board board1 = boardService.findOne(board.getId());
     assertEquals(board1.getBoardName(), boardName, "equal test board name");
@@ -53,7 +53,7 @@ class BoardServiceTest extends BaseServiceTest {
   @Test
   @DisplayName("게시판 저장 (site name)")
   void add2() {
-    Board board = Board.builder().boardName(boardName).boardParam(boardParam).build();
+    Board board = Board.builder().boardName(boardName).build();
     boardService.addWithSiteName(board, siteName);
     Board board1 = boardService.findOne(board.getId());
     assertEquals(board1.getBoardName(), boardName, "equal test board name");
