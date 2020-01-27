@@ -20,5 +20,9 @@ public interface PostRepository extends JpaRepository<Post, Long> {
   List<Post> findInOriginIds(@Param("postOriginIds") List<Long> postOriginIds, @Param("boardId") Long boardId); // 적용하자!
 
   @Query("select p from Post p where p.board.id = :boardId")
-  Slice<Post> findPostByBoardId(@Param("boardId") Long boardId, Pageable pageable);
+  Slice<Post> findPostsByBoardId(@Param("boardId") Long boardId, Pageable pageable);
+
+  @Query("select p from Post p")
+// 지워도 될거 같은데
+  Slice<Post> findPosts(Pageable pageable);
 }

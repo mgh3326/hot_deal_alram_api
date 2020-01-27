@@ -104,13 +104,17 @@ public class PostService {
     return posts;
   }
 
-  public PostRes findPostDtoAll(Long boardId, int page) {
-    return postQueryRepository.findPostDtoAll(boardId, page);
+  public PostRes findPostDtoAllByBoardId(Long boardId, int page) {
+    return postQueryRepository.findPostDtoAllByBoardId(boardId, page);
 
   }
 
   public void saveParsed(Long boardId, List<Post> posts) {
     posts = postUpdatePossible(boardId, posts);
     savePostAllWithBoardId(posts, boardId);
+  }
+
+  public PostRes findPostDtoAll(int page) {
+    return postQueryRepository.findPostDtoAll(page);
   }
 }

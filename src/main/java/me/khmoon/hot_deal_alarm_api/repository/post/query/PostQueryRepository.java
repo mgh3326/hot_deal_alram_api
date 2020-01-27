@@ -13,10 +13,17 @@ import org.springframework.stereotype.Repository;
 public class PostQueryRepository {
   private final PostRepository postRepository;
 
-  public PostRes findPostDtoAll(Long boardId, int page) {
+  public PostRes findPostDtoAllByBoardId(Long boardId, int page) {
     PageRequest pageRequest = PageRequest.of(page, 50, Sort.by(Sort.Direction.DESC,
             "postOriginId"));
-    Slice<Post> postByBoardId = postRepository.findPostByBoardId(boardId, pageRequest);
+    Slice<Post> postByBoardId = postRepository.findPostsByBoardId(boardId, pageRequest);
     return new PostRes(postByBoardId);
+  }
+
+  public PostRes findPostDtoAll(int page) {
+    PageRequest pageRequest = PageRequest.of(page, 50, Sort.by(Sort.Direction.DESC,
+            "createdDate"));
+    Slice<Post> posts = postRepository.findPosts(pageRequest);
+    return new PostRes(posts);
   }
 }
