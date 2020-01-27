@@ -2,9 +2,9 @@ language: java
 jdk:
   - openjdk11
 
-branches:
-  only:
-    - master
+#branches: # branch 모든게 다 되야 좋을것 같다.
+#  only:
+#    - master
 services:
   - redis-server
 # Travis CI 서버의 Cache 활성화
