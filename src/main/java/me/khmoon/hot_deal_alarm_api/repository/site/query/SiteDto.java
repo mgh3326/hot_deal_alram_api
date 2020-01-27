@@ -25,9 +25,11 @@ public class SiteDto {
   @Data
   private static class BoardDto {
     private BoardKoreanName boardKoreanName;
+    private Long boardId;
 
     public BoardDto(Board board) {
       this.boardKoreanName = board.getBoardKoreanName();
+      this.boardId = board.getId();
     }
   }
 }
