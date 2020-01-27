@@ -30,35 +30,27 @@ public class InitService {
   }
 
   public void dbInitPpomppu(int startPageNum, int pageNumSize) {//TODO 게시판 별로 파라미터를 분리할 필요가 있겠다.
-    String siteListUrl = applicationProperties.getPpomppu().getUrl().getList();
-    String siteViewUrl = applicationProperties.getPpomppu().getUrl().getView();
-    Site site = Site.builder().siteName(SiteName.PPOMPPU).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
+    Site site = Site.builder().siteName(SiteName.PPOMPPU).build();
     siteService.add(site);
     addBoard(site, BoardName.DOMESTIC, applicationProperties.getPpomppu().getParam().getDomestic(), startPageNum, pageNumSize);
     addBoard(site, BoardName.OVERSEAS, applicationProperties.getPpomppu().getParam().getOverseas(), startPageNum, pageNumSize);
   }
 
   public void dbInitDealbada(int startPageNum, int pageNumSize) {
-    String siteListUrl = applicationProperties.getDealbada().getUrl().getList();
-    String siteViewUrl = applicationProperties.getDealbada().getUrl().getView();
-    Site site = Site.builder().siteName(SiteName.DEALBADA).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
+    Site site = Site.builder().siteName(SiteName.DEALBADA).build();
     siteService.add(site);
     addBoard(site, BoardName.DOMESTIC, applicationProperties.getDealbada().getParam().getDomestic(), startPageNum, pageNumSize);
     addBoard(site, BoardName.OVERSEAS, applicationProperties.getDealbada().getParam().getOverseas(), startPageNum, pageNumSize);
   }
 
   public void dbInitClien(int startPageNum, int pageNumSize) {
-    String siteListUrl = applicationProperties.getClien().getUrl().getList();
-    String siteViewUrl = applicationProperties.getClien().getUrl().getView();
-    Site site = Site.builder().siteName(SiteName.CLIEN).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
+    Site site = Site.builder().siteName(SiteName.CLIEN).build();
     siteService.add(site);
     addBoard(site, BoardName.THRIFTY, applicationProperties.getClien().getParam().getThrifty(), startPageNum, pageNumSize);
   }
 
   public void dbInitCoolenjoy(int startPageNum, int pageNumSize) {
-    String siteListUrl = applicationProperties.getCoolenjoy().getUrl().getList();
-    String siteViewUrl = applicationProperties.getCoolenjoy().getUrl().getView();
-    Site site = Site.builder().siteName(SiteName.COOLENJOY).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
+    Site site = Site.builder().siteName(SiteName.COOLENJOY).build();
     siteService.add(site);
     addBoard(site, BoardName.THRIFTY, applicationProperties.getCoolenjoy().getParam().getThrifty(), startPageNum, pageNumSize);
   }

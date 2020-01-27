@@ -31,10 +31,8 @@ public class Site {
   private List<Board> boards = new ArrayList<>();
 
   @Builder
-  public Site(SiteName siteName, String siteViewUrl, String siteListUrl) {
+  public Site(SiteName siteName) {
     this.siteName = siteName;
-    this.siteViewUrl = siteViewUrl;
-    this.siteListUrl = siteListUrl;
     switch (siteName) {
       case PPOMPPU:
         this.siteKoreanName = SiteKoreanName.뽐뿌;
@@ -49,5 +47,10 @@ public class Site {
         this.siteKoreanName = SiteKoreanName.쿨엔조이;
         break;
     }
+  }
+
+  public void addUrl(String siteViewUrl, String siteListUrl) {//이럼 변경이 되려나
+    this.siteViewUrl = siteViewUrl;
+    this.siteListUrl = siteListUrl;
   }
 }

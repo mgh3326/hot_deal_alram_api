@@ -38,7 +38,7 @@ class SiteServiceTest extends BaseServiceTest {
   @Test
   @DisplayName("추가하기")
   void add() {
-    Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
+    Site site = Site.builder().siteName(siteName).build();
     siteService.add(site);
     Site site1 = siteService.findOne(site.getId());
     assertEquals(site1.getSiteName(), siteName);
@@ -50,9 +50,9 @@ class SiteServiceTest extends BaseServiceTest {
   @Test
   @DisplayName("유니큐 조건")
   void uniqueViolation() {
-    Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
+    Site site = Site.builder().siteName(siteName).build();
     siteService.add(site);
-    Site site2 = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
+    Site site2 = Site.builder().siteName(siteName).build();
     assertThrows(DataIntegrityViolationException.class, () -> siteService.add(site2));
   }
 

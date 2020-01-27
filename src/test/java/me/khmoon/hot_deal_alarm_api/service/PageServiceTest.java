@@ -26,23 +26,14 @@ class PageServiceTest extends BaseServiceTest {
   @Autowired
   private SiteService siteService;
   private String boardParam;
-  private String siteListUrl;
-  private String siteViewUrl;
   private SiteName siteName = SiteName.PPOMPPU;
   private BoardName boardName = BoardName.DOMESTIC;
   private SiteName siteNameDealbada = SiteName.DEALBADA;
   private String boardParamDealbada;
-  private String siteListUrlDealbada;
-  private String siteViewUrlDealbada;
 
   @PostConstruct
   public void init() {
-    siteListUrl = applicationProperties.getPpomppu().getUrl().getList();
-    siteViewUrl = applicationProperties.getPpomppu().getUrl().getView();
     boardParam = applicationProperties.getPpomppu().getParam().getDomestic();
-
-    siteListUrlDealbada = applicationProperties.getDealbada().getUrl().getList();
-    siteViewUrlDealbada = applicationProperties.getDealbada().getUrl().getView();
     boardParamDealbada = applicationProperties.getDealbada().getParam().getDomestic();
   }
 
@@ -50,7 +41,7 @@ class PageServiceTest extends BaseServiceTest {
   @DisplayName("페이지 저장")
   void savePage() {
     // 사이트 저장
-    Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
+    Site site = Site.builder().siteName(siteName).build();
     siteService.add(site);
     //board 저장
     Board board = Board.builder().boardName(boardName).boardParam(boardParam).build();
@@ -101,7 +92,7 @@ class PageServiceTest extends BaseServiceTest {
   @DisplayName("페이지 저장")
   void savePageDealbada() {
     // 사이트 저장
-    Site site = Site.builder().siteName(siteNameDealbada).siteListUrl(siteListUrlDealbada).siteViewUrl(siteViewUrlDealbada).build();
+    Site site = Site.builder().siteName(siteNameDealbada).build();
     siteService.add(site);
 
     //board 저장
@@ -119,7 +110,7 @@ class PageServiceTest extends BaseServiceTest {
   @Test
   void findPageIdBySiteId() {
     // site 넣기
-    Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
+    Site site = Site.builder().siteName(siteName).build();
     siteService.add(site);
     //board 저장
     Board board = Board.builder().boardName(boardName).boardParam(boardParam).build();

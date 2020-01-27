@@ -24,6 +24,6 @@ public class PostApiController {
 
   @GetMapping("/all")
   public PostAllRes postsAll(@RequestParam(value = "page", defaultValue = "0") int page) {
-    return postService.findPostDtoAll(page);
+    return postService.findPostDtoAll(page);// 쿼리가 3번만 나가는게 신기하네 fetch join을 하지 않는게 오히려 효율적인거 같다.
   }
 }

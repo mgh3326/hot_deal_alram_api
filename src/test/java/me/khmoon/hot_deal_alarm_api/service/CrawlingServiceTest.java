@@ -31,42 +31,28 @@ class CrawlingServiceTest extends BaseServiceTest {
   private PostService postService;
   private String boardParamDomestic;
   private String boardParamOverseas;
-  private String siteListUrl;
-  private String siteViewUrl;
   private SiteName siteName = SiteName.PPOMPPU;
   private BoardName boardName = BoardName.DOMESTIC;
   private BoardName boardNameOverseas = BoardName.OVERSEAS;
   private SiteName siteNameDealbada = SiteName.DEALBADA;
   private String boardParamDealbada;
-  private String siteListUrlDealbada;
-  private String siteViewUrlDealbada;
   private SiteName siteNameClien = SiteName.CLIEN;
   private String boardParamClien;
-  private String siteListUrlClien;
-  private String siteViewUrlClien;
   private BoardName boardNameClien = BoardName.THRIFTY;
 
 
   @PostConstruct
   public void init() {
-    siteListUrl = applicationProperties.getPpomppu().getUrl().getList();
-    siteViewUrl = applicationProperties.getPpomppu().getUrl().getView();
     boardParamDomestic = applicationProperties.getPpomppu().getParam().getDomestic();
     boardParamOverseas = applicationProperties.getPpomppu().getParam().getOverseas();
-
-    siteListUrlDealbada = applicationProperties.getDealbada().getUrl().getList();
-    siteViewUrlDealbada = applicationProperties.getDealbada().getUrl().getView();
     boardParamDealbada = applicationProperties.getDealbada().getParam().getDomestic();
-
-    siteListUrlClien = applicationProperties.getClien().getUrl().getList();
-    siteViewUrlClien = applicationProperties.getClien().getUrl().getView();
     boardParamClien = applicationProperties.getClien().getParam().getThrifty();
   }
 
   @Test
   void parsePpomppuDomestic() {
     // 사이트 저장
-    Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
+    Site site = Site.builder().siteName(siteName).build();
     siteService.add(site);
 
     //board 저장
@@ -94,7 +80,7 @@ class CrawlingServiceTest extends BaseServiceTest {
   @Test
   void parseDealbada() {
     // 사이트 저장
-    Site site = Site.builder().siteName(siteNameDealbada).siteListUrl(siteListUrlDealbada).siteViewUrl(siteViewUrlDealbada).build();
+    Site site = Site.builder().siteName(siteNameDealbada).build();
     siteService.add(site);
 
     //board 저장
@@ -118,7 +104,7 @@ class CrawlingServiceTest extends BaseServiceTest {
   @Test
   void parseClien() {
     // 사이트 저장
-    Site site = Site.builder().siteName(siteNameClien).siteListUrl(siteListUrlClien).siteViewUrl(siteViewUrlClien).build();
+    Site site = Site.builder().siteName(siteNameClien).build();
     siteService.add(site);
 
     //board 저장
@@ -142,7 +128,7 @@ class CrawlingServiceTest extends BaseServiceTest {
   @Test
   void parsePpomppuOverseas() {
     // 사이트 저장
-    Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
+    Site site = Site.builder().siteName(siteName).build();
     List<Site> sites = siteService.findSites();
     assertEquals(0, sites.size(), "사이트 갯수가 0이어야 되는데");
     siteService.add(site);
@@ -170,7 +156,7 @@ class CrawlingServiceTest extends BaseServiceTest {
   void parseUpdate() {
     // 사이트 저장
 
-    siteService.add(Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build());
+    siteService.add(Site.builder().siteName(siteName).build());
     Site site = siteService.findOneBySiteName(siteName);
     //board 저장
     boardService.addWithSiteId(Board.builder().boardName(boardName).boardParam(boardParamDomestic).build(), site.getId());

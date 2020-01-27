@@ -22,23 +22,18 @@ class BoardServiceTest extends BaseServiceTest {
   @Autowired
   private SiteService siteService;
   private String boardParam;
-  private String siteListUrl;
-  private String siteViewUrl;
   private SiteName siteName = SiteName.PPOMPPU;
   private BoardName boardName = BoardName.DOMESTIC;
   private BoardKoreanName boardKoreanName = BoardKoreanName.국내;
 
   @PostConstruct
   public void init() {
-    siteListUrl = applicationProperties.getPpomppu().getUrl().getList();
-    siteViewUrl = applicationProperties.getPpomppu().getUrl().getView();
     boardParam = applicationProperties.getPpomppu().getParam().getDomestic();
-
   }
 
   @BeforeEach
   void init2() {
-    Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
+    Site site = Site.builder().siteName(siteName).build();
     siteService.add(site);
   }
 

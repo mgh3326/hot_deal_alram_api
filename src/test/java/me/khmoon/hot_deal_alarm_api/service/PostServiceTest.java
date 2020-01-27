@@ -24,52 +24,28 @@ class PostServiceTest extends BaseServiceTest {
   @Autowired
   private PostService postService;
   private String boardParam;
-  private String siteListUrl;
-  private String siteViewUrl;
   private SiteName siteName = SiteName.PPOMPPU;
   private BoardName boardName = BoardName.DOMESTIC;
-
   private String boardParamDealbada;
-  private String siteListUrlDealbada;
-  private String siteViewUrlDealbada;
   private SiteName siteNameDealbada = SiteName.DEALBADA;
-
   private BoardName boardNameThrifty = BoardName.THRIFTY;
-  private String siteListUrlClien;
-  private String siteViewUrlClien;
   private SiteName siteNameClien = SiteName.CLIEN;
   private String boardParamClien;
-
-  private String siteListUrlCoolenjoy;
-  private String siteViewUrlCoolenjoy;
   private String boardParamCoolenjoy;
   private SiteName siteNameCoolenjoy = SiteName.COOLENJOY;
 
   @PostConstruct
   public void init() {
-
-
-    siteListUrl = applicationProperties.getPpomppu().getUrl().getList();
-    siteViewUrl = applicationProperties.getPpomppu().getUrl().getView();
     boardParam = applicationProperties.getPpomppu().getParam().getDomestic();
-
-    siteListUrlDealbada = applicationProperties.getDealbada().getUrl().getList();
-    siteViewUrlDealbada = applicationProperties.getDealbada().getUrl().getView();
     boardParamDealbada = applicationProperties.getDealbada().getParam().getDomestic();
-
-    siteListUrlClien = applicationProperties.getClien().getUrl().getList();
-    siteViewUrlClien = applicationProperties.getClien().getUrl().getView();
     boardParamClien = applicationProperties.getClien().getParam().getThrifty();
-
-    siteListUrlCoolenjoy = applicationProperties.getCoolenjoy().getUrl().getList();
-    siteViewUrlCoolenjoy = applicationProperties.getCoolenjoy().getUrl().getView();
     boardParamCoolenjoy = applicationProperties.getCoolenjoy().getParam().getThrifty();
   }
 
   @Test
   void savePost() {
     // 사이트 저장
-    Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
+    Site site = Site.builder().siteName(siteName).build();
     siteService.add(site);
 
     //board 저장
@@ -104,7 +80,7 @@ class PostServiceTest extends BaseServiceTest {
   @Test
   void savePosts() {
     // 사이트 저장
-    Site site = Site.builder().siteName(siteName).siteListUrl(siteListUrl).siteViewUrl(siteViewUrl).build();
+    Site site = Site.builder().siteName(siteName).build();
     siteService.add(site);
 
     //board 저장
@@ -161,7 +137,7 @@ class PostServiceTest extends BaseServiceTest {
   @Test
   void savePostDealbada() {
     // 사이트 저장
-    Site site = Site.builder().siteName(siteNameDealbada).siteListUrl(siteListUrlDealbada).siteViewUrl(siteViewUrlDealbada).build();
+    Site site = Site.builder().siteName(siteNameDealbada).build();
     siteService.add(site);
 
     //board 저장
@@ -197,7 +173,7 @@ class PostServiceTest extends BaseServiceTest {
   @Test
   void savePostClien() {
     // 사이트 저장
-    Site site = Site.builder().siteName(siteNameClien).siteListUrl(siteListUrlClien).siteViewUrl(siteViewUrlClien).build();
+    Site site = Site.builder().siteName(siteNameClien).build();
     siteService.add(site);
 
     //board 저장
@@ -232,7 +208,7 @@ class PostServiceTest extends BaseServiceTest {
   @Test
   void savePostCoolenjoy() {
     // 사이트 저장
-    Site site = Site.builder().siteName(siteNameCoolenjoy).siteListUrl(siteListUrlCoolenjoy).siteViewUrl(siteViewUrlCoolenjoy).build();
+    Site site = Site.builder().siteName(siteNameCoolenjoy).build();
     siteService.add(site);
 
     //board 저장
