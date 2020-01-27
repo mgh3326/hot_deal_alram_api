@@ -6,13 +6,11 @@ import me.khmoon.hot_deal_alarm_api.service.InitService;
 import me.khmoon.hot_deal_alarm_api.service.PageService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+import org.springframework.hateoas.MediaTypes;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.List;
-
-import org.springframework.hateoas.MediaTypes;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -41,22 +39,22 @@ class SiteApiControllerTest extends BaseControllerTest {
             .andDo(print())
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.size()").value(4))
-            .andExpect(jsonPath("$[0].siteName").value("PPOMPPU"))
+            .andExpect(jsonPath("$[0].siteKoreanName").value("뽐뿌"))
             .andExpect(jsonPath("$[0].boards").exists())
             .andExpect(jsonPath("$[0].boards[0]").exists())
-            .andExpect(jsonPath("$[0].boards[0].boardName").exists())
-            .andExpect(jsonPath("$[1].siteName").value("DEALBADA"))
+            .andExpect(jsonPath("$[0].boards[0].boardKoreanName").exists())
+            .andExpect(jsonPath("$[1].siteKoreanName").value("딜바다"))
             .andExpect(jsonPath("$[1].boards").exists())
             .andExpect(jsonPath("$[1].boards[0]").exists())
-            .andExpect(jsonPath("$[1].boards[0].boardName").exists())
-            .andExpect(jsonPath("$[2].siteName").value("CLIEN"))
+            .andExpect(jsonPath("$[1].boards[0].boardKoreanName").exists())
+            .andExpect(jsonPath("$[2].siteKoreanName").value("클리앙"))
             .andExpect(jsonPath("$[2].boards").exists())
             .andExpect(jsonPath("$[2].boards[0]").exists())
-            .andExpect(jsonPath("$[2].boards[0].boardName").exists())
-            .andExpect(jsonPath("$[3].siteName").value("COOLENJOY"))
+            .andExpect(jsonPath("$[2].boards[0].boardKoreanName").exists())
+            .andExpect(jsonPath("$[3].siteKoreanName").value("쿨엔조이"))
             .andExpect(jsonPath("$[3].boards").exists())
             .andExpect(jsonPath("$[3].boards[0]").exists())
-            .andExpect(jsonPath("$[3].boards[0].boardName").exists())
+            .andExpect(jsonPath("$[3].boards[0].boardKoreanName").exists())
     ;
   }
 }
