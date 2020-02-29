@@ -7,7 +7,7 @@ import me.khmoon.hot_deal_alarm_api.domain.post.Post;
 import me.khmoon.hot_deal_alarm_api.service.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.MediaTypes;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.List;
@@ -63,13 +63,15 @@ class PostApiControllerTest extends BaseControllerTest {
       mockMvc.perform(MockMvcRequestBuilders.get("/api/posts/")
               .param("boardId", board.getId().toString())
               .param("page", Integer.toString(0))
-              .contentType(MediaTypes.HAL_JSON))
+              .contentType(MediaType.APPLICATION_JSON)
+              .accept(MediaType.APPLICATION_JSON))
               .andDo(print())
               .andExpect(status().isOk())
       ;
       mockMvc.perform(MockMvcRequestBuilders.get("/api/posts/all")
               .param("page", Integer.toString(0))
-              .contentType(MediaTypes.HAL_JSON))
+              .contentType(MediaType.APPLICATION_JSON)
+              .accept(MediaType.APPLICATION_JSON))
               .andDo(print())
               .andExpect(status().isOk())
       ;

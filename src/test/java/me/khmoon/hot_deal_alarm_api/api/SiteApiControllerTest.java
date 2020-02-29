@@ -6,7 +6,7 @@ import me.khmoon.hot_deal_alarm_api.service.InitService;
 import me.khmoon.hot_deal_alarm_api.service.PageService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.MediaTypes;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -35,7 +35,10 @@ class SiteApiControllerTest extends BaseControllerTest {
     List<Page> pages = pageService.findAll();
     assertEquals(6 * pageNumSize, pages.size());
 
-    mockMvc.perform(MockMvcRequestBuilders.get("/api/sites/").contentType(MediaTypes.HAL_JSON))
+    mockMvc.perform(MockMvcRequestBuilders.get("/api/sites/")
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON)
+    )
             .andDo(print())
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.size()").value(4))
