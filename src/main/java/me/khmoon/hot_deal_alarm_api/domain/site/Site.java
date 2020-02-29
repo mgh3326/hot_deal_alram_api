@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import me.khmoon.hot_deal_alarm_api.domain.board.Board;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,12 +21,15 @@ public class Site {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "site_id")
   private Long id;
-
+  @NotNull
   @Enumerated(EnumType.STRING)
   private SiteName siteName;
+  @NotNull
   @Enumerated(EnumType.STRING)
   private SiteKoreanName siteKoreanName;
+  @NotBlank
   private String siteListUrl;
+  @NotBlank
   private String siteViewUrl;
 
   @OneToMany(mappedBy = "site")

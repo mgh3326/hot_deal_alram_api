@@ -9,6 +9,7 @@ import me.khmoon.hot_deal_alarm_api.domain.board.Board;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDateTime;
 
 import static javax.persistence.FetchType.LAZY;
@@ -22,13 +23,13 @@ public class Page extends BaseTimeEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "page_id")
   private Long id;
-
   @NotNull
+  @PositiveOrZero
   private int pageNum; // Long 으로 바꿔야하지 않을까?
   @NotNull
+  @PositiveOrZero
   private int pageRefreshSecond;//페이지 크롤링 시간
   @NotNull
-
   private LocalDateTime pageRefreshingDateTime;
 
   @ManyToOne(fetch = LAZY)

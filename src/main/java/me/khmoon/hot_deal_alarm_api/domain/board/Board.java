@@ -9,6 +9,7 @@ import me.khmoon.hot_deal_alarm_api.domain.post.Post;
 import me.khmoon.hot_deal_alarm_api.domain.site.Site;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,9 +24,10 @@ public class Board {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "board_id")
   private Long id;
-
+  @NotNull
   @Enumerated(EnumType.STRING)
   private BoardName boardName;
+  @NotNull
   @Enumerated(EnumType.STRING)
   private BoardKoreanName boardKoreanName;
   private String boardParam;

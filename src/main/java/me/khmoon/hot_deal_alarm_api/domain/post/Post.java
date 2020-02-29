@@ -10,6 +10,9 @@ import me.khmoon.hot_deal_alarm_api.domain.user.UserPost;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,16 +27,29 @@ public class Post extends BaseTimeEntity {
   @GeneratedValue
   @Column(name = "post_id")
   private Long id;
+  @NotNull
   private Long postOriginId;
+  @NotBlank
   private String postType;// Enum으로 하고 싶었는데, Type은 현재 fix 하기 어려울것 같다. (그냥 한글 넣을듯)
+  @NotBlank
   private String postTitle;
+  @NotBlank
   private String postWriter;
+  @NotNull
   @Enumerated(EnumType.STRING)
   private PostStatus postStatus; // READY, COMP (진행중, 종료됨)
+  @NotNull
+  @PositiveOrZero
   private int postRecommendationCount;//추천수
+  @NotNull
+  @PositiveOrZero
   @ColumnDefault("0")
   private int postDisLikeCount;//싫어요
+  @NotNull
+  @PositiveOrZero
   private int postCommentCount;//댓글 수
+  @NotNull
+  @PositiveOrZero
   private int postOriginClickCount;//실제 클릭수
 
 
