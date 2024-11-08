@@ -42,7 +42,7 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.13.1'
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.6.1'
+    implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.10.0'
 
     //querydsl 추가
     implementation "com.querydsl:querydsl-jpa" // querydsl
