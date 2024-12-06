@@ -47,7 +47,7 @@ dependencies {
     //querydsl 추가
     implementation "com.querydsl:querydsl-jpa" // querydsl
     // https://mvnrepository.com/artifact/org.modelmapper/modelmapper
-    implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.7'
+    implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.2.2'
     implementation 'org.springframework.boot:spring-boot-starter-hateoas'
     implementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 
